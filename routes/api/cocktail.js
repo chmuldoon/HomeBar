@@ -10,7 +10,7 @@ const Cocktail = require('../../models/Cocktail')
 
 router.get('/', async (req, res) => {
   try {
-    const cocktails = await Cocktail.find()
+    const cocktails = await Cocktail.find().select('-password')
 
     res.json(cocktails)
   } catch (err) {
