@@ -8,11 +8,15 @@ module.exports = function (req, res, next) {
   if (!token) {
     return res.status(401).json({ msg: "no toke, auth denied" });
   }
+
   //if there is a token, verify it
   try {
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, require("../config/jwt").jwtSecret);
+  console.log("hit");
 
     req.user = decoded.user;
+    console.log(req.user);
+
     next();
   } catch (err) {
     // if there is a token but it's not valid

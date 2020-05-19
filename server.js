@@ -45,6 +45,10 @@ app.use(bodyParser.json());
 
 app.use("/api/auth", require("./routes/api/auth"));
 app.use("/api/cocktails", require("./routes/api/cocktail"));
+app.use("/api/users", require("./routes/api/user"));
+app.use("/api/ingredients", require("./routes/api/ingredient"));
+
+
 
 
 

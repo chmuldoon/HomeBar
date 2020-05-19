@@ -16,10 +16,6 @@ const IngredientSchema = new Schema({
     ref: "cocktail",
   },
 });
-IngredientSchema.statics.findDrinks = function (id) {
-  return this.findById(id)
-    .populate("cocktails")
-    .then((ingredient) => ingredient.cocktails);
-};
+
 
 module.exports = mongoose.model("ingredient", IngredientSchema);
