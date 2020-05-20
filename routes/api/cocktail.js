@@ -3,6 +3,8 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const Cocktail = require('../../models/Cocktail')
+const User = require("../../models/User");
+
 
 //get all cocktails
 //public
@@ -10,7 +12,7 @@ const Cocktail = require('../../models/Cocktail')
 
 router.get('/', async (req, res) => {
   try {
-    const cocktails = await Cocktail.find().select('-password')
+    const cocktails = await Cocktail.find().select('_id name photo')
 
     res.json(cocktails)
   } catch (err) {
@@ -35,5 +37,20 @@ router.get("/:id", async (req, res) => {
     res.status(500).send("server err");
   }
 });
+
+//fetch user's cocktails
+router.get("/byuser/:userId", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.params.userId).select("-password");
+    if (!user) return res.status(400).json({ msg: "User is not found" });
+
+    let cocktails = await Cocktail.find( { _id : { $in: user.cocktails}})
+
+    res.json(cocktails);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at fetch user");
+  }
+})
 
 module.exports = router;
