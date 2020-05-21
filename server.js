@@ -3,10 +3,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 // const schema = require("./schema/schema");
-const session = require("express-session");
+// const session = require("express-session");
 const passport = require("passport");
 // const passportConfig = require("./server/services/auth");
-const MongoStore = require("connect-mongo")(session);
+// const MongoStore = require("connect-mongo")(session);
 const db = require("./config/keys").mongoURI;
 const path = require("path");
 
