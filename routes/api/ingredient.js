@@ -16,7 +16,6 @@ router.get('/', async (req, res) => {
   }
 })
 router.put('/add/:id', auth, async (req, res) => {
-  // console.log("woo")
   try {
     let user = await User.findById(req.user.id).select("-password")
     let newIngredientsList = user.ingredients.concat(req.params.id)

@@ -10,5 +10,9 @@ export const LOGOUT = "LOGOUT";
 export const AUTH_ERROR = "AUTH_ERROR";
 export const USER_LOADED = "USER_LOADED";
 
+export const USER_COCKTAILS = "USER_COCKTAILS"
+export const FETCH_COCKTAIL = "FETCH_COCKTAIL";
+
+
 
 

@@ -42,4 +42,4 @@ CocktailSchema.statics.findIngredients = function (id) {
     .then((cocktail) => cocktail.using2);
 };
 
-module.exports = mongoose.model("cocktail", CocktailSchema);
+module.exports = Cocktail = mongoose.model("cocktail", CocktailSchema);

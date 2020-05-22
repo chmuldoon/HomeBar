@@ -10,16 +10,16 @@ const User = require("../../models/User");
 //public
 //testing
 
-router.get('/', async (req, res) => {
-  try {
-    const cocktails = await Cocktail.find().select('_id name photo')
+// router.get('/', async (req, res) => {
+//   try {
+//     const cocktails = await Cocktail.find().select('_id name photo')
 
-    res.json(cocktails)
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("server err");
-  }
-})
+//     res.json(cocktails)
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("server err");
+//   }
+// })
 
 //get cocktail by id
 //public
@@ -30,7 +30,6 @@ router.get("/:id", async (req, res) => {
     const cocktail = await Cocktail.findById(req.params.id);
     if (!cocktail) return res.status(400).json({ msg: "Cocktail not found" });
 
-
     res.json(cocktail);
   } catch (err) {
     console.error(err.message);
@@ -39,9 +38,11 @@ router.get("/:id", async (req, res) => {
 });
 
 //fetch user's cocktails
-router.get("/byuser/:userId", auth, async (req, res) => {
+
+router.get('/', auth, async (req, res) => {
   try {
-    let user = await User.findById(req.params.userId).select("-password");
+    console.log(req.user)
+    let user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(400).json({ msg: "User is not found" });
 
     let cocktails = await Cocktail.find( { _id : { $in: user.cocktails}})
@@ -49,7 +50,7 @@ router.get("/byuser/:userId", auth, async (req, res) => {
     res.json(cocktails);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("server err at fetch user");
+    res.status(500).send("server err at fetch user cokctails");
   }
 })
 
