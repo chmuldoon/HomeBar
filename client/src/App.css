@@ -1,38 +1,575 @@
-.App {
-  text-align: center;
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+* {
+  /* -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+     box-sizing: border-box;  */
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*:focus {
+    outline: none;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  font-family: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+  line-height: 1;
+  background-color: grey;
+  /* position: fixed; */
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+ul {
+  list-style-type: none;
+}
+/* .dasd {
+  overflow-y: scroll;
+  background-image: url("assets/images/bartendersfriend.jpg");
+  background-position: center;
+} */
+html {
+  height: 100%;
+}
+#main {
+  height: 900px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-wrap: wrap;
+}
+.navbar {
+  grid-area: header;
+  background-color: aqua;
+}
+.topBar {
+  height: 70px;
+  width: 100%;
+  color: white;
+  background-color: #3d3d3d;
+  position: fixed;
+  z-index: 5;
+  display: flex;
+  /* justify-content: space-between; */
+  font-size: 2.5rem;
+  /* display: flex; */
+  justify-content: center;
+  padding-top: 15px;
+
+
+  font-family: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+.barCenter {
+  margin-left: auto;
+  margin-right: auto;
+  /* display: flex;
+  justify-content: center; */
+  /* position: fixed; */
+  /* position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+
+
+  z-index: 3; */
+}
+.barRight,
+.barLeft {
+  display: flex;
+  position: absolute;
+  z-index: 3;
+  width: 223px;
+  justify-content: center;
+}
+.barLeft {
+  margin-left: 20px;
+  float: left;
+  left: 0;
+  padding-bottom: 10px;
+
+
+}
+.barRight {
+  float: right;
+  margin-right: 20px;
+  right: 0;
+
+
+}
+.display {
+  grid-area: display;
+  overflow-y: scroll;
+  border: 1px solid black;
+  height: 600px;
+  width: 10%;
+}
+.searchInput {
+  /* width: 90%; */
+  border-radius: 5px;
+  height: 40px;
+  border: 1px solid #3d3d3d;
+  margin-right: 10px;
+  margin-bottom: 15px;
+
+  /* padding: 0 10px 0 10px; */
+  font-size: 15px;
+}
+.container {
+  
+  display: grid;
+  /* max-width: 1000px; */
+  margin: auto;
+  min-height: 70%;
+  grid-template-columns: 200px auto 200px;
+  grid-template-rows: 30px 20px 600px auto;
+  grid-template-areas: 
+    "header header header"
+    "search  using ."
+    "display  gallery  ."
+    "footer footer footer";
+}
+.usingContent {
+  width: 80%;
+  min-height: 5%;
+  margin-bottom: 2%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.usingContent div {
+  display: flex;
+    justify-content: center;
+    color: white;
+}
+.checkedSearchItem,
+.searchItem {
+  height: 40px;
+  width: 259px;
+  
+  display: flex;
+  border-bottom: 1px solid darkgray;
+  cursor: pointer;
+}
+
+.checkedSearchItem *,
+.searchItem * {
+  margin: auto 0 auto 10px;
+}
+.checkedSearchItem img,
+.searchItem img {
+  height: 80%; 
+  background-color: white; 
+  border-radius: 50%;
+}
+.searchItem {
+  background-color: #c1c1c1;
   color: white;
 }
+.checkedSearchItem{
+  background-color: #585858;
+   color: #4CA64C;
+}
+div.checkedSearchItem:hover {
+  color: #ff6666;
+}
+div.searchItem:hover {
+  color: #4CA64C;
 
-.App-link {
-  color: #61dafb;
+}
+.searchType{
+  height: 15px;
+  width: 95%;
+  /* margin-left: 5px; */
+  margin-top: -15px;
+  border-radius: 5px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+}
+.searchTypeRight,
+.searchTypeLeft {
+  cursor: pointer;
+  font-size: 13px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  /* padding-top: 4px; */
+}
+.searchTypeRight{
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+
+}
+.searchTypeLeft{
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.ingItem {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 15px;
+  justify-content: center;
+  text-align: center;
+  height: auto;
+  padding: 0 5px 0 5px;
+  cursor: pointer;
+  background-color: #4CA64C;
+  text-transform:capitalize;
+  /* padding-top: 3px 3px 0 3px; */
+  color: white;
+  margin: 5px;
+ 
+}
+.ingItem:hover{
+  background-color: #ff6666;;
+}
+.sideBar {
+  margin-top: 25px;
+  overflow-y: scroll;
+  background-color: #c1c1c1;
+  position: fixed;
+  z-index: 3;
+  left: 0;
+  max-height: 800px;
+  width: 259px;
+}
+.drinkSection {
+  width: 100%;
+  height: 90%;
+  /* padding: 0 20px 0 20px; */
+  overflow-y: scroll;
+  min-height: 80%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* margin-left: -20px; */
+
+}
+.content {
+  margin-top: 70px;
+  height: 100%;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.mainArea {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  height: 90%;
+  width: 100%;
+}
+
+.drinkCard {
+  width: 260px;
+  height: 530px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  background-color: white;
+}
+.ingredientItem{
+  margin-left: 2px;
+  height: 20px;
+  width: 50px;
+  width: 80%;
+  justify-content: center;
+  margin: 0 auto 0 auto;
+}
+.ingredientName {
+  height: 100%;
+  width: 90%;
+  font-size: 90%;
+  margin-left: 22px;
+  padding: 3px 0 0 5px;
+  background-color: lightgray;
+  border-radius: 2px;
+  text-overflow: ellipsis;
+
+}
+  .box {
+  width: 20px;
+  height: 20px;
+  background-color: #3d3d3d;
+  color: #fff;
+  position: relative;
+  float: left;
+  border-radius: 2px;
+}
+
+
+.box.arrow-right:after {
+  content: " ";
+  position: absolute;
+  right: -5px;
+  top: 5px;
+
+  border-top: 5px solid transparent;
+  border-right: none;
+  border-left: 5px solid #4CA64C;
+  border-bottom: 5px solid transparent;
+}
+
+.ingredientsSection {
+  display: grid;
+  grid-template-columns: 100px 100px;
+  grid-template-rows: 40px 40px 40px 40px 40px;
+}
+.drinkCard.drinkTitle {
+  font-family: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 1.233333rem;
+    font-weight: 500;
+    padding: 0, 10px, 0, 10px;
+}
+.show-sm {
+  display: none;
+
+}
+.drinkShowTitle {
+  background-color: white;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+.modal-case {
+  display: inline;
+  justify-content: center;
+}
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  padding-top: 10%;
+
+}
+
+.modal-child {
+  display: flex;
+  flex-wrap: wrap;
+	/* position: absolute; */
+	/* margin-top: 30%;
+	left: 53%;
+	/* margin: auto; */
+  /* transform: translate(-50%, -50%);  */
+}
+.drinkShow {
+  width: 900px;
+  height: 300px;
+
+  display: flex;
+  flex-wrap: wrap;
+  background-color:white;
+}
+.Xcase{
+  display: flex;
+  justify-content: center;
+}
+
+.drinkShow > div {
+  width: 33.33%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.drinkShow > div > div {
+  height: 50%;
+  width: 100%;
+  display: inherit;
+  justify-content: center;
+  flex-wrap: inherit;
+}
+.drinkShow > div > img {
+  width: 100%;
+  height: 100%
+}
+@media (max-width: 900px) {
+  .modal-child{
+    margin-top: auto;
+    margin-bottom: auto;
   }
-  to {
-    transform: rotate(360deg);
+  .drinkShow{
+    height: 800px;
+    width: 300px;
+  }
+  .drinkShow > div {
+    width: 100%;
+    height: 33.33%;
+  }
+}
+
+@media (max-width: 700px) {
+  #main {
+    height: 800px;
+  }
+  .modal-child{
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  .drinkShow{
+    height: 650px;
+    width: 350px;
+  }
+  .drinkShow > div {
+    width: 100%;
+    height: 33.33%;
+  }
+ 
+  .hide-sm {
+    display: none;
+    padding-bottom: 10px;
+  }
+  .show-sm {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+
+  }
+  .sideBar {
+    margin-top: 70px;
+    width: 100%
+  }
+  .topBar {
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between
+
+  }
+  .barRight,
+  .barLeft {
+    width: auto;
+  }
+  .barLeft {
+
+    /* margin-left: 40%; */
+    position: fixed;
+    z-index: 3;
+  }
+  .ingredientItem{
+    margin-bottom: 2px;
+  }
+
+  .searchInput{
+    /* float: right; */
+  }
+  .checkedSearchItem,
+  .searchItem {
+   height: 40px;
+    width: 100%;
+  }
+  .usingContent {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .fa-search {
+    float: left;
+  }
+  .content {
+    margin-top: 60;
+    width: 100%;
+  }
+  .drinkCard {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding-bottom: 10px;
+  }
+  .modal-background {
+    padding-top: 0
+  }
+
+  .drinkSection {
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0 20px 0 20px;
+    margin-left: none;
+
+  }
+  .ingredientsSection {
+    justify-content: center;
+    grid-template-columns: 200px 200px minmax(100px);
+    grid-template-rows: 50px 50px 50px 50px 50px;
+  
+  }
+  .ingredientsSection div {
+    border-radius: 30px;
+    font-size: 15px;
+    height: 70%;
+    line-height: 30px;
+    width: 85%;
+    display: flex;
+    margin: auto 20px auto 20px;
+  }
+  .drinkTitle {
+    font-size: 2rem;
+
+  }
+  .searchTypeRight,
+  .searchTypeLeft {
+    /* padding-top: 8px */
+  }
+  .searchType{
+    margin-left: 0;
+    width: 86%;
+    height: 15px;
+  }
+  
+}
+@media (max-width: 800px) {
+  .drinkShow{
+    height: 520px;
+    width: 300px
   }
 }

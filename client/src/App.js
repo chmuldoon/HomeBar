@@ -1,11 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { loadUser } from "./actions/auth_actions";
+import setAuthToken from "./util/setAuthToken";
+import store from "./store";
+
 import './App.css';
 
 const App = () => {
   return (
-    <Fragment>
-      <h1>hey</h1>
-    </Fragment>
+    <Provider store={store} >
+      <Router>
+        
+      </Router>
+    </Provider>
   );
 }
 
