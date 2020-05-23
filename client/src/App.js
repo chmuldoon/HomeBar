@@ -17,7 +17,6 @@ const App = () => {
     store.dispatch(loadUser());
   }, []);
   window.getState = store.getState;
-  console.log("hit")
   return (
     <Provider store={store}>
       <div id="main">

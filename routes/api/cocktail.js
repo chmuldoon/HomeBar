@@ -3,6 +3,8 @@ const router = express.Router();
 const { check, validationResult } = require("express-validator");
 const auth = require("../../middleware/auth");
 const Cocktail = require('../../models/Cocktail')
+const Ingredient = require("../../models/Ingredient");
+
 const User = require("../../models/User");
 
 
@@ -41,7 +43,6 @@ router.get("/:id", async (req, res) => {
 
 router.get('/', auth, async (req, res) => {
   try {
-    console.log(req.user)
     let user = await User.findById(req.user.id).select("-password");
     if (!user) return res.status(400).json({ msg: "User is not found" });
 
@@ -54,4 +55,17 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+router.get('/search', async (req, res) => {
+  try {
+    // let cocktails = await Cocktail.find().select("_id name photo");
+    // let ingredients = await Ingredient.find().select("_id name photo");
+
+
+    res.json({cocktails, ingredients})
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at search items");
+    
+  }
+})
 module.exports = router;

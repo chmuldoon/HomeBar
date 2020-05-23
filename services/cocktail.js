@@ -21,6 +21,13 @@ async function _userCocktails(list, mustHave) {
   return [...new Set(output)];
 }
 
+function _rank(list, using) {
+  let count = 0
+  using.forEach(i => {
+    if(list.includes(i)) { count++ }
+  })
+  return count
+}
 function listMaker(list, mustHave) {
   return _userCocktails(list, mustHave).then((total) => {
     return total

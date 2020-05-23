@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    console.log("Redirected")
     return <Redirect to="/main" />;
   }
   return (

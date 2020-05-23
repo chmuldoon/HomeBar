@@ -6,41 +6,46 @@ class Item extends Component {
     // this.state = { drink: null, error: null, isLoaded: false };
     // this.ingredientList = this.ingredientList.bind(this)
   }
-  // _isMustHave(item) {
-  //   return this.props.mustHave.includes(item.toLowerCase().trim())
-  //     ? "#fca103"
-  //     : "#4CA64C";
-  // }
-  // renderIngredients(drink) {
-  //   let adjustedProps = this.props.using.map((word) => word.toLowerCase());
-  //   let filtered = drink.using.filter((ing) => ing !== "");
-  //   return filtered.map((ing) => {
-  //     return (
-  //       <div className="ingredientItem">
-  //         {adjustedProps.includes(ing.toLowerCase()) ? (
-  //           <Fragment>
-  //             <div
-  //               className="box arrow-right"
-  //               style={{ backgroundColor: `${this._isMustHave(ing)}` }}
-  //             ></div>
+  _isMustHave(item) {
+    return this.props.mustHave.includes(item.toLowerCase().trim())
+      ? "#fca103"
+      : "#4CA64C";
+  }
+  renderIngredients(drink) {
+    let adjustedProps = this.props.using
+    let ingObj = {}
+    for (let i = 0; i < drink.using2.length; i++) {
+      ingObj[drink.using2[i]] = drink.using[i]
+    }
 
-  //             <div
-  //               className="ingredientName"
-  //               style={{ backgroundColor: "grey", color: "white" }}
-  //             >
-  //               {ing.toUpperCase()}
-  //             </div>
-  //           </Fragment>
-  //         ) : (
-  //           <Fragment>
-  //             <div className="box"></div>
-  //             <div className="ingredientName"> {ing.toUpperCase()}</div>
-  //           </Fragment>
-  //         )}
-  //       </div>
-  //     );
-  //   });
-  // }
+    
+    return drink.using2.map((ing) => {
+      return (
+        <div className="ingredientItem">
+          {adjustedProps.includes(ing) ? (
+            <Fragment>
+              <div
+                className="box arrow-right"
+                style={{ backgroundColor: `${this._isMustHave(ing)}` }}
+              ></div>
+
+              <div
+                className="ingredientName"
+                style={{ backgroundColor: "grey", color: "white" }}
+              >
+                {ingObj[ing].toUpperCase()}
+              </div>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <div className="box"></div>
+              <div className="ingredientName"> {ingObj[ing].toUpperCase()}</div>
+            </Fragment>
+          )}
+        </div>
+      );
+    });
+  }
 
   render() {
     if (!this.props.drink) {
@@ -63,7 +68,7 @@ class Item extends Component {
             {drink.name}
           </p>
         </div>
-        {/* {this.renderIngredients(drink)} */}
+        {this.renderIngredients(drink)}
       </div>
     );
   }
