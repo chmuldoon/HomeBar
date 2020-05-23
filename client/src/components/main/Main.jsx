@@ -1,13 +1,16 @@
 
-import React, { useEffect, Fragment } from "react";
+import React, { useEffect, Fragment, useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth_actions"
 import { getUserCocktails } from "../../actions/cocktail_actions";
-import Item from "./Item";
+import CocktailsIndex from "./CocktailsIndex";
+import Navbar from "./Navbar";
 const Main = ({
   auth: { user },cocktails, logout, getUserCocktails
 }) => {
+
+
   useEffect(() => {
 
 
@@ -18,27 +21,21 @@ const Main = ({
   return user === null ? (
     <div>loading</div>
   ) : (
-    <div className="mainArea">
-      <a onClick={logout} href="#!">
-        <i className="fas fa-sign-out-alt" />{" "}
-      </a>
-      <div className="content">
-        <div className="drinkSection">
-          {cocktails.map((drink) => (
-            <div
-            >
-              <Item
-                mustHave={user.mustHave}
-                using={user.using2}
-                key={drink.name}
-                drink={drink}
-              />
-            </div>
-          ))}
-          ))}
+    <Fragment>
+      <Navbar/>
+      <div className="mainArea">
+        <a onClick={logout} href="#!">
+          <i className="fas fa-sign-out-alt" />{" "}
+        </a>
+        <div className="content">
+          <CocktailsIndex
+            cocktails={cocktails}
+            mustHave={user.mustHave}
+            using={user.ingredients}
+          />
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
