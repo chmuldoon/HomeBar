@@ -13,6 +13,11 @@ export const USER_LOADED = "USER_LOADED";
 export const USER_COCKTAILS = "USER_COCKTAILS"
 export const FETCH_COCKTAIL = "FETCH_COCKTAIL";
 
+export const ADD_INGREDIENT = "ADD_INGREDIENT";
+export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
+
+
+
 
 
 

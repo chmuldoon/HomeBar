@@ -17,8 +17,15 @@ async function _userCocktails(list, mustHave) {
     output = output.concat(c);
   });
   output = output.map((c) => c.toString());
-
-  return [...new Set(output)];
+  output = [...new Set(output)]
+  // .sort(
+  //   (a, b) =>
+  //     (a.using2.length -
+  //     _rank(list, a.using2)) -
+  //     (b.using2.length -
+  //     _rank(list, b.using2))
+  // );
+  return output
 }
 
 function _rank(list, using) {

@@ -1,7 +1,6 @@
 import {
-  FETCH_COCKTAIL, USER_COCKTAILS
+  FETCH_COCKTAIL, USER_COCKTAILS, ADD_INGREDIENT, REMOVE_INGREDIENT
 } from "../actions/types"
-
 const initialState = {
   cocktail: null,
   cocktails: [],
@@ -12,7 +11,10 @@ const initialState = {
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
+    case ADD_INGREDIENT:
     case USER_COCKTAILS:
+    case REMOVE_INGREDIENT:
+    
       debugger
       return {
         ...state,

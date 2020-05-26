@@ -5,14 +5,15 @@ import { SEARCH_ITEMS } from "../actions/types"
 
 export const fetchSearchItems = () => async dispatch => {
   try {
-    const res = await axios.get(`/api/cocktails/search`);
-
+    debugger
+    const res = await axios.get("/api/cocktails/search");
+    debugger
     dispatch({
       type: SEARCH_ITEMS,
       payload: res.data
     })
   } catch (err) {
-    throw "err";
+    // throw "err";
     
   }
 }
