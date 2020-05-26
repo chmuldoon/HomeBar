@@ -22,10 +22,22 @@ const User = require("../../models/User");
 //     res.status(500).send("server err");
 //   }
 // })
+router.get("/search", async (req, res) => {
+  try {
+    let cocktails = await Cocktail.find({}).select("-glass -ingredients -instructions -measurements -using -using2 -__v");
+    let ingredients = await Ingredient.find({}).select("_id name img");
+
+    res.json({ cocktails, ingredients });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at search items");
+  }
+});
 
 //get cocktail by id
 //public
 //likely for app
+
 
 router.get("/:id", async (req, res) => {
   try {
@@ -55,17 +67,4 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
-router.get('/search', async (req, res) => {
-  try {
-    // let cocktails = await Cocktail.find().select("_id name photo");
-    // let ingredients = await Ingredient.find().select("_id name photo");
-
-
-    res.json({cocktails, ingredients})
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("server err at search items");
-    
-  }
-})
 module.exports = router;

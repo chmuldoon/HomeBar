@@ -1,7 +1,8 @@
 import { SEARCH_ITEMS } from "../actions/types";
 
 const initialState = {
-  searchItems: null,
+  ingredients: null,
+  cocktails: null,
   loading: true,
   error: {},
 };
@@ -12,7 +13,8 @@ export default (state = initialState, action) => {
     case SEARCH_ITEMS:
       return {
         ...state,
-        searchItems: payload,
+        ingredients: payload.ingredients,
+        cocktails: payload.cocktails,
         loading: false,
       };
 
