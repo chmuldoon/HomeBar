@@ -17,6 +17,25 @@ router.get('/', async (req, res) => {
     res.status(500).send("server err");
   }
 })
+
+router.get('/shelf', auth, async(req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select("-password");
+    
+    let ingredients = await Ingredient.find({_id: { $in: user.ingredients }});
+    let mustHave = await Ingredient.find({ _id: { $in: user.mustHave } });
+    let ingObj = {}
+    let mustObj = {}
+    ingredients.forEach(i => ingObj[i._id] = i)
+    mustHave.forEach((i) => (mustObj[i._id] = i));
+
+    res.json({ingredients: ingObj, mustHave: mustObj})
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at ingredient add");
+  }
+})
+
 router.put('/add/:id', auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password")
@@ -31,13 +50,14 @@ router.put('/add/:id', auth, async (req, res) => {
 
     await user.save()
 
+
     let cocktails = await Cocktail.find({ _id: { $in: user.cocktails } });
     
 
 
 
 
-    res.json(cocktails);
+    res.json({cocktails, user});
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server err at ingredient add");
@@ -49,37 +69,61 @@ router.put("/remove/:id", auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");
     let newIngredientsList = user.ingredients
+
     newIngredientsList = newIngredientsList
       .slice()
       .slice(0, newIngredientsList.indexOf(req.params.id))
       .concat(newIngredientsList.slice(newIngredientsList.indexOf(req.params.id) + 1));
+    if(user.mustHave.includes(req.params.id)){
+      
+      let newMustHaveList = user.mustHave;
+      newMustHaveList = newMustHaveList
+        .slice()
+        .slice(0, newMustHaveList.indexOf(req.params.id))
+        .concat(
+          newMustHaveList.slice(
+            newMustHaveList.indexOf(req.params.id) + 1
+          )
+        );
+      user.mustHave = newMustHaveList
+    }
+
     let newCocktailList = await CocktailService.listMaker(
       newIngredientsList,
       user.mustHave
     );
+
     user.ingredients = newIngredientsList;
     user.cocktails = newCocktailList;
-
     await user.save();
+    
     let cocktails = await Cocktail.find({ _id: { $in: user.cocktails } });
 
 
-    res.json(cocktails);
+    res.json({ cocktails, user });
   } catch (err) {
-    console.error(err.message);
+    console.error(err.message, "hey");
     res.status(500).send("server err at ingredient remove");
   }
 });
 
-router.put("/addmusthave/:id", auth, async (req, res) => {
+router.put("/add/musthave/:id", auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");
     let newMustHaveList = user.mustHave.concat(req.params.id);
+    //if ingredients does not include, then add 
+    if(!user.ingredients.includes(req.params.id)){
+      let newIngredientsList = user.ingredients.concat(req.params.id);
+      user.ingredients = newIngredientsList
+
+    }
+
+    user.mustHave = newMustHaveList;
+
     let newCocktailList = await CocktailService.listMaker(
       user.ingredients,
       newMustHaveList
     );
-    user.mustHave = newMustHaveList;
     user.cocktails = newCocktailList;
 
     await user.save();
@@ -87,14 +131,14 @@ router.put("/addmusthave/:id", auth, async (req, res) => {
     let cocktails = await Cocktail.find({ _id: { $in: user.cocktails } });
 
 
-    res.json(cocktails);
+    res.json({user, cocktails});
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server err at addmusthave");
   }
 })
 
-router.put("/removemusthave/:id", auth, async (req, res) => {
+router.put("/remove/musthave/:id", auth, async (req, res) => {
   // console.log("woo")
   try {
     let user = await User.findById(req.user.id).select("-password");
@@ -116,7 +160,7 @@ router.put("/removemusthave/:id", auth, async (req, res) => {
     let cocktails = await Cocktail.find({ _id: { $in: user.cocktails } });
 
 
-    res.json(cocktails);
+    res.json({user, cocktails});
   } catch (err) {
     console.error(err.message);
     res.status(500).send("server err at ingredient remove must have");
