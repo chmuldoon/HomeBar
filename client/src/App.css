@@ -183,7 +183,8 @@ html {
 .searchItem {
   height: 40px;
   width: 259px;
-  
+  font-size: 20px;
+  text-transform: capitalize;
   display: flex;
   border-bottom: 1px solid darkgray;
   cursor: pointer;
@@ -250,7 +251,7 @@ div.searchItem:hover {
   border-radius: 15px;
   justify-content: center;
   text-align: center;
-  height: auto;
+  height: 20px;
   padding: 0 5px 0 5px;
   cursor: pointer;
   background-color: #4CA64C;
@@ -264,7 +265,7 @@ div.searchItem:hover {
   background-color: #ff6666;;
 }
 .sideBar {
-  margin-top: 25px;
+  margin-top: 70px;
   overflow-y: scroll;
   background-color: #c1c1c1;
   position: fixed;

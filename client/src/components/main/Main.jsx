@@ -6,33 +6,54 @@ import { logout } from "../../actions/auth_actions"
 import { getUserCocktails } from "../../actions/cocktail_actions";
 import CocktailsIndex from "./CocktailsIndex";
 import Navbar from "./Navbar";
+import UsingArea from "./UsingArea";
+import { fetchUserLists } from "../../actions/ingredient_actions";
+
 const Main = ({
-  auth: { user },cocktails, logout, getUserCocktails
+  auth: { user },cocktails, logout, getUserCocktails, fetchUserLists, ingredients, mustHave
 }) => {
 
 
   useEffect(() => {
 
-
+    fetchUserLists()
     getUserCocktails()
 
-  }, [getUserCocktails])
-
+  }, [getUserCocktails, fetchUserLists])
+  const sorted = (drinks) => {
+    debugger
+    let ings = Object.keys(ingredients)
+    return drinks.sort((a,b)  => _rank(ings, a.using2) - _rank(ings, b.using2))
+  }
+  const _rank = (list, using) => {
+    let count = 0;
+    using.forEach((i) => { if (list.includes(i)) { count++ }; });
+    return  using.length - count
+  };
   return user === null ? (
     <div>loading</div>
   ) : (
     <Fragment>
-      <Navbar/>
+      <Navbar />
       <div className="mainArea">
-        <a onClick={logout} href="#!">
-          <i className="fas fa-sign-out-alt" />{" "}
-        </a>
+        \
         <div className="content">
-          <CocktailsIndex
-            cocktails={cocktails}
-            mustHave={user.mustHave}
-            using={user.ingredients}
-          />
+          {ingredients && (
+            <UsingArea
+              using={Object.values(ingredients)}
+              mustHave={Object.values(mustHave)}
+            />
+          )}
+          <a onClick={logout} href="#!">
+            <i className="fas fa-sign-out-alt" />{" "}
+          </a>
+          {cocktails && ingredients && (
+            <CocktailsIndex
+              cocktails={sorted(cocktails)}
+              using={Object.keys(ingredients)}
+              mustHave={Object.keys(mustHave)}
+            />
+          )}
         </div>
       </div>
     </Fragment>
@@ -48,7 +69,9 @@ Main.propTypes = {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  ingredients: state.ingredients.ingredients,
+  mustHave: state.ingredients.mustHave,
   cocktails: state.cocktails.cocktails
 });
 
-export default connect(mapStateToProps, { logout, getUserCocktails })(Main);
+export default connect(mapStateToProps, { logout, getUserCocktails, fetchUserLists })(Main);

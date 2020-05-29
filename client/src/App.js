@@ -19,17 +19,19 @@ const App = () => {
   window.getState = store.getState;
   return (
     <Provider store={store}>
-      <div id="main">
         <Router>
           <Route exact path="/" component={Landing} />
           <section>
+            <div id="main">
+
             <Switch>
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/main" component={Main} />
             </Switch>
+           </div>
+
           </section>
         </Router>
-      </div>
     </Provider>
   );
 }

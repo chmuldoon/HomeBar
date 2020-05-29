@@ -2,6 +2,7 @@ import React, { useEffect, Fragment, useState } from "react";
 import { fetchSearchItems } from "../../actions/search_actions";
 import { connect } from "react-redux";
 import { addIngredient } from "../../actions/ingredient_actions";
+import Shelf from "./Shelf";
 const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
   const [searchType, setSearchType] = useState("ingredients");
   const [searchTerm, setSearchTerm] = useState("");
@@ -107,10 +108,7 @@ const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
             displayed.map((drink) => {
               return (
                 <Fragment>
-                  <div
-                    className="searchItem"
-
-                  >
+                  <div className="searchItem">
                     <img
                       src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
                     />
@@ -123,7 +121,8 @@ const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
             displayed.map((ing) => {
               return (
                 <Fragment>
-                  <div className="searchItem"
+                  <div
+                    className="searchItem"
                     onClick={() => addIngredient(ing._id)}
                   >
                     <img src={ing.img} />
@@ -136,6 +135,8 @@ const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
             })}
         </div>
       </div>
+      <Shelf style={{ hover: "cursor" }} />
+      <i class="fas fa-star"></i>
     </div>
   );
 }
