@@ -3,7 +3,9 @@ import { fetchSearchItems } from "../../actions/search_actions";
 import { connect } from "react-redux";
 import { addIngredient } from "../../actions/ingredient_actions";
 import Shelf from "./Shelf";
-const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
+import { logout } from "../../actions/auth_actions";
+import { Link } from "react-router-dom";
+const Navbar = ({fetchSearchItems, logout, addIngredient, ingredients, cocktails}) => {
   const [searchType, setSearchType] = useState("ingredients");
   const [searchTerm, setSearchTerm] = useState("");
   const [displayed, setDisplayed] = useState([]);
@@ -108,12 +110,14 @@ const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
             displayed.map((drink) => {
               return (
                 <Fragment>
-                  <div className="searchItem">
-                    <img
-                      src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-                    />
-                    <p>{drink.name}</p>
-                  </div>
+                  <Link to={`/cocktails/${drink._id}`}>
+                    <div className="searchItem">
+                      <img
+                        src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+                      />
+                      <p>{drink.name}</p>
+                    </div>
+                  </Link>
                 </Fragment>
               );
             })}
@@ -135,8 +139,13 @@ const Navbar = ({fetchSearchItems, addIngredient, ingredients, cocktails}) => {
             })}
         </div>
       </div>
-      <Shelf style={{ hover: "cursor" }} />
+      <Link to="/main">
+        <Shelf style={{ hover: "cursor" }} />
+      </Link>
       <i class="fas fa-star"></i>
+      <a onClick={logout} href="#!">
+        <i className="fas fa-sign-out-alt" />{" "}
+      </a>
     </div>
   );
 }
@@ -148,4 +157,4 @@ const mapStateToProps = (state) => {
   }
 } ;
 
-export default connect(mapStateToProps, { fetchSearchItems, addIngredient })(Navbar)
+export default connect(mapStateToProps, { fetchSearchItems,logout, addIngredient })(Navbar)
