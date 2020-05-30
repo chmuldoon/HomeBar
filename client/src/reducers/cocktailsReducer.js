@@ -13,7 +13,6 @@ export default (state = initialState, action) => {
   switch (type) {
     case ADD_INGREDIENT:
     case ADD_MUST_HAVE:
-
     case USER_COCKTAILS:
     case REMOVE_MUST_HAVE:
     case REMOVE_INGREDIENT:
@@ -22,6 +21,12 @@ export default (state = initialState, action) => {
         cocktails: payload,
         loading: false,
       };
+    case FETCH_COCKTAIL:
+      return {
+        ...state,
+        cocktail: payload,
+        loading: false
+      }
 
     default:
       return state;

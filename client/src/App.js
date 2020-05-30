@@ -9,6 +9,8 @@ import Login from "./components/auth/Login";
 import Main from "./components/main/Main";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Landing from "./components/layout/Landing";
+import Navbar from "./components/main/Navbar";
+import CocktailPage from "./components/cocktails/CocktailPage";
 const App = () => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -27,7 +29,8 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login} />
               <PrivateRoute exact path="/main" component={Main} />
-            </Switch>
+              <PrivateRoute exact path="/cocktails/:id" component={CocktailPage} />
+              </Switch>
            </div>
 
           </section>

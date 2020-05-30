@@ -6,8 +6,8 @@ const Shelf = () => {
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="20.48"
-      height="20.48"
+      width="50"
+      height="50"
       viewBox="0 0 2048.0 2048.0"
     >
       {" "}

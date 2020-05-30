@@ -8,7 +8,7 @@ import CocktailsIndex from "./CocktailsIndex";
 import Navbar from "./Navbar";
 import UsingArea from "./UsingArea";
 import { fetchUserLists } from "../../actions/ingredient_actions";
-
+import { Link } from "react-router-dom";
 const Main = ({
   auth: { user },cocktails, logout, getUserCocktails, fetchUserLists, ingredients, mustHave
 }) => {
@@ -21,7 +21,6 @@ const Main = ({
 
   }, [getUserCocktails, fetchUserLists])
   const sorted = (drinks) => {
-    debugger
     let ings = Object.keys(ingredients)
     return drinks.sort((a,b)  => _rank(ings, a.using2) - _rank(ings, b.using2))
   }
@@ -34,9 +33,9 @@ const Main = ({
     <div>loading</div>
   ) : (
     <Fragment>
-      <Navbar />
+        <Navbar />
       <div className="mainArea">
-        \
+
         <div className="content">
           {ingredients && (
             <UsingArea
@@ -44,9 +43,6 @@ const Main = ({
               mustHave={Object.values(mustHave)}
             />
           )}
-          <a onClick={logout} href="#!">
-            <i className="fas fa-sign-out-alt" />{" "}
-          </a>
           {cocktails && ingredients && (
             <CocktailsIndex
               cocktails={sorted(cocktails)}

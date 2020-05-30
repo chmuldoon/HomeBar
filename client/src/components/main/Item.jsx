@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 class Item extends Component {
   constructor(props) {
     super(props);
@@ -53,6 +54,7 @@ class Item extends Component {
     }
     let { drink, using } = this.props;
     return (
+      <Link to={`/cocktails/${drink._id}`}>
       <div className="drinkCard">
         <div>
           {/* <p>{drink.strCategory}</p> */}
@@ -70,6 +72,7 @@ class Item extends Component {
         </div>
         {this.renderIngredients(drink)}
       </div>
+      </Link>
     );
   }
 }
