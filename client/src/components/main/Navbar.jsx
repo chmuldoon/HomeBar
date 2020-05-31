@@ -5,7 +5,7 @@ import { addIngredient } from "../../actions/ingredient_actions";
 import Shelf from "./Shelf";
 import { logout } from "../../actions/auth_actions";
 import { Link } from "react-router-dom";
-const Navbar = ({fetchSearchItems, logout, addIngredient, ingredients, cocktails}) => {
+const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredients, cocktails}) => {
   const [searchType, setSearchType] = useState("ingredients");
   const [searchTerm, setSearchTerm] = useState("");
   const [displayed, setDisplayed] = useState([]);
@@ -33,7 +33,9 @@ const Navbar = ({fetchSearchItems, logout, addIngredient, ingredients, cocktails
     }
   }
 
-  return (
+  return user === null ? (
+    <></>
+  ) : (
     <div className="topBar">
       <div className="barLeft">
         {ingredients !== null && (
@@ -139,10 +141,15 @@ const Navbar = ({fetchSearchItems, logout, addIngredient, ingredients, cocktails
             })}
         </div>
       </div>
-      <Link to="/main">
+      <Link to="/shelf">
         <Shelf style={{ hover: "cursor" }} />
       </Link>
+
       <i class="fas fa-star"></i>
+      <Link to="/main">
+        <i class="fas fa-cocktail"></i>
+      </Link>
+
       <a onClick={logout} href="#!">
         <i className="fas fa-sign-out-alt" />{" "}
       </a>
@@ -152,9 +159,11 @@ const Navbar = ({fetchSearchItems, logout, addIngredient, ingredients, cocktails
 
 const mapStateToProps = (state) => {
   return {
+    auth: state.auth,
+
     ingredients: state.search.ingredients,
-    cocktails: state.search.cocktails
-  }
+    cocktails: state.search.cocktails,
+  };
 } ;
 
 export default connect(mapStateToProps, { fetchSearchItems,logout, addIngredient })(Navbar)

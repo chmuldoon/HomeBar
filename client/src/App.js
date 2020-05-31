@@ -11,6 +11,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import Landing from "./components/layout/Landing";
 import Navbar from "./components/main/Navbar";
 import CocktailPage from "./components/cocktails/CocktailPage";
+import UsingArea from "./components/main/UsingArea";
 const App = () => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -20,22 +21,29 @@ const App = () => {
   }, []);
   window.getState = store.getState;
   return (
-    <Provider store={store}>
-        <Router>
-          <Route exact path="/" component={Landing} />
-          <section>
-            <div id="main">
+    <Fragment>
+      <Route exact path="/" component={Landing} />
+      <section>
+        <div id="main">
+          <Navbar />
+          <div className="mainArea">
+            <div className="content">
+              <Switch>
+                <Route exact path="/login" component={Login} />
+                <PrivateRoute exact path="/main" component={Main} />
+                <PrivateRoute exact path="/shelf" component={UsingArea} />
 
-            <Switch>
-              <Route exact path="/login" component={Login} />
-              <PrivateRoute exact path="/main" component={Main} />
-              <PrivateRoute exact path="/cocktails/:id" component={CocktailPage} />
+                <PrivateRoute
+                  exact
+                  path="/cocktails/:id"
+                  component={CocktailPage}
+                />
               </Switch>
-           </div>
-
-          </section>
-        </Router>
-    </Provider>
+            </div>
+          </div>
+        </div>
+      </section>
+    </Fragment>
   );
 }
 

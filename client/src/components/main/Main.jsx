@@ -33,16 +33,16 @@ const Main = ({
     <div>loading</div>
   ) : (
     <Fragment>
-        <Navbar />
+        {/* <Navbar /> */}
       <div className="mainArea">
 
         <div className="content">
-          {ingredients && (
+          {/* {ingredients && (
             <UsingArea
               using={Object.values(ingredients)}
               mustHave={Object.values(mustHave)}
             />
-          )}
+          )} */}
           {cocktails && ingredients && (
             <CocktailsIndex
               cocktails={sorted(cocktails)}

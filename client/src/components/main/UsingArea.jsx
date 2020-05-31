@@ -17,20 +17,12 @@ const UsingArea = ({
   };
 
   return (
-    <div className="usingContent">
-      <div style={{ width: "100%" }}>
-        {using.length === 0 ? (
-          <p>
-            Your virtual shelf is empty. Please search and add some ingredients.
-          </p>
-        ) : (
-          <p>Your virtual shelf is stocked with:</p>
-        )}
-      </div>
+    !using ? <div>loading</div> : <div className="usingContent">
       {using.map((used) => (
         <UsingItem
           color={isMustHave(used._id)}
           name={used.name}
+          photo={used.img}
           ingId={used._id}
           isMustHave={isMustHave(used._id) == "#fca103"}
           key={used._id}
@@ -39,8 +31,11 @@ const UsingArea = ({
     </div>
   );
 };
-
-export default connect(null, { removeIngredient, removeMustHave, addMustHave })(
+const mapStateToProps = (state) => ({
+  using: Object.values(state.ingredients.ingredients),
+  mustHave: Object.values(state.ingredients.mustHave)
+});
+export default connect(mapStateToProps, { removeIngredient, removeMustHave, addMustHave })(
   UsingArea
 );
 
