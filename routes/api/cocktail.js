@@ -25,7 +25,7 @@ const User = require("../../models/User");
 router.get("/search", async (req, res) => {
   try {
     let cocktails = await Cocktail.find({}).select("-glass -ingredients -instructions -measurements -using -using2 -__v");
-    let ingredients = await Ingredient.find({}).select("_id name img");
+    let ingredients = await Ingredient.find({}).select("_id name img cocktails");
 
     res.json({ cocktails, ingredients });
   } catch (err) {

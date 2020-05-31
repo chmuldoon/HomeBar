@@ -134,6 +134,7 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
                     <img src={ing.img} />
                     <p>
                       {ing.name.length > 22 ? ing.name.slice(0, 10) : ing.name}
+                      {ing.cocktails.length}
                     </p>
                   </div>
                 </Fragment>
