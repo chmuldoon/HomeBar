@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: "cocktails",
   },
+  favorites: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "cocktails",
+  }
 });
 // UserSchema.pre("save", function save(next) {
 //   const user = this;

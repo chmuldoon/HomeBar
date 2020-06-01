@@ -17,6 +17,7 @@ export const fetchUserLists = () => async dispatch => {
 }
 export const addIngredient = (id) => async dispatch => {
   try {
+    debugger
     const res = await axios.put(`/api/ingredients/add/${id}`);
     dispatch({
       type: UPDATE_USER,
