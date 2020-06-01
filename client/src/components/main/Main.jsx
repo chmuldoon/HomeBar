@@ -39,7 +39,7 @@ const Main = ({
         <div className="content">
           {/* {ingredients && (
             <UsingArea
-              using={Object.values(ingredients)}
+              using={Object.values(ingredxients)}
               mustHave={Object.values(mustHave)}
             />
           )} */}

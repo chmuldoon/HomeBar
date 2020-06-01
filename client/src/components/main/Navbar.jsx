@@ -43,7 +43,7 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
             <input
               className="searchInput"
               type="text"
-              placeholder={`Search for ${searchType}`}
+              placeholder={`Search for Ingredients`}
               value={searchTerm}
               onChange={handleChange("searchTerm")}
             />
@@ -152,7 +152,7 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
       </Link>
 
       <a onClick={logout} href="#!">
-        <i className="fas fa-sign-out-alt" />{" "}
+        <i className="fas fa-sign-out-alt" />
       </a>
     </div>
   );

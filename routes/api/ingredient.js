@@ -179,16 +179,16 @@ router.put("/remove/musthave/:id", auth, async (req, res) => {
 //   }
 // })
 
-router.get("/mostused", async (req, res) => {
-  try {
-    let ingredients = await Ingredient.find()
-    ingredients = ingredients.filter(i => i.cocktails.length > 30).map(i => i.name)
-    res.json(ingredients)
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("server err at ingredient remove must have");
-  }
-})
+// router.get("/mostused", async (req, res) => {
+//   try {
+//     let ingredients = await Ingredient.find()
+//     ingredients = ingredients.filter(i => i.cocktails.length > 30).map(i => i.name)
+//     res.json(ingredients)
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("server err at ingredient remove must have");
+//   }
+// })
 
 module.exports = router;
 

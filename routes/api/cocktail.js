@@ -66,5 +66,52 @@ router.get('/', auth, async (req, res) => {
     res.status(500).send("server err at fetch user cokctails");
   }
 })
+router.put("/add/favorites/:id", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select("-password");
+    if(!user.favorites) { user.favorites = []}
+
+    let newFavoritesList = user.favorites.concat(req.params.id);
+    //if ingredients does not include, then add
+    if (!user.favorites.includes(req.params.id)) {
+      let newFavoritesList = user.favorites.concat(req.params.id);
+      user.favorites = newFavoritesList;
+    }
+
+    user.favorites = newFavoritesList;
+
+
+    await user.save();
+
+    let cocktails = await Cocktail.find({ _id: { $in: user.favorites } });
+
+    res.json({ user, cocktails });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at addmusthave");
+  }
+});
+router.put("/remove/favorites/:id", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select("-password");
+    let newFavoritesList = user.favorites;
+    newFavoritesList = newFavoritesList
+      .slice()
+      .slice(0, newFavoritesList.indexOf(req.params.id))
+      .concat(
+        newFavoritesList.slice(newFavoritesList.indexOf(req.params.id) + 1)
+      );
+  
+    user.favorites = newFavoritesList;
+
+    await user.save();
+    let cocktails = await Cocktail.find({ _id: { $in: user.favorites } });
+
+    res.json({ user, cocktails });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at ingredient remove must have");
+  }
+});
 
 module.exports = router;
