@@ -21,7 +21,7 @@ const App = () => {
   }, []);
   window.getState = store.getState;
   return (
-    <Fragment>
+    <Fragment> 
       <Route exact path="/" component={Landing} />
       <section>
         <div id="main">
