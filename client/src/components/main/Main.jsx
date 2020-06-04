@@ -48,6 +48,7 @@ const Main = ({
               cocktails={sorted(cocktails)}
               using={Object.keys(ingredients)}
               mustHave={Object.keys(mustHave)}
+              favorites={user.favorites}
             />
           )}
         </div>

@@ -1,19 +1,19 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-class Item extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = { drink: null, error: null, isLoaded: false };
-    // this.ingredientList = this.ingredientList.bind(this)
-  }
-  _isMustHave(item) {
-    return this.props.mustHave.includes(item.toLowerCase().trim())
+import { connect } from "react-redux";
+
+import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
+
+
+const Item = ({ mustHave, favorites, using, drink, addFavorite, removeFavorite}) => {
+  const _isMustHave = (item) => {
+    return mustHave.includes(item.toLowerCase().trim())
       ? "#fca103"
       : "#4CA64C";
   }
-  renderIngredients(drink) {
-    let adjustedProps = this.props.using
+  const renderIngredients = (drink) => {
+    let adjustedProps = using
     let ingObj = {}
     for (let i = 0; i < drink.using2.length; i++) {
       ingObj[drink.using2[i]] = drink.using[i]
@@ -27,7 +27,7 @@ class Item extends Component {
             <Fragment>
               <div
                 className="box arrow-right"
-                style={{ backgroundColor: `${this._isMustHave(ing)}` }}
+                style={{ backgroundColor: `${_isMustHave(ing)}` }}
               ></div>
 
               <div
@@ -47,15 +47,17 @@ class Item extends Component {
       );
     });
   }
-
-  render() {
-    if (!this.props.drink) {
-      return null;
-    }
-    let { drink, using } = this.props;
-    return (
+  if (!drink) {
+    return null;
+  }
+  return (
+    <div className="drinkCard">
+      {favorites.includes(drink._id) ? (
+        <i className="fas fa-star" onClick={() => removeFavorite(drink._id)} style={{ color: "yellow" }} />
+      ) : (
+        <i className="far fa-star" onClick={() => addFavorite(drink._id)} style={{ color: "black" }} />
+      )}
       <Link to={`/cocktails/${drink._id}`}>
-      <div className="drinkCard">
         <div>
           {/* <p>{drink.strCategory}</p> */}
           <img
@@ -70,11 +72,10 @@ class Item extends Component {
             {drink.name}
           </p>
         </div>
-        {this.renderIngredients(drink)}
-      </div>
+        {renderIngredients(drink)}
       </Link>
-    );
-  }
+    </div>
+  );
 }
 
 
@@ -99,4 +100,6 @@ export const DrinkCard = styled.div`
     padding: 0, 10px, 0, 10px;
   }
 `;
-export default Item;
+
+
+export default connect(null, {addFavorite, removeFavorite})(Item);

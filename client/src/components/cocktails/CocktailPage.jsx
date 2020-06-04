@@ -3,9 +3,7 @@ import Navbar from '../main/Navbar';
 import { getCocktail } from '../../actions/cocktail_actions';
 import { connect } from 'react-redux';
 const CocktailPage = ({match, drink, getCocktail, loading}) => {
-  debugger
   useEffect(() => {
-    debugger
     getCocktail(match.params.id)
   });
 

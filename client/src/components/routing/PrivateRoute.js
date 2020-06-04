@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
@@ -30,3 +30,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(PrivateRoute);
+
+
+
+

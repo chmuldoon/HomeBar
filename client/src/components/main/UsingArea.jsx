@@ -52,12 +52,18 @@ const UsingArea = ({
 
   const renderIngredients = () => {
     return Object.values(using).map((used) => (
-        <IngCard color={isMustHave(used._id)} onClick={() => updateMustHave(used._id)}>
-          <img src={used.img}></img>
-          {used.name}
-          {`Used in ${used.cocktails.length} drinks`}
-        </IngCard>
-      ))
+      <IngCard
+        color={isMustHave(used._id)}
+        onClick={() => updateMustHave(used._id)}
+      >
+        <img src={used.img}></img>
+        {used.name}
+        {`Used in ${used.cocktails.length} drinks`}
+        <i className="fas fa-times-circle" 
+          onClick={() => removeIngredient(used._id)}
+        />
+      </IngCard>
+    ));
   }
 
   return using === null ? (
