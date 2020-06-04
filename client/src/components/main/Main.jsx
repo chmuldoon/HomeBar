@@ -33,9 +33,8 @@ const Main = ({
     <div>loading</div>
   ) : (
     <Fragment>
-        {/* <Navbar /> */}
+      {/* <Navbar /> */}
       <div className="mainArea">
-
         <div className="content">
           {/* {ingredients && (
             <UsingArea
@@ -49,6 +48,7 @@ const Main = ({
               using={Object.keys(ingredients)}
               mustHave={Object.keys(mustHave)}
               favorites={user.favorites}
+              favoritesPage={false}
             />
           )}
         </div>

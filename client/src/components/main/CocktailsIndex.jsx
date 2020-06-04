@@ -1,7 +1,7 @@
 import React from 'react'
 import Item from "./Item";
 
-const CocktailsIndex = ({mustHave, using, favorites, cocktails}) => {
+const CocktailsIndex = ({mustHave, using, favorites, cocktails, favoritesPage}) => {
   return (
     <div className="drinkSection">
       {cocktails.map((drink) => (
@@ -11,10 +11,10 @@ const CocktailsIndex = ({mustHave, using, favorites, cocktails}) => {
             favorites={favorites}
             using={using}
             key={drink.name}
+            favoritesPage={favoritesPage}
             drink={drink}
           />
         </div>
-      ))}
       ))}
     </div>
   );

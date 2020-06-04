@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
 
 
-const Item = ({ mustHave, favorites, using, drink, addFavorite, removeFavorite}) => {
+const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
   const _isMustHave = (item) => {
     return mustHave.includes(item.toLowerCase().trim())
       ? "#fca103"
@@ -53,7 +53,7 @@ const Item = ({ mustHave, favorites, using, drink, addFavorite, removeFavorite})
   return (
     <div className="drinkCard">
       {favorites.includes(drink._id) ? (
-        <i className="fas fa-star" onClick={() => removeFavorite(drink._id)} style={{ color: "yellow" }} />
+        <i className="fas fa-star" onClick={() => removeFavorite(drink._id, favoritesPage)} style={{ color: "yellow" }} />
       ) : (
         <i className="far fa-star" onClick={() => addFavorite(drink._id)} style={{ color: "black" }} />
       )}

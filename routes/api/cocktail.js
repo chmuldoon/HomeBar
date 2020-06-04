@@ -33,6 +33,17 @@ router.get("/search", async (req, res) => {
     res.status(500).send("server err at search items");
   }
 });
+router.get("/favorites", auth, async (req, res) => {
+  try {
+    let user = await User.findById(req.user.id).select("-password");
+    let cocktails = await Cocktail.find({ _id: { $in: user.favorites } });
+
+    res.json(cocktails);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at addmusthave");
+  }
+});
 
 //get cocktail by id
 //public
@@ -66,6 +77,7 @@ router.get('/', auth, async (req, res) => {
     res.status(500).send("server err at fetch user cokctails");
   }
 })
+
 router.put("/add/favorites/:id", auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");

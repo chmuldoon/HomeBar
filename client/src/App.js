@@ -12,6 +12,7 @@ import Landing from "./components/layout/Landing";
 import Navbar from "./components/main/Navbar";
 import CocktailPage from "./components/cocktails/CocktailPage";
 import UsingArea from "./components/main/UsingArea";
+import Favorites from './components/cocktails/Favorites'
 const App = () => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -21,7 +22,7 @@ const App = () => {
   }, []);
   window.getState = store.getState;
   return (
-    <Fragment> 
+    <Fragment>
       <Route exact path="/" component={Landing} />
       <section>
         <div id="main">
@@ -31,6 +32,8 @@ const App = () => {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/main" component={Main} />
+                <PrivateRoute exact path="/favorites" component={Favorites} />
+
                 <PrivateRoute exact path="/shelf" component={UsingArea} />
 
                 <PrivateRoute

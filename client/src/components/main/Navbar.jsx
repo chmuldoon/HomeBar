@@ -145,8 +145,10 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
       <Link to="/shelf">
         <Shelf style={{ hover: "cursor" }} />
       </Link>
+      <Link to="/favorites">
+        <i class="fas fa-star"></i>
+      </Link>
 
-      <i class="fas fa-star"></i>
       <Link to="/main">
         <i class="fas fa-cocktail"></i>
       </Link>
