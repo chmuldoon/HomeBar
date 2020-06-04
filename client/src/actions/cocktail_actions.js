@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_COCKTAIL,UPDATE_USER, USER_COCKTAILS, REMOVE_FAVORITE } from "../actions/types";
+import { FETCH_COCKTAIL,UPDATE_USER, USER, USER_FAVORITES, USER_COCKTAILS, REMOVE_FAVORITE } from "../actions/types";
 export const getCocktail = (id) => async dispatch => {
   try {
     const res = await axios.get(`/api/cocktails/${id}`);
@@ -22,6 +22,17 @@ export const getUserCocktails = () => async dispatch => {
     throw "err"
   }
 }
+export const getUserFavorites = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/cocktails/favorites`);
+    dispatch({
+      type: USER_FAVORITES,
+      payload: res.data,
+    });
+  } catch (err) {
+    throw "err";
+  }
+};
 
 export const addFavorite = (id) => async dispatch => {
   try {

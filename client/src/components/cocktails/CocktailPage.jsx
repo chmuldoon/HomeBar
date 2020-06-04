@@ -12,7 +12,6 @@ const CocktailPage = ({match, drink, getCocktail, loading}) => {
   ) : (
     drink && (
       <Fragment>
-        <Navbar />
         <div className="mainArea">
           <div className="content">
             <b> {drink.name}</b>
