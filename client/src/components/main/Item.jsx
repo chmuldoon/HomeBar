@@ -52,28 +52,25 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
   }
   return (
     <div className="drinkCard">
-      {favorites.includes(drink._id) ? (
-        <i className="fas fa-star" onClick={() => removeFavorite(drink._id, favoritesPage)} style={{ color: "yellow" }} />
-      ) : (
-        <i className="far fa-star" onClick={() => addFavorite(drink._id)} style={{ color: "black" }} />
-      )}
-      <Link to={`/cocktails/${drink._id}`}>
-        <div>
-          {/* <p>{drink.strCategory}</p> */}
-          <img
-            src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-            style={{ width: "100%", marginBottom: "10px" }}
-            alt=""
-          />
+
+      <div>
+        {/* <p>{drink.strCategory}</p> */}
+        <img
+          src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+          style={{ width: "100%", marginBottom: "10px" }}
+          alt=""
+        />
+    
+        <Link to={`/cocktails/${drink._id}`}>
           <p
             className="drinkTitle"
             style={{ width: "100%", textAlign: "center" }}
           >
             {drink.name}
           </p>
-        </div>
-        {renderIngredients(drink)}
-      </Link>
+        </Link>
+      </div>
+      {renderIngredients(drink)}
     </div>
   );
 }
@@ -99,6 +96,8 @@ export const DrinkCard = styled.div`
     font-weight: 500;
     padding: 0, 10px, 0, 10px;
   }
+
+
 `;
 
 

@@ -355,7 +355,10 @@ div.searchItem:hover {
   border-left: 5px solid #4CA64C;
   border-bottom: 5px solid transparent;
 }
-
+.cocktailPage {
+  width: 100%;
+  display: flex;
+}
 .ingredientsSection {
   display: grid;
   grid-template-columns: 100px 100px;
@@ -363,10 +366,17 @@ div.searchItem:hover {
 }
 .drinkCard.drinkTitle {
   font-family: "Avenir Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 1.233333rem;
-    font-weight: 500;
-    padding: 0, 10px, 0, 10px;
+  font-size: 1.233333rem;
+  font-weight: 500;
+  padding: 0, 10px, 0, 10px;
+  text-align: center;
 }
+/* .cardOver {
+  height: 530px;
+  width: 260px;
+  z-index: 4;
+  position: absolute;
+} */
 .show-sm {
   display: none;
 
@@ -394,7 +404,12 @@ div.searchItem:hover {
   padding-top: 10%;
 
 }
-
+.drinkStar{
+  display: flex;
+  z-index: 5;
+  float: right;
+  margin-right: 15px
+}
 .modal-child {
   display: flex;
   flex-wrap: wrap;
