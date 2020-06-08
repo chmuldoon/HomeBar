@@ -1,3 +1,2 @@
-node_modules
-config/keys.js
-config/jwt.js
+node_modules/
+config/

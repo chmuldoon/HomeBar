@@ -35,6 +35,7 @@ const CocktailPage = ({match, drink, getCocktail, addFavorite, removeFavorite, l
                 )}
                 <b> {drink.name}</b>
                 <p>{drink.instructions}</p>
+                
               </div>
             </div>
           </div>
