@@ -203,6 +203,10 @@ router.put("/fix/:name", async (req, res) => {
     cocktail.using2[idx] = "5e9d51a19a6bb767c4002c02";
     cocktail.ingredients[idx] = "Club Soda"
     cocktail.using[idx] = "club soda"
+
+    let newUse2 = cocktail.using2
+    let newIng =cocktail.ingredients
+    let newUse = cocktail.using
     cocktail = await Cocktail.findOneAndUpdate(
       { name: req.params.name },
       {
