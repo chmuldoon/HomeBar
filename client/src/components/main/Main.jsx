@@ -34,8 +34,7 @@ const Main = ({
   ) : (
     <Fragment>
       {/* <Navbar /> */}
-      <div className="mainArea">
-        <div className="content">
+    
           {/* {ingredients && (
             <UsingArea
               using={Object.values(ingredxients)}
@@ -51,8 +50,6 @@ const Main = ({
               favoritesPage={false}
             />
           )}
-        </div>
-      </div>
     </Fragment>
   );
 };

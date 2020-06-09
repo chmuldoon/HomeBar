@@ -167,6 +167,67 @@ router.put("/remove/musthave/:id", auth, async (req, res) => {
   }
 });
 
+router.put("/find/:id1/replace/:id2", async (req, res) => {
+  try {
+    let dom = await Ingredient.findById(req.params.id1)
+    let sub = await Ingredient.findById(req.params.id2)
+    let subCocktails = await Cocktail.find({ _id: { $in: sub.cocktails }})
+
+
+    subCocktails.forEach(cocktail => {
+      let idx = cocktail["using2"].indexOf(sub._id);
+      cocktail.using2[idx] = dom._id
+      cocktail.ingredients[idx] = dom.name
+      cocktail.using[idx] = dom.name;
+      cocktail.save()
+    })
+    // console.log(subCocktails)
+    dom.cocktails = dom.cocktails.concat(sub.cocktails)
+    await dom.save()
+    await Ingredient.findByIdAndRemove(req.params.id2);
+    let test = await Ingredient.find({_id: req.params.id2})
+    res.json({dom, test})
+
+  } catch (err) {
+     console.error(err.message);
+     res.status(500).send("server err");
+  }
+})
+
+router.put("/fix/:name", async (req, res) => {
+  try {
+    let id = "5e9d51a29a6bb767c4002d01";
+    let replacer = "5e9d51a19a6bb767c4002c02";
+    let cocktail = await Cocktail.findOne({name: req.params.name});
+    let idx = cocktail.using2.indexOf(id)
+    cocktail.using2[idx] = "5e9d51a19a6bb767c4002c02";
+    cocktail.ingredients[idx] = "Club Soda"
+    cocktail.using[idx] = "club soda"
+
+    let newUse2 = cocktail.using2
+    let newIng =cocktail.ingredients
+    let newUse = cocktail.using
+    cocktail = await Cocktail.findOneAndUpdate(
+      { name: req.params.name },
+      {
+        $set: {
+          using2: cocktail.using2,
+          ingredients: "Club Soda",
+          using: "club soda",
+        },
+      },
+      { new: false }
+    );
+  
+ 
+
+    res.json({ cocktail });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err");
+  }
+});
+
 // router.delete("/destroy", async (req, res) => {
 //   try {
     

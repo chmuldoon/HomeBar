@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth_actions";
-
+import { Button, Form } from "react-bootstrap";
 const Login = ({ demoLogin, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,6 +24,7 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
   }
 
   return (
+
     <Fragment>
 
       <form className="form" onSubmit={(e) => onSubmit(e)}>
