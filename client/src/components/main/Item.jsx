@@ -1,10 +1,9 @@
 import React, { Component, Fragment } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
-import { Card } from "react-bootstrap";
-
+import { Card, Badge } from "react-bootstrap";
 
 const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
   const _isMustHave = (item) => {
@@ -12,6 +11,7 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
       ? "#fca103"
       : "#4CA64C";
   }
+  
   const renderIngredients = (drink) => {
     let adjustedProps = using
     let ingObj = {}
@@ -52,10 +52,11 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
   }
   return (
     <Card style={{ width: "18rem" }}>
+      <Link to={`/cocktails/${drink._id}`}>
       <Card.Img
         variant="top"
         src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-      />
+        />
       <Card.Body>
         <Card.Title>{drink.name}</Card.Title>
         <Card.Text>
@@ -72,6 +73,7 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
         <Card.Link href="#">Card Link</Card.Link>
         <Card.Link href="#">Another Link</Card.Link>
       </Card.Body>
+      </Link>
     </Card>
     // <div className="drinkCard">
 

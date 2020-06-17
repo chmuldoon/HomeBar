@@ -33,6 +33,8 @@ router.post(
     const { email, password } = req.body;
 
     try {
+      console.log("hit");
+
       //Check if the User exists,
       let user = await User.findOne({ email });
 
@@ -56,7 +58,7 @@ router.post(
       await user.save();
 
       //return jwt so user can be logged in right away
-
+      console.log("hit")
       //this extracts the payload f
       const payload = {
         user: {

@@ -13,6 +13,7 @@ import Navbar from "./components/main/Navbar";
 import CocktailPage from "./components/cocktails/CocktailPage";
 import UsingArea from "./components/main/UsingArea";
 import Favorites from './components/cocktails/Favorites'
+import Register from "./components/auth/Register";
 const App = () => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -31,6 +32,8 @@ const App = () => {
             <div className="content">
               <Switch>
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+
                 <PrivateRoute exact path="/main" component={Main} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
 

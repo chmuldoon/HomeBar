@@ -38,7 +38,7 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
   ) : (
     <div className="topBar">
       <div className="barLeft">
-        {ingredients !== null && (
+        {/* {ingredients !== null && (
           <div>
             <input
               className="searchInput"
@@ -106,7 +106,7 @@ const Navbar = ({auth:{ user},fetchSearchItems, logout, addIngredient, ingredien
               )}
             </div>
           </div>
-        )}
+        )} */}
         <div className="sideBar">
           {searchType === "drinks" &&
             displayed.map((drink) => {
