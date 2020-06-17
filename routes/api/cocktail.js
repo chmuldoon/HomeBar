@@ -125,6 +125,32 @@ router.put("/remove/favorites/:id", auth, async (req, res) => {
     res.status(500).send("server err at ingredient remove must have");
   }
 });
+router.get("/similar/:id", async (req, res) => {
+  try {
+    let cocktail = await Cocktail.findById(req.params.id)
+    let ingredients = await Ingredient.find({ _id: { $in: cocktail.using2 }})
+    let ids = ingredients.map(ing => ing.cocktails)
+    let flat = [].concat.apply([], [].concat.apply([], ids));
+    // flat = flat.filter(i => i !== req.params.id)
+    let countObj = {}
+    for(let i = 0; i < flat.length; i++) {
+      const el = flat[i]
+      if(el == req.params.id){
+        continue
+      }
+      if(!countObj[el]) countObj[el] = 0
+      countObj[el]++
+    }
+    let sorted = Object.keys(countObj).sort((a, b) => countObj[b] - countObj[a]).slice(0, 5)
+    cocktails = await Cocktail.find({ _id: { $in: sorted } });
+
+    res.json(cocktails)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at similar drinks");
+    
+  }
+})
 
 
 

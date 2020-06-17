@@ -3,6 +3,7 @@ import { removeIngredient, removeMustHave, addMustHave, fetchUserLists, addIngre
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import { fetchSearchItems } from '../../actions/search_actions';
+import { Card, Image, Modal } from 'react-bootstrap';
 const UsingArea = ({
   using,
   mustHave,
@@ -39,6 +40,7 @@ const UsingArea = ({
       setDisplayed(filtered);
     };
   };
+  const handleClose = (id) => removeIngredient(id)
   const isMustHave = (id) => {
 
     let ids = Object.values(mustHave).map(m => m._id)
@@ -52,17 +54,30 @@ const UsingArea = ({
 
   const renderIngredients = () => {
     return Object.values(using).map((used) => (
-      <IngCard
-        color={isMustHave(used._id)}
-        onClick={() => updateMustHave(used._id)}
-      >
-        <img src={used.img}></img>
-        {used.name}
-        {`Used in ${used.cocktails.length} drinks`}
-        <i className="fas fa-times-circle" 
-          onClick={() => removeIngredient(used._id)}
-        />
-      </IngCard>
+      // <Modal.Dialog onHide={handleClose(used._id)}>
+      //   <Modal.Header closeButton>
+      //     <Modal.Title>{used.name}</Modal.Title>
+      //     {/* <Modal.Img variant="top" src={used.img}></Modal.Img> */}
+      //   </Modal.Header>
+      // </Modal.Dialog>
+      <Card style={{ width: "9rem", height: "18rem" }}>
+        <Card.Img variant="top" src={used.img}></Card.Img>
+        <Card.Body>
+          <Card.Title>{used.name}</Card.Title>
+          <Card.Text>{`Used in ${used.cocktails.length} drinks`}</Card.Text>
+        </Card.Body>
+      </Card>
+      // <IngCard
+      //   color={isMustHave(used._id)}
+      //   onClick={() => updateMustHave(used._id)}
+      // >
+      //   <img src={used.img}></img>
+      //   {used.name}
+      //   {`Used in ${used.cocktails.length} drinks`}
+      //   <i className="fas fa-times-circle"
+      //     onClick={() => removeIngredient(used._id)}
+      //   />
+      // </IngCard>
     ));
   }
 
@@ -70,12 +85,11 @@ const UsingArea = ({
     <div>loading</div>
   ) : (
     <Fragment>
-      <div className="usingContent">
-        {renderIngredients()}
-        <IngCard color="darkgrey" onClick={() => toggleModal(!displayModal)}>
+      {renderIngredients()}
+      <IngCard color="darkgrey" onClick={() => toggleModal(!displayModal)}>
           <i className="fas fa-plus" />
         </IngCard>
-      </div>
+
       {displayModal && (
         <div
           className="modal-background"
@@ -127,7 +141,9 @@ const UsingArea = ({
                       >
                         <img src={ing.img} />
                         <p>
-                          {ing.name.length > 22 ? ing.name.slice(0, 10) : ing.name}
+                          {ing.name.length > 22
+                            ? ing.name.slice(0, 10)
+                            : ing.name}
                         </p>
                       </div>
                     </Fragment>
