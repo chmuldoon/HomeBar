@@ -64,6 +64,7 @@ export const removeIngredient = (id) => async (dispatch) => {
 export const addMustHave = (id) => async (dispatch) => {
   try {
     const res = await axios.put(`/api/ingredients/add/musthave/${id}`);
+    debugger
     dispatch({
       type: UPDATE_USER,
       payload: res.data.user,
