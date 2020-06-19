@@ -48,7 +48,39 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
   ) : (
     drink && user && similar && (
       <Fragment>
-        <Row className="justify-content-md-center">
+        <Card>
+          <Image
+            style={{ height: "10rem", width: "10rem" }}
+            src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+            roundedCircle
+          />
+          <h1>
+            {drink.name}
+            {user.favorites.includes(drink._id) ? (
+              <i
+                className="fas fa-star"
+                onClick={() => removeFavorite(drink._id, false)}
+                style={{ color: "yellow", cursor: "pointer" }}
+              />
+            ) : (
+              <i
+                className="far fa-star"
+                onClick={() => addFavorite(drink._id)}
+                style={{ color: "black", cursor: "pointer" }}
+              />
+            )}
+          </h1>
+          <Card.Body>
+            <Card.Title>Ingredients</Card.Title>
+
+            <ListGroup>{renderIngredients()}</ListGroup>
+            <br></br>
+            <Card.Title>Instructions</Card.Title>
+            <Card.Text>{drink.instructions}</Card.Text>
+          </Card.Body>
+        </Card>
+        <div style={{ display: "flex" }}>{renderSimilar()}</div>
+        {/* <Row className="justify-content-md-center">
           <Col sm={4}>
             <Card>
               <Card.Body>
@@ -93,7 +125,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
               {renderSimilar()}
             </div>
           </Col>
-        </Row>
+        </Row> */}
       </Fragment>
     )
   );

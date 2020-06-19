@@ -60,47 +60,6 @@ const UsingArea = ({
   const renderIngredients = () => {
     return Object.values(using).map((used) => (
       <UsingItem key={used._id} mustHave={Object.keys(mustHave)} item={used} />
-      // <div className="flip-card">
-      //   <div className="flip-card-inner">
-      //     <div className="flip-card-front">
-      //       <img
-      //         src={used.img}
-      //         alt="Avatar"
-      //         style={{ width: "300px", height: "300px" }}
-      //       />
-      //     </div>
-      //     <div className="flip-card-back">
-      //       <h1>{used.name}</h1>
-      //       <p>{`Used in ${used.cocktails.length} drinks`}</p>
-      //       <p>See More</p>
-      //     </div>
-      //   </div>
-      // </div>
-      // <Modal.Dialog onHide={handleClose(used._id)}>
-      //   <Modal.Header closeButton>
-      //     <Modal.Title>{used.name}</Modal.Title>
-      //     {/* <Modal.Img variant="top" src={used.img}></Modal.Img> */}
-      //   </Modal.Header>
-      // </Modal.Dialog>
-
-      // <Card style={{ width: "9rem", height: "18rem" }}>
-      //   <Card.Img variant="top" src={used.img}></Card.Img>
-      //   <Card.Body>
-      //     <Card.Title>{used.name}</Card.Title>
-      //     <Card.Text>{`Used in ${used.cocktails.length} drinks`}</Card.Text>
-      //   </Card.Body>
-      // </Card>
-      // <IngCard
-      //   color={isMustHave(used._id)}
-      //   onClick={() => updateMustHave(used._id)}
-      // >
-      //   <img src={used.img}></img>
-      //   {used.name}
-      //   {`Used in ${used.cocktails.length} drinks`}
-      //   <i className="fas fa-times-circle"
-      //     onClick={() => removeIngredient(used._id)}
-      //   />
-      // </IngCard>
     ));
   }
 
@@ -108,10 +67,17 @@ const UsingArea = ({
     <div>loading</div>
   ) : (
     <Fragment>
-      {renderIngredients()}
-      <IngCard color="darkgrey" onClick={() => toggleModal(!displayModal)}>
-          <i className="fas fa-plus" />
-        </IngCard>
+      <div className="drinkSection">
+        {renderIngredients()}
+        <div style={{ height: "12rem", width: "12rem" }}>
+          <Card
+            onClick={() => toggleModal(!displayModal)}
+            style={{ height: "12rem", width: "12rem" }}
+          >
+            <i className="fas fa-plus" />
+          </Card>
+        </div>
+      </div>
 
       {displayModal && (
         <div
