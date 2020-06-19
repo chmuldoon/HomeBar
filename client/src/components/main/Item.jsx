@@ -1,52 +1,23 @@
-import React, { Component, Fragment } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
 import { Card, Badge } from "react-bootstrap";
-
+import Tequila from "../major/Tequila";
+import Vodka from "../major/Vodka";
+import Gin from "../major/Gin";
+import TripleSec from "../major/TripleSec";
 const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
+  const [checkVal, setCheckVal] = useState();
+  
   const _isMustHave = (item) => {
     return mustHave.includes(item.toLowerCase().trim())
       ? "#fca103"
       : "#4CA64C";
   }
   
-  const renderIngredients = (drink) => {
-    let adjustedProps = using
-    let ingObj = {}
-    for (let i = 0; i < drink.using2.length; i++) {
-      ingObj[drink.using2[i]] = drink.using[i]
-    }
-
-    
-    return drink.using2.map((ing) => {
-      return (
-        <div className="ingredientItem">
-          {adjustedProps.includes(ing) ? (
-            <Fragment>
-              <div
-                className="box arrow-right"
-                style={{ backgroundColor: `${_isMustHave(ing)}` }}
-              ></div>
-
-              <div
-                className="ingredientName"
-                style={{ backgroundColor: "grey", color: "white" }}
-              >
-                {ingObj[ing].toUpperCase()}
-              </div>
-            </Fragment>
-          ) : (
-            <Fragment>
-              <div className="box"></div>
-              <div className="ingredientName"> {ingObj[ing].toUpperCase()}</div>
-            </Fragment>
-          )}
-        </div>
-      );
-    });
-  }
+  
   const checkedNum = () => {
     let count  = 0
     drink.using2.forEach(el => {
@@ -58,29 +29,48 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
   if (!drink) {
     return null;
   }
+  debugger
   return (
-    <Card style={{ width: "18rem" }}>
-      <Link to={`/cocktails/${drink._id}`}>
-      <Card.Img
-        variant="top"
-        src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-        />
-      <Card.Body>
-        <Card.Title>{drink.name}</Card.Title>
-        <Card.Text>
-          {checkedNum()} out of {drink.using2.length} ingredients
-        </Card.Text>
-      </Card.Body>
- 
+    <div style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}>
+      <Card style={{ width: "18rem"}}>
+        <Link to={`/cocktails/${drink._id}`}>
+          <Card.Img
+            variant="top"
+            src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+          />
+        </Link>
+        <Card.Body>
+          <Link to={`/cocktails/${drink._id}`}>
+            <Card.Title>{drink.name}</Card.Title>
+          </Link>
+          <Vodka
+            dimension="30px"
+            used={drink.using2.includes("5e9d51a19a6bb767c4002b9e")}
+          />
+          <Gin
+            dimension="30px"
+            used={drink.using2.includes("5e9d51a19a6bb767c4002b9f")}
+          />
+          <TripleSec
+            dimension="30px"
+            used={drink.using2.includes("5e9d51a29a6bb767c4002d24")}
+          />
+          <Tequila
+            dimension="30px"
+            used={drink.using2.includes("5e9d51a19a6bb767c4002ba1")}
+          />
+          <Card.Text>
+            {checkedNum()} out of {drink.using2.length} ingredients
+          </Card.Text>
+        </Card.Body>
 
-
-      {/* <ListGroup className="list-group-flush">
-        <ListGroupItem>Cras justo odio</ListGroupItem>
-        <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-        <ListGroupItem>Vestibulum at eros</ListGroupItem>
-      </ListGroup> */}
-      </Link>
-    </Card>
+        {/* <ListGroup className="list-group-flush">
+          <ListGroupItem>Cras justo odio</ListGroupItem>
+          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
+          <ListGroupItem>Vestibulum at eros</ListGroupItem>
+        </ListGroup> */}
+      </Card>
+    </div>
     // <div className="drinkCard">
 
     //   <div>
