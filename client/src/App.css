@@ -276,14 +276,13 @@ div.searchItem:hover {
   width: 259px;
 }
 .drinkSection {
-  width: 100%;
+  width: 80%;
   height: 90%;
-  /* padding: 0 20px 0 20px; */
   overflow-y: scroll;
   min-height: 80%;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
+  justify-content: center;
   /* margin-left: -20px; */
 
 }
@@ -298,7 +297,7 @@ div.searchItem:hover {
 .mainArea {
   display: flex;
   justify-content: center;
-  margin: auto;
+  margin: 2rem 0 0 0;
   height: 90%;
   width: 100%;
 }
