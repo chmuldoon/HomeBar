@@ -3,21 +3,33 @@ import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
-import { Card, Badge, Popover, OverlayTrigger } from "react-bootstrap";
+import { Card, Badge, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
 const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
-   const [show, setShow] = useState(false);
-   const [target, setTarget] = useState(null);
-   const ref = useRef(null);
+
   const _isMustHave = (item) => {
     return mustHave.includes(item.toLowerCase().trim())
       ? "#fca103"
       : "#4CA64C";
   }
-  
+
+  const doesHave = (ingId) => {
+    return using.includes(ingId) ? 
+    "success" :
+    "dark"
+  }
+  const renderList = () => {
+    return <ListGroup>
+      {drink.using2.map((el, i) => {
+        return <ListGroupItem style={{textTransform: "capitalize"}} variant={doesHave(el)}>
+          {drink.using[i]}
+        </ListGroupItem>
+      })}
+    </ListGroup>
+  }
   
   const checkedNum = () => {
     let count  = 0
@@ -28,10 +40,9 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
   }
   const popover = (
     <Popover id="popover-basic">
-      <Popover.Title as="h3">Popover right</Popover.Title>
+      <Popover.Title as="h3">Ingredients</Popover.Title>
       <Popover.Content>
-        And here's some <strong>amazing</strong> content. It's very engaging.
-        right?
+        {renderList()}
       </Popover.Content>
     </Popover>
   );
@@ -40,50 +51,53 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
     return null;
   }
   return (
-    <div style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}>
+    <div
+      style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}
+    >
       <OverlayTrigger trigger="hover" placement="auto" overlay={popover}>
-      <Card style={{ width: "18rem", border: "none"}}>
-        <Link to={`/cocktails/${drink._id}`}>
-          <Card.Img
-            variant="top"
-            src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-          />
-        </Link>
-        <Card.Body>
+        <Card style={{ width: "18rem", height: "26rem", border: "none" }}>
           <Link to={`/cocktails/${drink._id}`}>
-            <Card.Title style={{overflow:"hidden"}}>{drink.name.slice(0, 25)}
-            {drink.name.length > 25 && "..."}
-            </Card.Title>
+            <Card.Img
+              variant="top"
+              src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+            />
           </Link>
-          {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && <Vodka
-            dimension="30px"
-            used={true}
-          />}
-          <Gin
-            dimension="30px"
-            used={drink.using2.includes("5e9d51a19a6bb767c4002b9f")}
-          />
-          <TripleSec
-            dimension="30px"
-            used={drink.using2.includes("5e9d51a29a6bb767c4002d24")}
-          />
-          <Tequila
-            dimension="30px"
-            used={drink.using2.includes("5e9d51a19a6bb767c4002ba1")}
-          />
-          <Card.Text>
-            {checkedNum()} out of {drink.using2.length} ingredients
-          </Card.Text>
+          <Card.Body>
+            <Link to={`/cocktails/${drink._id}`}>
+              <Card.Title style={{ overflow: "hidden" }}>
+                {drink.name.slice(0, 25)}
+                {drink.name.length > 25 && "..."}
+              </Card.Title>
+            </Link>
+            <div style={{height: "30px"}}>
+              {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && (
+                <Vodka dimension="30px" used={true} />
+                )}
+              {drink.using2.includes("5e9d51a19a6bb767c4002b9f") && (
+                <Gin dimension="30px" used={true} />
+                )}
+              {drink.using2.includes("5e9d51a29a6bb767c4002d24") && (
+                <TripleSec dimension="30px" used={true} />
+                )}
+              {drink.using2.includes("5e9d51a19a6bb767c4002ba1") &&
+              <Tequila
+              dimension="30px"
+              used={true}
+              />}
 
-        </Card.Body>
+            </div>
+            <Card.Text>
+              {checkedNum()} out of {drink.using2.length} ingredients
+            </Card.Text>
+          </Card.Body>
 
-        {/* <ListGroup className="list-group-flush">
+          {/* <ListGroup className="list-group-flush">
           <ListGroupItem>Cras justo odio</ListGroupItem>
           <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
           <ListGroupItem>Vestibulum at eros</ListGroupItem>
         </ListGroup> */}
-      </Card>
-        </OverlayTrigger>
+        </Card>
+      </OverlayTrigger>
     </div>
     // <div className="drinkCard">
 
