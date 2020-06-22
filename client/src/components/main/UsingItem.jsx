@@ -1,23 +1,25 @@
 import React, { useState } from 'react'
 import ReactCardFlip from 'react-card-flip';
-import { Card, Image, Modal, Row, Col } from "react-bootstrap";
-import { removeMustHave, addMustHave } from '../../actions/ingredient_actions';
+import { Card, Image, Modal, Row, Col, Button } from "react-bootstrap";
+import { removeMustHave, addMustHave, removeIngredient } from '../../actions/ingredient_actions';
 import { connect } from 'react-redux';
-
-const UsingItem = ({item, removeMustHave, addMustHave, mustHave}) => {
-  const status = mustHave.includes(item._id)
+const UsingItem = ({
+  item,
+  removeMustHave,
+  addMustHave,
+  mustHave,
+  removeIngredient,
+}) => {
+  const status = mustHave.includes(item._id);
   const [isFlipped, setIsFlipped] = useState(false);
-  debugger
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
-    setIsFlipped(!isFlipped)
-  }
-  const handleMustHave = id  => {
+    setIsFlipped(!isFlipped);
+  };
+  const handleMustHave = (id) => {
     mustHave.includes(id) ? removeMustHave(id) : addMustHave(id);
-
-  }
+  };
   const isMustHave = (id) => {
-    
     return mustHave.includes(id) ? "#fca103" : "white";
   };
 
@@ -30,6 +32,7 @@ const UsingItem = ({item, removeMustHave, addMustHave, mustHave}) => {
             height: "12rem",
             width: "12rem",
             textTransform: "capitalize",
+            border: "none",
           }}
           onClick={handleClick}
         >
@@ -52,7 +55,7 @@ const UsingItem = ({item, removeMustHave, addMustHave, mustHave}) => {
           </Card.Title>
         </Card>
 
-        <Card style={{ height: "12rem", width: "12rem" }}>
+        <Card style={{ height: "12rem", width: "12rem", border: "none" }}>
           <Card.Body>
             <Card.Title
               style={{ textTransform: "capitalize" }}
@@ -60,6 +63,7 @@ const UsingItem = ({item, removeMustHave, addMustHave, mustHave}) => {
             >
               {item.name}
             </Card.Title>
+            <Button onClick={() => removeIngredient(item._id)}> X </Button>
             <Card.Text>Used in {item.cocktails.length} cocktails</Card.Text>
             <Row>
               <Col>
@@ -77,13 +81,14 @@ const UsingItem = ({item, removeMustHave, addMustHave, mustHave}) => {
                 </label>
               </Col>
             </Row>
-
           </Card.Body>
         </Card>
       </ReactCardFlip>
     </div>
   );
-}
+};
 
 
-export default connect(null, {addMustHave, removeMustHave})(UsingItem)
+export default connect(null, { addMustHave, removeMustHave, removeIngredient })(
+  UsingItem
+);

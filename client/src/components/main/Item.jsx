@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
-import { Card, Badge } from "react-bootstrap";
+import { Card, Badge, Popover, OverlayTrigger } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
 const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
-  const [checkVal, setCheckVal] = useState();
-  
+   const [show, setShow] = useState(false);
+   const [target, setTarget] = useState(null);
+   const ref = useRef(null);
   const _isMustHave = (item) => {
     return mustHave.includes(item.toLowerCase().trim())
       ? "#fca103"
@@ -25,14 +26,23 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
     })
     return count
   }
+  const popover = (
+    <Popover id="popover-basic">
+      <Popover.Title as="h3">Popover right</Popover.Title>
+      <Popover.Content>
+        And here's some <strong>amazing</strong> content. It's very engaging.
+        right?
+      </Popover.Content>
+    </Popover>
+  );
 
   if (!drink) {
     return null;
   }
-  debugger
   return (
     <div style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}>
-      <Card style={{ width: "18rem"}}>
+      <OverlayTrigger trigger="hover" placement="auto" overlay={popover}>
+      <Card style={{ width: "18rem", border: "none"}}>
         <Link to={`/cocktails/${drink._id}`}>
           <Card.Img
             variant="top"
@@ -41,12 +51,14 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
         </Link>
         <Card.Body>
           <Link to={`/cocktails/${drink._id}`}>
-            <Card.Title>{drink.name}</Card.Title>
+            <Card.Title style={{overflow:"hidden"}}>{drink.name.slice(0, 25)}
+            {drink.name.length > 25 && "..."}
+            </Card.Title>
           </Link>
-          <Vodka
+          {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && <Vodka
             dimension="30px"
-            used={drink.using2.includes("5e9d51a19a6bb767c4002b9e")}
-          />
+            used={true}
+          />}
           <Gin
             dimension="30px"
             used={drink.using2.includes("5e9d51a19a6bb767c4002b9f")}
@@ -62,6 +74,7 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
           <Card.Text>
             {checkedNum()} out of {drink.using2.length} ingredients
           </Card.Text>
+
         </Card.Body>
 
         {/* <ListGroup className="list-group-flush">
@@ -70,6 +83,7 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
           <ListGroupItem>Vestibulum at eros</ListGroupItem>
         </ListGroup> */}
       </Card>
+        </OverlayTrigger>
     </div>
     // <div className="drinkCard">
 
