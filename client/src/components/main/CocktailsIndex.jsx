@@ -3,7 +3,7 @@ import Item from "./Item";
 
 const CocktailsIndex = ({mustHave, using, favorites, cocktails, favoritesPage}) => {
   return (
-    <div className="drinkSection">
+      <div className="drinkSection">
         {cocktails.map((drink) => (
             <Item
               mustHave={mustHave}

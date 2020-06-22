@@ -14,7 +14,6 @@ const Favorites = ({ getUserFavorites, auth: {user},cocktails,ingredients, using
   }
   return (
     <div className="mainArea">
-      <div className="content">
         {cocktails && ingredients && (
           <CocktailsIndex
             cocktails={cocktails}
@@ -24,7 +23,6 @@ const Favorites = ({ getUserFavorites, auth: {user},cocktails,ingredients, using
             favoritesPage={true}
           />
         )}
-      </div>
     </div>
   );
 }
