@@ -7,86 +7,130 @@ import { getUserCocktails } from "../../actions/cocktail_actions";
 import CocktailsIndex from "./CocktailsIndex";
 import Navbar from "./Navbar";
 import UsingArea from "./UsingArea";
-import { fetchUserLists } from "../../actions/ingredient_actions";
+import { fetchUserLists, addMustHave, removeMustHave } from "../../actions/ingredient_actions";
 import { Link } from "react-router-dom";
 import { Spinner, Card } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import TripleSec from "../major/TripleSec";
 import Gin from "../major/Gin";
+import Slider from "react-smooth-range-input";
+
+
+
 const Main = ({
-  auth: { user },cocktails, logout, getUserCocktails, fetchUserLists, ingredients, mustHave
+  auth: { user },
+  cocktails,
+  logout,
+  getUserCocktails,
+  fetchUserLists,
+  ingredients,
+  mustHave,
+  addMustHave,
+  removeMustHave,
 }) => {
-  const [filter, setFilter] = useState({
-    tequila: false,
-    vodka: false,
-    gin: false,
-    whiskey: false,
-    rum: false,
-    tripleSec: false,
-    idList: [],
-    range: null
-  })
+    const [filter, setFilter] = useState(10);
+    const [length, setLength] = useState(0);
+
   useEffect(() => {
+    fetchUserLists();
+    getUserCocktails();
 
-    fetchUserLists()
-    getUserCocktails()
-
-  }, [getUserCocktails, fetchUserLists])
-
-
-
-  const handleClick = (e) => {
-    const info = e.currentTarget.textContent.split(",")
-    let kind = info[0]
-    let id = info[1]
+    
+  }, [getUserCocktails, fetchUserLists, cocktails]);
+  const handleClick = (e, keys) => {
     debugger
-    if(filter[kind]){
-      let newIdlist = filter.idList
-      newIdlist = newIdlist
-        .slice(0, newIdlist.indexOf(id))
-        .concat(newIdlist.slice(newIdlist.indexOf(id) + 1));
-      setFilter({...filter, [kind]: false, idList: newIdlist })
-    }else{
-      const newIdlist = filter.idList.concat(id);
-
-      setFilter({ ...filter, [kind]: true, idList: newIdlist });
-
+    const info = e.currentTarget.textContent.split(",");
+    let kind = info[0];
+    let id = info[1];
+    if (keys.includes(id)) {
+      // setFilter({ ...filter, [kind]: false });
+      removeMustHave(id)
+    } else {
+      // setFilter({ ...filter, [kind]: true });
+      addMustHave(id)
     }
+  };
+  const handleChange = num => {
+    setFilter(num)
+
   }
   const sorted = (drinks) => {
-    let ings = Object.keys(ingredients)
-    return drinks.sort((a,b)  => _rank(ings, a.using2) - _rank(ings, b.using2))
-  }
+    let ings = Object.keys(ingredients);
+    drinks = drinks.sort((a, b) => _rank(ings, a.using2) - _rank(ings, b.using2));
+    drinks = drinks.filter(c => _rank(ings, c.using2) <= filter)
+    // setLength(drinks.length)
+    return drinks
+
+  };
   const _rank = (list, using) => {
     let count = 0;
-    using.forEach((i) => { if (list.includes(i)) { count++ }; });
-    return  using.length - count
+    using.forEach((i) => {
+      if (list.includes(i)) {
+        count++;
+      }
+    });
+    return using.length - count;
   };
-
-  const filterCard = (
-    <Card>
-      <Card.Body>Filter by popular Alcohol</Card.Body>
+  const filterCard = (keys) => {
+    let count = null
+    if(document.querySelector(".drinkSection")){
+      count = document.querySelector(".drinkSection").childElementCount
+    }
+    return <Card style={{ height: "20rem" }}>
       <Card.Body>
-        <div style={{textTransform: "capitalize"}} onClick={(e) => handleClick(e)}>
-          <Vodka used={filter.vodka} dimension="30px" />
+        <Card.Title>Filter by popular Alcohol</Card.Title>
+        <div
+          style={{ textTransform: "capitalize" }}
+          onClick={(e) => handleClick(e, keys)}
+        >
+          <Vodka
+            used={keys.includes("5e9d51a19a6bb767c4002b9e")}
+            dimension="30px"
+          />
           vodka
         </div>
-        <div style={{textTransform: "capitalize"}} onClick={(e) => handleClick(e)}>
-          <Tequila used={filter.tequila} dimension="30px" />
+        <div
+          style={{ textTransform: "capitalize" }}
+          onClick={(e) => handleClick(e, keys)}
+        >
+          <Tequila
+            used={keys.includes("5e9d51a19a6bb767c4002ba1")}
+            dimension="30px"
+          />
           tequila
         </div>
-        <div style={{textTransform: "capitalize"}} onClick={(e) => handleClick(e)}>
-          <Gin used={filter.gin} dimension="30px" />
+        <div
+          style={{ textTransform: "capitalize" }}
+          onClick={(e) => handleClick(e, keys)}
+        >
+          <Gin
+            used={keys.includes("5e9d51a19a6bb767c4002b9f")}
+            dimension="30px"
+          />
           gin
         </div>
-        <div style={{textTransform: "capitalize"}} onClick={(e) => handleClick(e)}>
-          <TripleSec used={filter.tripleSec} dimension="30px" />
+        <div
+          style={{ textTransform: "capitalize" }}
+          onClick={(e) => handleClick(e, keys)}
+        >
+          <TripleSec
+            used={keys.includes("5e9d51a29a6bb767c4002d24")}
+            dimension="30px"
+          />
           tripleSec
         </div>
+        <Card.Title>Maximum Ingredients Needed</Card.Title>
+        <Slider
+          value={filter}
+          min={0}
+          max={10}
+          onChange={(num) => handleChange(num)}
+        />
+        {count && `${count} Cocktails`}
       </Card.Body>
     </Card>
-  );
+  };
   return user === null ? (
     <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>
@@ -94,15 +138,15 @@ const Main = ({
   ) : (
     <Fragment>
       {cocktails && ingredients && (
-          <CocktailsIndex
-            cocktails={sorted(cocktails)}
-            using={Object.keys(ingredients)}
-            mustHave={Object.keys(mustHave)}
-            favorites={user.favorites}
-            favoritesPage={false}
-          />
-      )}
-      {filterCard}
+        <CocktailsIndex
+          cocktails={sorted(cocktails)}
+          using={Object.keys(ingredients)}
+          mustHave={Object.keys(mustHave)}
+          favorites={user.favorites}
+          favoritesPage={false}
+        />
+        )}
+        {mustHave && filterCard(Object.keys(mustHave))} 
     </Fragment>
   );
 };
@@ -121,4 +165,10 @@ const mapStateToProps = (state) => ({
   cocktails: state.cocktails.cocktails
 });
 
-export default connect(mapStateToProps, { logout, getUserCocktails, fetchUserLists })(Main);
+export default connect(mapStateToProps, {
+  logout,
+  getUserCocktails,
+  fetchUserLists,
+  addMustHave,
+  removeMustHave,
+})(Main);

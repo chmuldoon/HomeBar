@@ -4,6 +4,7 @@ import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCockta
 import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { CardBody } from 'react-bootstrap/Card';
 const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFavorite, removeFavorite,similarCocktails, loading, auth:{user}}) => {
   useEffect(() => {
     // drink = null
@@ -15,7 +16,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
   const renderIngredients = () => {
     return drink.using.map((el, i) => {
       return (
-        <ListGroupItem>
+        <ListGroupItem style={{height: "2.5rem", border: "none"}}>
           <Badge style={{ backgroundColor: "#fca103", color: "#fca103" }}>
             {" X "}
           </Badge>
@@ -48,13 +49,16 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
   ) : (
     drink && user && similar && (
       <Fragment>
-        <Card>
-          <Image
-            style={{ height: "10rem", width: "10rem" }}
+        <Card style={{ width: "20rem", border: "none" }}>
+          <Card.Img
             src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-            roundedCircle
           />
-          <h1>
+          <Card.Header>{drink.name}</Card.Header>
+          <ListGroup>{renderIngredients()}</ListGroup>
+          <Card.Body>
+            <Card.Text>{drink.instructions}</Card.Text>
+          </Card.Body>
+          {/* <h1>
             {drink.name}
             {user.favorites.includes(drink._id) ? (
               <i
@@ -77,7 +81,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
             <br></br>
             <Card.Title>Instructions</Card.Title>
             <Card.Text>{drink.instructions}</Card.Text>
-          </Card.Body>
+          </Card.Body> */}
         </Card>
         <div style={{ display: "flex" }}>{renderSimilar()}</div>
         {/* <Row className="justify-content-md-center">
