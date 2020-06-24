@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect } from 'react'
-import Navbar from '../main/Navbar';
 import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCocktails } from '../../actions/cocktail_actions';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
@@ -17,7 +16,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
     return drink.using.map((el, i) => {
       return (
         <ListGroupItem style={{height: "2.5rem", border: "none"}}>
-          <Badge style={{ backgroundColor: "#fca103", color: "#fca103" }}>
+          <Badge style={{ backgroundColor: inShelf(drink.using2[i]), color: inShelf(drink.using2[i]) }}>
             {" X "}
           </Badge>
 
@@ -28,6 +27,10 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
         </ListGroupItem>
       );
     })
+  }
+  const inShelf = (id) => {
+    debugger
+    return user.ingredients.includes(id) ? "#4CA64C" : "darkgray";
   }
   const renderSimilar = () => {
     return similar.map(el => {
@@ -56,6 +59,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
           <Card.Header>{drink.name}</Card.Header>
           <ListGroup>{renderIngredients()}</ListGroup>
           <Card.Body>
+            {drink.glass && <Card.Text>Served in a {drink.glass}</Card.Text>}
             <Card.Text>{drink.instructions}</Card.Text>
           </Card.Body>
           {/* <h1>

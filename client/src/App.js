@@ -9,7 +9,6 @@ import Login from "./components/auth/Login";
 import Main from "./components/main/Main";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Landing from "./components/layout/Landing";
-// import Navbar from "./components/main/Navbar";
 import CocktailPage from "./components/cocktails/CocktailPage";
 import UsingArea from "./components/main/UsingArea";
 import Favorites from './components/cocktails/Favorites'
@@ -29,18 +28,14 @@ const App = () => {
       <section>
         <Topbar/>
         <div id="main">
-          {/* <Navbar /> */}
           <div className="mainArea">
             {/* <div className="content"> */}
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
-
                 <PrivateRoute exact path="/main" component={Main} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
-
                 <PrivateRoute exact path="/shelf" component={UsingArea} />
-
                 <PrivateRoute
                   exact
                   path="/cocktails/:id"

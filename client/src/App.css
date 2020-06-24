@@ -77,8 +77,8 @@ html {
   flex-wrap: wrap;
 }
 .navbar {
-  grid-area: header;
-  background-color: aqua;
+  z-index: 11;
+  position: fixed;
 }
 .topBar {
   height: 70px;
@@ -277,7 +277,7 @@ div.searchItem:hover {
 }
 .drinkSection {
   width: 60%;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   min-height: 80%;
   display: flex;
   flex-wrap: wrap;
@@ -296,7 +296,7 @@ div.searchItem:hover {
 .mainArea {
   display: flex;
   justify-content: center;
-  margin: 2rem 0 0 0;
+  margin: 4rem 0 0 0;
   height: 90%;
   width: 100%;
 }
@@ -612,9 +612,12 @@ input:checked + .slider:before {
 
   .drinkSection {
     height: 100%;
-    overflow-y: scroll;
+    width: 100%;
+    /* overflow-y: scroll; */
     padding: 0 20px 0 20px;
     margin-left: none;
+    justify-content: left;
+
 
   }
   .ingredientsSection {
