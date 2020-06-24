@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { logout } from "../../actions/auth_actions"
 import { getUserCocktails } from "../../actions/cocktail_actions";
 import CocktailsIndex from "./CocktailsIndex";
-import Navbar from "./Navbar";
 import UsingArea from "./UsingArea";
 import { fetchUserLists, addMustHave, removeMustHave } from "../../actions/ingredient_actions";
 import { Link } from "react-router-dom";
@@ -29,8 +28,7 @@ const Main = ({
   addMustHave,
   removeMustHave,
 }) => {
-    const [filter, setFilter] = useState(10);
-    const [length, setLength] = useState(0);
+    const [filter, setFilter] = useState(3);
 
   useEffect(() => {
     fetchUserLists();
@@ -77,59 +75,71 @@ const Main = ({
     if(document.querySelector(".drinkSection")){
       count = document.querySelector(".drinkSection").childElementCount
     }
-    return <Card style={{ height: "20rem" }}>
-      <Card.Body>
-        <Card.Title>Filter by popular Alcohol</Card.Title>
-        <div
-          style={{ textTransform: "capitalize" }}
-          onClick={(e) => handleClick(e, keys)}
+    return (
+      <div className="hide-sm">
+        <Card
+          style={{
+            height: "20rem",
+            position: "fixed",
+            zIndex: "10",
+            right: "0",
+            marginRight: "3rem",
+          }}
         >
-          <Vodka
-            used={keys.includes("5e9d51a19a6bb767c4002b9e")}
-            dimension="30px"
-          />
-          vodka
-        </div>
-        <div
-          style={{ textTransform: "capitalize" }}
-          onClick={(e) => handleClick(e, keys)}
-        >
-          <Tequila
-            used={keys.includes("5e9d51a19a6bb767c4002ba1")}
-            dimension="30px"
-          />
-          tequila
-        </div>
-        <div
-          style={{ textTransform: "capitalize" }}
-          onClick={(e) => handleClick(e, keys)}
-        >
-          <Gin
-            used={keys.includes("5e9d51a19a6bb767c4002b9f")}
-            dimension="30px"
-          />
-          gin
-        </div>
-        <div
-          style={{ textTransform: "capitalize" }}
-          onClick={(e) => handleClick(e, keys)}
-        >
-          <TripleSec
-            used={keys.includes("5e9d51a29a6bb767c4002d24")}
-            dimension="30px"
-          />
-          tripleSec
-        </div>
-        <Card.Title>Maximum Ingredients Needed</Card.Title>
-        <Slider
-          value={filter}
-          min={0}
-          max={10}
-          onChange={(num) => handleChange(num)}
-        />
-        {count && `${count} Cocktails`}
-      </Card.Body>
-    </Card>
+          <Card.Body>
+            <Card.Title>Filter by popular Alcohol</Card.Title>
+            <div
+              style={{ textTransform: "capitalize" }}
+              onClick={(e) => handleClick(e, keys)}
+            >
+              <Vodka
+                used={keys.includes("5e9d51a19a6bb767c4002b9e")}
+                dimension="30px"
+              />
+              vodka
+            </div>
+            <div
+              style={{ textTransform: "capitalize" }}
+              onClick={(e) => handleClick(e, keys)}
+            >
+              <Tequila
+                used={keys.includes("5e9d51a19a6bb767c4002ba1")}
+                dimension="30px"
+              />
+              tequila
+            </div>
+            <div
+              style={{ textTransform: "capitalize" }}
+              onClick={(e) => handleClick(e, keys)}
+            >
+              <Gin
+                used={keys.includes("5e9d51a19a6bb767c4002b9f")}
+                dimension="30px"
+              />
+              gin
+            </div>
+            <div
+              style={{ textTransform: "capitalize" }}
+              onClick={(e) => handleClick(e, keys)}
+            >
+              <TripleSec
+                used={keys.includes("5e9d51a29a6bb767c4002d24")}
+                dimension="30px"
+              />
+              tripleSec
+            </div>
+            <Card.Title>Maximum Ingredients Needed</Card.Title>
+            <Slider
+              value={filter}
+              min={0}
+              max={10}
+              onChange={(num) => handleChange(num)}
+            />
+            {count && `${count} Cocktails`}
+          </Card.Body>
+        </Card>
+      </div>
+    );
   };
   return user === null ? (
     <Spinner animation="border" role="status">

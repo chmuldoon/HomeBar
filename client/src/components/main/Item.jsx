@@ -1,20 +1,15 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
-import { Card, Badge, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
-const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, removeFavorite}) => {
-
-  const _isMustHave = (item) => {
-    return mustHave.includes(item.toLowerCase().trim())
-      ? "#fca103"
-      : "#4CA64C";
-  }
+import uuid from "react-uuid";
+const Item = ({ mustHave, using, drink}) => {
 
   const doesHave = (ingId) => {
     return using.includes(ingId) ? 
@@ -24,7 +19,7 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
   const renderList = () => {
     return <ListGroup>
       {drink.using2.map((el, i) => {
-        return <ListGroupItem style={{textTransform: "capitalize"}} variant={doesHave(el)}>
+        return <ListGroupItem key={uuid()} style={{textTransform: "capitalize"}} variant={doesHave(el)}>
           {drink.using[i]}
         </ListGroupItem>
       })}
@@ -54,7 +49,12 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
     <div
       style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}
     >
-      <OverlayTrigger trigger="hover" placement="auto" overlay={popover}>
+      <OverlayTrigger
+        trigger="hover focus"
+        focus
+        placement="auto"
+        overlay={popover}
+      >
         <Card style={{ width: "18rem", height: "26rem", border: "none" }}>
           <Link to={`/cocktails/${drink._id}`}>
             <Card.Img
@@ -69,26 +69,29 @@ const Item = ({ mustHave, favorites,favoritesPage, using, drink, addFavorite, re
                 {drink.name.length > 25 && "..."}
               </Card.Title>
             </Link>
-            <div style={{height: "30px"}}>
+            <div style={{ height: "30px" }}>
               {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && (
                 <Vodka dimension="30px" used={true} />
-                )}
+              )}
               {drink.using2.includes("5e9d51a19a6bb767c4002b9f") && (
                 <Gin dimension="30px" used={true} />
-                )}
+              )}
               {drink.using2.includes("5e9d51a29a6bb767c4002d24") && (
                 <TripleSec dimension="30px" used={true} />
-                )}
-              {drink.using2.includes("5e9d51a19a6bb767c4002ba1") &&
-              <Tequila
-              dimension="30px"
-              used={true}
-              />}
-
+              )}
+              {drink.using2.includes("5e9d51a19a6bb767c4002ba1") && (
+                <Tequila dimension="30px" used={true} />
+              )}
             </div>
-            <Card.Text>
-              {checkedNum()} out of {drink.using2.length} ingredients
-            </Card.Text>
+            <OverlayTrigger
+              trigger="click"
+              placement="auto"
+              overlay={popover}
+            >
+              <Card.Text>
+                {checkedNum()} out of {drink.using2.length} ingredients
+              </Card.Text>
+            </OverlayTrigger>
           </Card.Body>
 
           {/* <ListGroup className="list-group-flush">

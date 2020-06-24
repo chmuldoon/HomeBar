@@ -55,11 +55,11 @@ const UsingItem = ({
           </Card.Title>
         </Card>
 
-        <Card style={{ height: "12rem", width: "12rem", border: "none" }}>
+        <Card onDoubleClick={handleClick} style={{ height: "12rem", width: "12rem", border: "none" }}>
           <Card.Body>
             <Card.Title
               style={{ textTransform: "capitalize" }}
-              onClick={handleClick}
+              // onClick={handleClick}
             >
               {item.name}
             </Card.Title>
