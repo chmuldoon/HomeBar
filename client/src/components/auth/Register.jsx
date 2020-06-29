@@ -13,12 +13,10 @@ const Register = ({ register, isAuthenticated }) => {
   //this allows onChange to be used for all our inputs
   // [e.target.name] will set the key equal to the name of the target name tag if that wasnt obvious
   const onChange = (e) => {
-    debugger
     return setFormData({ ...formData, [e.target.name]: e.target.value });
   }
   const onSubmit = async (e) => {
     e.preventDefault();
-    debugger
     register(email, password);
   };
   //Redirect if logged in

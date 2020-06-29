@@ -27,12 +27,10 @@ const App = () => {
       <Route exact path="/" component={Landing} />
       <section>
         <Topbar/>
-        <div id="main">
+        {localStorage.token && <div id="main">
           <div className="mainArea">
             {/* <div className="content"> */}
               <Switch>
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
                 <PrivateRoute exact path="/main" component={Main} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
                 <PrivateRoute exact path="/shelf" component={UsingArea} />
@@ -44,7 +42,7 @@ const App = () => {
               </Switch>
             {/* </div> */}
           </div>
-        </div>
+        </div>}
       </section>
     </Fragment>
   );

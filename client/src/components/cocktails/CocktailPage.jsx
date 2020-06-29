@@ -37,7 +37,9 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
       return (
         <Card style={{width: "8rem"}}>
           <Link to={`/cocktails/${el._id}`}>
-            <Card.Title>{el.name}</Card.Title>
+            <Card.Title>{el.name}
+            
+            </Card.Title>
             <Card.Img
               src={`https://www.thecocktaildb.com/images/media/drink/${el.photo}`}
               rounded
@@ -56,7 +58,22 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
           <Card.Img
             src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
           />
-          <Card.Header>{drink.name}</Card.Header>
+          <Card.Header>
+            {drink.name}
+            {user.favorites.includes(drink._id) ? (
+              <i
+                className="fas fa-star"
+                onClick={() => removeFavorite(drink._id, false)}
+                style={{ color: "yellow" }}
+              />
+            ) : (
+              <i
+                className="far fa-star"
+                onClick={() => addFavorite(drink._id)}
+                style={{ color: "black" }}
+              />
+            )}
+          </Card.Header>
           <ListGroup>{renderIngredients()}</ListGroup>
           <Card.Body>
             {drink.glass && <Card.Text>Served in a {drink.glass}</Card.Text>}
