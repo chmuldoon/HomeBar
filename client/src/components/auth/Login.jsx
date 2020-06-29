@@ -3,7 +3,7 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth_actions";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
 const Login = ({ demoLogin, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,12 +24,25 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
   }
 
   return (
-
     <Fragment>
-
       <form className="form" onSubmit={(e) => onSubmit(e)}>
+        {/* <InputGroup className="mb-3">
+          <InputGroup.Prepend >
+            <InputGroup.Text  id="basic-addon1">
+              Email
+            </InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            
+            placeholder=""
+            aria-label=""
+            aria-describedby="basic-addon1"
+          />
+        </InputGroup> */}
         <div className="form-group">
+          <label>Email:</label>
           <input
+            className="frosted"
             type="email"
             placeholder="Email Address"
             name="email"
@@ -39,6 +52,7 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
           />
         </div>
         <div className="form-group">
+          <label>Password:</label>
           <input
             type="password"
             placeholder="Password"
@@ -49,9 +63,7 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Login" />
-
       </form>
-
     </Fragment>
   );
 };

@@ -1,22 +1,24 @@
 import React from 'react'
 import { Navbar, Nav, Button } from "react-bootstrap";
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth_actions';
 import Shelf from './Shelf';
 const Topbar = ({ logout, user, isAuthenticated }) => {
   if(!isAuthenticated){
-    return null
+    return <Redirect to="/"/>
   }
   return user ? (
     <Navbar fixed="top" bg="dark" variant="dark" as="ul">
-      <Navbar.Brand href="/main">Home Bar</Navbar.Brand>
+      <Navbar.Brand>
+        <Link style={{ color: "white" }} to="/main">
+          Home Bar
+        </Link>
+      </Navbar.Brand>
       <Nav className="mr-auto">
         <Nav.Link as="li">
           <Link style={{ color: "white" }} to="/main">
             Cocktails
-            {/* <i className="fas fa-cocktail show-sm"></i>
-            <p className="hide-sm">Cocktails</p> */}
           </Link>
         </Nav.Link>
         <Nav.Link as="li">

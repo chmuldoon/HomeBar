@@ -29,6 +29,7 @@ const Main = ({
   removeMustHave,
 }) => {
     const [filter, setFilter] = useState(3);
+    const [mainAlc, setMainAlc] = useState([])
 
   useEffect(() => {
     fetchUserLists();
@@ -36,27 +37,27 @@ const Main = ({
 
     
   }, [getUserCocktails, fetchUserLists, cocktails]);
-  const handleClick = (e, keys) => {
-    debugger
-    const info = e.currentTarget.textContent.split(",");
-    let kind = info[0];
-    let id = info[1];
-    if (keys.includes(id)) {
-      // setFilter({ ...filter, [kind]: false });
-      removeMustHave(id)
-    } else {
-      // setFilter({ ...filter, [kind]: true });
-      addMustHave(id)
-    }
-  };
-  const handleChange = num => {
-    setFilter(num)
 
+  const handleChange = num => setFilter(num)
+
+  const handleMainAlc = id => {
+    let ids = mainAlc.slice()
+    if(ids.includes(id)){
+      let idx = ids.indexOf(id)
+      let newIds = ids.slice(0,idx).concat(ids.slice(idx + 1))
+      setMainAlc(newIds);
+    }else{
+      ids.push(id)
+      setMainAlc(ids)
+    }
   }
   const sorted = (drinks) => {
     let ings = Object.keys(ingredients);
     drinks = drinks.sort((a, b) => _rank(ings, a.using2) - _rank(ings, b.using2));
     drinks = drinks.filter(c => _rank(ings, c.using2) <= filter)
+    mainAlc.forEach(el => {
+      drinks = drinks.filter(c => c.using2.includes(el))
+    })
     // setLength(drinks.length)
     return drinks
 
@@ -90,7 +91,7 @@ const Main = ({
             <Card.Title>Filter by popular Alcohol</Card.Title>
             <div
               style={{ textTransform: "capitalize" }}
-              onClick={(e) => handleClick(e, keys)}
+              onClick={() => handleMainAlc("5e9d51a19a6bb767c4002b9e")}
             >
               <Vodka
                 used={keys.includes("5e9d51a19a6bb767c4002b9e")}
@@ -100,7 +101,7 @@ const Main = ({
             </div>
             <div
               style={{ textTransform: "capitalize" }}
-              onClick={(e) => handleClick(e, keys)}
+              onClick={() => handleMainAlc("5e9d51a19a6bb767c4002ba1")}
             >
               <Tequila
                 used={keys.includes("5e9d51a19a6bb767c4002ba1")}
@@ -110,7 +111,7 @@ const Main = ({
             </div>
             <div
               style={{ textTransform: "capitalize" }}
-              onClick={(e) => handleClick(e, keys)}
+              onClick={() => handleMainAlc("5e9d51a19a6bb767c4002b9f")}
             >
               <Gin
                 used={keys.includes("5e9d51a19a6bb767c4002b9f")}
@@ -120,7 +121,7 @@ const Main = ({
             </div>
             <div
               style={{ textTransform: "capitalize" }}
-              onClick={(e) => handleClick(e, keys)}
+              onClick={() => handleMainAlc("5e9d51a29a6bb767c4002d24")}
             >
               <TripleSec
                 used={keys.includes("5e9d51a29a6bb767c4002d24")}
@@ -156,7 +157,7 @@ const Main = ({
           favoritesPage={false}
         />
         )}
-        {mustHave && filterCard(Object.keys(mustHave))} 
+        {mustHave && filterCard(mainAlc)} 
     </Fragment>
   );
 };
