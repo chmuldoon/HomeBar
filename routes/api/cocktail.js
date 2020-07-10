@@ -12,7 +12,47 @@ const User = require("../../models/User");
 //public
 //testing
 
+router.post("/", 
+  auth,
+  async (req, res) => {
+    const { name, instructions, glass, using2, using,  measurements, photo } = req.body
+  try {
+    const ingredients = using.slice()
+    while(ingredients.length < 15){
+      ingredients.push(null)
+    }
+    while(measurements.length < 15){
+      measurements.push(null)
+    }
+    ///MAKE SURE COCKTAIL DOESNT ALREADY EXIST
 
+
+    const cocktail = new Cocktail({
+      name,
+      instructions,
+      glass,
+      ingredients,
+      measurements,
+      using,
+      using2,
+      photo
+    });
+    await cocktail.save()
+    const ings = await Ingredient.find({ _id: { $in: using2 } })
+    for (let i = 0; i < ings.length; i++) {
+      ings[i].cocktails.push(cocktail._id)
+      ings[i].save()
+    }
+    
+
+
+
+    res.json(cocktail)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err");
+  }
+})
 router.get("/search", async (req, res) => {
   try {
     let cocktails = await Cocktail.find({}).select("-glass -ingredients -instructions -measurements -using -using2 -__v");
