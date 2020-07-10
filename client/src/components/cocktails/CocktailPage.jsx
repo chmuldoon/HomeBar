@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CardBody } from 'react-bootstrap/Card';
+
 const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFavorite, removeFavorite,similarCocktails, loading, auth:{user}}) => {
   useEffect(() => {
     // drink = null

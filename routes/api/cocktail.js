@@ -12,16 +12,7 @@ const User = require("../../models/User");
 //public
 //testing
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const cocktails = await Cocktail.find().select('_id name photo')
 
-//     res.json(cocktails)
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("server err");
-//   }
-// })
 router.get("/search", async (req, res) => {
   try {
     let cocktails = await Cocktail.find({}).select("-glass -ingredients -instructions -measurements -using -using2 -__v");
