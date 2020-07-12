@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCocktails } from '../../actions/cocktail_actions';
+import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCocktails, formCocktailUrl } from '../../actions/cocktail_actions';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
@@ -42,7 +42,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
             
             </Card.Title>
             <Card.Img
-              src={`https://www.thecocktaildb.com/images/media/drink/${el.photo}`}
+              src={formCocktailUrl(el)}
               rounded
             />
           </Link>
@@ -105,7 +105,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
             <Card.Text>{drink.instructions}</Card.Text>
           </Card.Body> */}
         </Card>
-        <div style={{ display: "flex" }}>{renderSimilar()}</div>
+        {/* <div style={{ display: "flex" }}>{renderSimilar()}</div> */}
         {/* <Row className="justify-content-md-center">
           <Col sm={4}>
             <Card>
@@ -167,4 +167,4 @@ const mapStateToProps = (state) => {
   }
 } ;
 
-export default connect(mapStateToProps, {getCocktail,resetCocktails,  addFavorite,similarCocktails, removeFavorite})(CocktailPage)
+export default connect(mapStateToProps, {getCocktail,  resetCocktails,  addFavorite,similarCocktails, removeFavorite})(CocktailPage)

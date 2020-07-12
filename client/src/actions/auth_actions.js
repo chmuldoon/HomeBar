@@ -31,20 +31,16 @@ export const loadUser = () => async (dispatch) => {
 //register a user
 export const register = ( email, password ) => async (dispatch) => {
   //adds headers to request
-  debugger
   const config = {
     headers: {
       "Content-Type": "application/json",
     },
   };
   //translates to json
-  debugger;
 
   const body = JSON.stringify({ email, password });
-  debugger;
 
   try {
-  debugger;
 
     //makes http request with the body and header
     const res = await axios.post("/api/users", body, config);

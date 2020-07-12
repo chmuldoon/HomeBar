@@ -1,5 +1,5 @@
 import {
-  FETCH_COCKTAIL, REMOVE_FAVORITE,USER_FAVORITES, USER_COCKTAILS, ADD_INGREDIENT, REMOVE_INGREDIENT, ADD_MUST_HAVE, REMOVE_MUST_HAVE, SIMILAR_COCKTAILS, RESET_COCKTAILS
+  FETCH_COCKTAIL, REMOVE_FAVORITE,USER_FAVORITES, USER_COCKTAILS, ADD_INGREDIENT, REMOVE_INGREDIENT, ADD_MUST_HAVE, REMOVE_MUST_HAVE, SIMILAR_COCKTAILS, RESET_COCKTAILS, CREATE_COCKTAIL
 } from "../actions/types"
 const initialState = {
   cocktail: null,
@@ -25,6 +25,7 @@ export default (state = initialState, action) => {
         loading: false,
       };
     case FETCH_COCKTAIL:
+    case CREATE_COCKTAIL:
       return {
         ...state,
         cocktail: payload,

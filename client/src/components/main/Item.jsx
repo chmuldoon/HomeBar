@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addFavorite, removeFavorite } from '../../actions/cocktail_actions'
+import { addFavorite, removeFavorite, formCocktailUrl } from '../../actions/cocktail_actions'
 import { Card, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
@@ -59,7 +59,7 @@ const Item = ({ mustHave, using, drink}) => {
           <Link to={`/cocktails/${drink._id}`}>
             <Card.Img
               variant="top"
-              src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
+              src={formCocktailUrl(drink)}
             />
           </Link>
           <Card.Body>

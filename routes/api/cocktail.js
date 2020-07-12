@@ -25,7 +25,7 @@ const User = require("../../models/User");
 router.post("/", 
   auth,
   async (req, res) => {
-    const { name, instructions, glass, using2, using,  measurements, photo } = req.body
+    const { name, instructions, glass, using2, using,  measurements, photo, userMade } = req.body
   try {
     const ingredients = using.slice()
     while(ingredients.length < 15){
@@ -45,18 +45,19 @@ router.post("/",
       measurements,
       using,
       using2,
-      photo
+      photo,
+      userMade
     });
     await cocktail.save()
-    const ings = await Ingredient.find({ _id: { $in: using2 } })
-    for (let i = 0; i < ings.length; i++) {
-      ings[i].cocktails.push(cocktail._id)
-      ings[i].save()
-    }
+    // const ings = await Ingredient.find({ _id: { $in: using2 } })
+    // for (let i = 0; i < ings.length; i++) {
+    //   ings[i].cocktails.push(cocktail._id)
+    //   ings[i].save()
+    // }
     
 
 
-
+    console.log(cocktail)
     res.json(cocktail)
   } catch (err) {
     console.error(err.message);
