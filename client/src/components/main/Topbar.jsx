@@ -37,13 +37,13 @@ const Topbar = ({ logout, user, isAuthenticated }) => {
             <p className="hide-sm">Favorites</p> */}
           </Link>
         </Nav.Link>
-        <Nav.Link as="li">
-          <Link style={{ color: "white" }} to="/create">
-            Create
+        {/* <Nav.Link as="li"> */}
+          {/* <Link style={{ color: "white" }} to="/create"> */}
+            {/* Create */}
             {/* <i className="fas fa-star show-sm"></i>
-            <p className="hide-sm">Favorites</p> */}
-          </Link>
-        </Nav.Link>
+            // <p className="hide-sm">Favorites</p> */}
+          {/* </Link> */}
+        {/* </Nav.Link> */}
       </Nav>
       <i
         onClick={() => logout()}

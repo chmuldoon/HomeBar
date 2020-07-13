@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import CocktailsIndex from '../main/CocktailsIndex'
 import {getUserFavorites, removeFavorite} from '../../actions/cocktail_actions'
 import {fetchUserLists} from '../../actions/ingredient_actions'
+import Select from "react-select";
 
 const Favorites = ({
   getUserFavorites,

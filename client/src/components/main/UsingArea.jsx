@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { fetchSearchItems } from '../../actions/search_actions';
 import { Card, Image, Modal } from 'react-bootstrap';
 import UsingItem from './UsingItem';
+import Select from "react-select";
+
 const UsingArea = ({
   using,
   mustHave,
@@ -26,6 +28,15 @@ const UsingArea = ({
     fetchSearchItems()
   }, [fetchUserLists, fetchSearchItems])
 
+  const _capitalize = (s) => {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  };
+  
+  const convertIngredientsToOptions = (ings) => {
+    return ings.map((ing) => {
+      return { ...ing, value: `${ing._id}`, label: `${_capitalize(ing.name)}` };
+    });
+  };
   const handleChange = (field) => {
     return (e) => {
       let filtered = search
@@ -44,17 +55,7 @@ const UsingArea = ({
       setDisplayed(filtered);
     };
   };
-  const handleClose = (id) => removeIngredient(id)
-  const isMustHave = (id) => {
 
-    let ids = Object.values(mustHave).map(m => m._id)
-    return ids.includes(id) ? "#fca103" : "#4CA64C";
-  };
-  const updateMustHave = (id) => {
-  
-    Object.keys(mustHave).includes(id) ? removeMustHave(id) : addMustHave(id);
-
-  }
 
  
   const renderIngredients = () => {
@@ -66,7 +67,10 @@ const UsingArea = ({
   return using === null ? (
     <div>loading</div>
   ) : (
-    <Fragment>
+    <div>
+      <div style={{ width: "60%", margin: "0 auto 0 auto" }}>
+        <Select options={convertIngredientsToOptions(search)}/>
+      </div>
       <div className="drinkSection">
         {renderIngredients()}
         <div style={{ height: "12rem", width: "12rem" }}>
@@ -143,7 +147,7 @@ const UsingArea = ({
           </div>
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 const mapStateToProps = (state) => ({

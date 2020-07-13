@@ -36,7 +36,7 @@ const App = () => {
                 <PrivateRoute exact path="/main" component={Main} />
                 <PrivateRoute exact path="/favorites" component={Favorites} />
                 <PrivateRoute exact path="/shelf" component={UsingArea} />
-                <PrivateRoute exact path="/create" component={CreateCocktail} />
+                {/* <PrivateRoute exact path="/create" component={CreateCocktail} /> */}
 
                 <PrivateRoute
                   exact

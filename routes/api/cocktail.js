@@ -57,7 +57,6 @@ router.post("/",
     
 
 
-    console.log(cocktail)
     res.json(cocktail)
   } catch (err) {
     console.error(err.message);
