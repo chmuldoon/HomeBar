@@ -33,6 +33,7 @@
     "nodemon": "^2.0.3",
     "passport": "^0.4.1",
     "styled": "^1.0.0",
-    "styled-components": "^5.1.0"
+    "styled-components": "^5.1.0",
+    "ws": "^7.3.1"
   }
 }

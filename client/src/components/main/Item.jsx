@@ -10,6 +10,7 @@ import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
 import uuid from "react-uuid";
 import history from "../../history";
+
 const Item = ({ mustHave, using, drink, clearCocktails}) => {
 
   const doesHave = (ingId) => {
@@ -45,7 +46,9 @@ const Item = ({ mustHave, using, drink, clearCocktails}) => {
   const handleLink = e => {
     const id = e.target.id
     clearCocktails()
-    history.push(`/cocktails/${id}`)
+    setTimeout(() => {
+      history.push(`/cocktails/${id}`)
+    }, 100);
   }
 
   if (!drink) {

@@ -4,14 +4,18 @@ import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CardBody } from 'react-bootstrap/Card';
+import Similar from './Similar';
 const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, clearCocktails, addFavorite, removeFavorite,similarCocktails, loading, auth:{user}}) => {
   useEffect(() => {
     // drink = null
-    clearCocktails()
     getCocktail(match.params.id);
     
     similarCocktails(match.params.id)
-  },[getCocktail, similarCocktails, match])
+    return () => {
+      clearCocktails();
+    };
+    // if(drink) fetchSimilarImages(drink.name)
+  },[ match])
   const renderIngredients = () => {
     return drink.using.map((el, i) => {
       return (
@@ -29,7 +33,6 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, clearC
     })
   }
   const inShelf = (id) => {
-    debugger
     return user.ingredients.includes(id) ? "#4CA64C" : "darkgray";
   }
   const renderSimilar = () => {
@@ -104,7 +107,8 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, clearC
             <Card.Text>{drink.instructions}</Card.Text>
           </Card.Body> */}
         </Card>
-        <div style={{ display: "flex" }}>{renderSimilar()}</div>
+        <Similar similar={similar} />
+        {/* <div style={{ display: "flex" }}>{renderSimilar()}</div> */}
         {/* <Row className="justify-content-md-center">
           <Col sm={4}>
             <Card>
@@ -166,4 +170,11 @@ const mapStateToProps = (state) => {
   }
 } ;
 
-export default connect(mapStateToProps, {getCocktail,  clearCocktails, resetCocktails,  addFavorite,similarCocktails, removeFavorite})(CocktailPage)
+export default connect(mapStateToProps, {
+  getCocktail,
+  clearCocktails,
+  resetCocktails,
+  addFavorite,
+  similarCocktails,
+  removeFavorite,
+})(CocktailPage);
