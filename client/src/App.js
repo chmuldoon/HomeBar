@@ -21,13 +21,14 @@ const App = () => {
   }
   useEffect(() => {
     store.dispatch(loadUser());
-  }, []);
+  }, [store]);
   window.getState = store.getState;
   return (
     <Fragment>
       <Route exact path="/" component={Landing} />
       <section>
-        <Topbar />
+        <PrivateRoute component={Topbar}/>
+        {/* <Topbar /> */}
         {localStorage.token && (
           <div id="main">
             <div className="mainArea">
@@ -41,6 +42,7 @@ const App = () => {
                 <PrivateRoute
                   exact
                   path="/cocktails/:id"
+                  wait={1000}
                   component={CocktailPage}
                 />
               </Switch>

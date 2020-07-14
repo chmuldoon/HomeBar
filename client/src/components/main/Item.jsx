@@ -2,14 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { addFavorite, removeFavorite, formCocktailUrl } from '../../actions/cocktail_actions'
+import { addFavorite, removeFavorite, formCocktailUrl, clearCocktails, clearCocktail } from '../../actions/cocktail_actions'
 import { Card, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
 import uuid from "react-uuid";
-const Item = ({ mustHave, using, drink}) => {
+import history from "../../history";
+const Item = ({ mustHave, using, drink, clearCocktails}) => {
 
   const doesHave = (ingId) => {
     return using.includes(ingId) ? 
@@ -41,6 +42,11 @@ const Item = ({ mustHave, using, drink}) => {
       </Popover.Content>
     </Popover>
   );
+  const handleLink = e => {
+    const id = e.target.id
+    clearCocktails()
+    history.push(`/cocktails/${id}`)
+  }
 
   if (!drink) {
     return null;
@@ -56,12 +62,14 @@ const Item = ({ mustHave, using, drink}) => {
         overlay={popover}
       >
         <Card style={{ width: "18rem", height: "26rem", border: "none" }}>
-          <Link to={`/cocktails/${drink._id}`}>
+          {/* <Link to={`/cocktails/${drink._id}`}> */}
             <Card.Img
+              id={drink._id}
+              onClick={(e) => handleLink(e)}
               variant="top"
               src={formCocktailUrl(drink)}
             />
-          </Link>
+          {/* </Link> */}
           <Card.Body>
             <Link to={`/cocktails/${drink._id}`}>
               <Card.Title style={{ overflow: "hidden" }}>
@@ -152,4 +160,4 @@ export const DrinkCard = styled.div`
 `;
 
 
-export default connect(null, {addFavorite, removeFavorite})(Item);
+export default connect(null, {addFavorite, removeFavorite, clearCocktails})(Item);

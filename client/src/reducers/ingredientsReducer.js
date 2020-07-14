@@ -1,6 +1,7 @@
 import {
   FETCH_USER_LISTS,
-  UPDATE_INGREDIENTS
+  UPDATE_INGREDIENTS,
+  LOGOUT
 } from "../actions/types";
 const initialState = {
   ingredient: null,
@@ -21,7 +22,8 @@ export default (state = initialState, action) => {
         mustHave: payload.mustHave,
         loading: false
       }
-
+    case LOGOUT:
+      return initialState
     default:
       return state;
   }

@@ -66,6 +66,16 @@ export const clearCocktail = () => async (dispatch) => {
     throw "err";
   }
 };
+export const clearCocktails = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_COCKTAILS,
+      payload: [],
+    });
+  } catch (err) {
+    throw "err";
+  }
+};
 export const formCocktailUrl = (cocktail) => {
   if(cocktail.userMade){
     return cocktail.photo
@@ -80,7 +90,6 @@ export const createCocktail = (cocktailData) => async (dispatch) => {
     },
   };
   const body = JSON.stringify(cocktailData)
-  debugger
   try {
     const res = await axios.post("/api/cocktails", body, config)
     console.log(res.data)

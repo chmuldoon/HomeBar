@@ -1,4 +1,4 @@
-import { SEARCH_ITEMS } from "../actions/types";
+import { SEARCH_ITEMS, LOGOUT } from "../actions/types";
 
 const initialState = {
   ingredients: null,
@@ -17,7 +17,8 @@ export default (state = initialState, action) => {
         cocktails: payload.cocktails,
         loading: false,
       };
-
+    case LOGOUT:
+      return initialState
     default:
       return state;
   }

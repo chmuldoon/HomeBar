@@ -3,9 +3,10 @@ import { removeIngredient, removeMustHave, addMustHave, fetchUserLists, addIngre
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import { fetchSearchItems } from '../../actions/search_actions';
-import { Card, Image, Modal } from 'react-bootstrap';
+import { Card, Image, Modal, Button } from 'react-bootstrap';
 import UsingItem from './UsingItem';
 import Select from "react-select";
+import AnimateItem from './AnimateItem';
 
 const UsingArea = ({
   using,
@@ -19,71 +20,77 @@ const UsingArea = ({
   search
 }) => {
   const [displayModal, toggleModal] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [displayed, setDisplayed] = useState([]);
-  const [isFlipped, setIsFlipped] = useState(false);
+  const [selectedIng, setSelectedIng] = useState({
+     label: "Select an Ingredient", value: null
+  })
 
   useEffect(() => {
     fetchUserLists()
     fetchSearchItems()
-  }, [fetchUserLists, fetchSearchItems])
+  }, [])
 
   const _capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
   };
   
   const convertIngredientsToOptions = (ings) => {
+    debugger
     return ings.map((ing) => {
-      return { ...ing, value: `${ing._id}`, label: `${_capitalize(ing.name)}` };
+      return ({ ...ing, value: `${ing._id}`, label: `${_capitalize(ing.name)}` });
     });
   };
-  const handleChange = (field) => {
-    return (e) => {
-      let filtered = search
-      if (e.target.value === "") {
-        filtered = [];
-      } else {
-        filtered = filtered.filter((ing) =>
-          ing.name
-            .split(" ")
-            .some((part) =>
-              part.toLowerCase().startsWith(e.target.value.toLowerCase())
-            )
-        );
-      }
-      setSearchTerm(e.target.value);
-      setDisplayed(filtered);
-    };
-  };
+  const condenseList = (ings) => {
+    const list = convertIngredientsToOptions(ings)
+    const newList = list.filter(el => !Object.keys(using).includes(el._id) )
+    newList.unshift({label: "Select an Ingredient", value: null})
+    return newList
+  }
+  const handleIngredient = e => {
+    setSelectedIng({label: e.label, value: e.value})
+  }
 
-
+  const handleClick = id => {
+    addIngredient(id);
+    setSelectedIng({ label: "Select an Ingredient", value: null});
+  }
  
   const renderIngredients = () => {
-    return Object.values(using).map((used) => (
-      <UsingItem key={used._id} mustHave={Object.keys(mustHave)} item={used} />
-    ));
+    return Object.values(using).map((used) => {
+      const myComponent = <UsingItem mustHave={Object.keys(mustHave)} item={used} />
+      return <AnimateItem key={used._id} component={myComponent}/>
+    });
   }
 
   return using === null ? (
     <div>loading</div>
   ) : (
     <div>
-      <div style={{ width: "60%", margin: "0 auto 0 auto" }}>
-        <Select options={convertIngredientsToOptions(search)}/>
+      <div style={{ width: "60%", margin: "0 auto 2vh auto", display: "flex" }}>
+        <div style={{width: "90%"}}>
+          {search && <Select
+            options={condenseList(search)}
+            
+            value={selectedIng}
+            placeholder="cool"
+            onChange={(e) => handleIngredient(e)}
+          />}
+        </div>
+        {selectedIng.label && selectedIng.value ? (
+          <Button
+            variant="primary"
+            onClick={() => handleClick(selectedIng.value)}
+          >
+            Add
+          </Button>
+        ) : (
+          <Button variant="secondary">Add</Button>
+        )}
       </div>
       <div className="drinkSection">
         {renderIngredients()}
-        <div style={{ height: "12rem", width: "12rem" }}>
-          <Card
-            onClick={() => toggleModal(!displayModal)}
-            style={{ height: "12rem", width: "12rem" }}
-          >
-            <i className="fas fa-plus" />
-          </Card>
-        </div>
       </div>
 
-      {displayModal && (
+      {/* {displayModal && (
         <div
           className="modal-background"
           onClick={() => {
@@ -142,11 +149,11 @@ const UsingArea = ({
                     </Fragment>
                   );
                 })}
-              </InputIng>
-            </div>
+              </InputIng> */}
+      {/* </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
