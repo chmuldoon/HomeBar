@@ -182,7 +182,7 @@ router.get("/similar/:id", async (req, res) => {
       if(!countObj[el]) countObj[el] = 0
       countObj[el]++
     }
-    let sorted = Object.keys(countObj).sort((a, b) => countObj[b] - countObj[a]).slice(0, 5)
+    let sorted = Object.keys(countObj).sort((a, b) => countObj[b] - countObj[a]).slice(0, 6)
     cocktails = await Cocktail.find({ _id: { $in: sorted } });
 
     res.json(cocktails)

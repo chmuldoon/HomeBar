@@ -59,7 +59,6 @@ const UsingItem = ({
           <Card.Body>
             <Card.Title
               style={{ textTransform: "capitalize" }}
-              // onClick={handleClick}
             >
               {item.name}
             </Card.Title>

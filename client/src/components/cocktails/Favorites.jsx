@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import {connect} from 'react-redux'
 import CocktailsIndex from '../main/CocktailsIndex'
 import {
@@ -9,6 +9,14 @@ import {
 } from "../../actions/cocktail_actions";
 import {fetchUserLists} from '../../actions/ingredient_actions'
 import Select from "react-select";
+const usePrevious = (value) => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
+
 const Favorites = ({
   getUserFavorites,
   auth: { user },
@@ -21,10 +29,13 @@ const Favorites = ({
   removeFavorite,
 }) => {
   useEffect(() => {
-    clearCocktail();
     getUserFavorites();
     fetchUserLists();
+    return () => {
+      clearCocktails()
+    }
   }, []);
+  const prev = usePrevious(cocktails)
   if (!user) {
     return <p>loading</p>;
   }

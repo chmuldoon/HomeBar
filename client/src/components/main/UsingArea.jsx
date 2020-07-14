@@ -65,7 +65,7 @@ const UsingArea = ({
     <div>loading</div>
   ) : (
     <div>
-      <div style={{ width: "60%", margin: "0 auto 2vh auto", display: "flex" }}>
+      <div style={{ width: "40vw", margin: "0 auto 2vh auto", display: "flex" }}>
         <div style={{width: "90%"}}>
           {search && <Select
             options={condenseList(search)}
@@ -86,74 +86,9 @@ const UsingArea = ({
           <Button variant="secondary">Add</Button>
         )}
       </div>
-      <div className="drinkSection">
+      <div style={{width: "40vw"}} className="drinkSection">
         {renderIngredients()}
       </div>
-
-      {/* {displayModal && (
-        <div
-          className="modal-background"
-          onClick={() => {
-            toggleModal(!displayModal);
-          }}
-        >
-          <div
-            className="modal-child"
-            style={{ display: "flex" }}
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <div className="modal-case">
-              <div className="Xcase">
-                <i
-                  class="fas fa-times"
-                  style={{
-                    fontSize: "30px",
-                    color: "white",
-                    cursor: "pointer",
-                    marginBottom: "10px",
-                  }}
-                  onClick={() => {
-                    toggleModal(!displayModal);
-                  }}
-                ></i>
-              </div>
-              <InputIng>
-                <input
-                  className="searchInput"
-                  type="text"
-                  placeholder={`Search for Ingredients`}
-                  value={searchTerm}
-                  onChange={handleChange("searchTerm")}
-                />
-                {displayed.map((ing) => {
-                  return (
-                    <Fragment>
-                      <div
-                        className="searchItem"
-                        onClick={() => {
-                          addIngredient(ing._id);
-                          setSearchTerm("");
-                          setDisplayed([]);
-                          toggleModal(!displayModal);
-                        }}
-                      >
-                        <img src={ing.img} />
-                        <p>
-                          {ing.name.length > 22
-                            ? ing.name.slice(0, 10)
-                            : ing.name}
-                        </p>
-                      </div>
-                    </Fragment>
-                  );
-                })}
-              </InputIng> */}
-      {/* </div>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

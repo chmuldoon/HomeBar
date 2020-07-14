@@ -13,48 +13,46 @@ const Topbar = (props) => {
   // }
   const handleClick = (e) => {
     const id = e.target.id
-    if(id === "/main" || id === "/favorites"){
-      props.clearCocktails()
+    if(props.location.pathname !== e.target.id){
+      history.push(e.target.id)
     }
-    history.push(e.target.id)
+  }
+  const navInfo = [["/main", "Cocktails"],["/shelf", "Shelf"],["/favorites", "Favorites"]]
+  const renderNavItems = info => {
+    return info.map((el, i) => {
+      const url = el[0];
+      const title = el[1];
+      const underline = url == props.location.pathname ? "underline" : "none";
+      debugger
+      return (
+        <Nav.Link
+          style={{
+            cursor: "pointer",
+            color: "white",
+            textDecoration: underline
+          }}
+          as="li"
+          id={url}
+          key={i}
+          onClick={(e) => handleClick(e)}
+        >
+          {title}
+        </Nav.Link>
+      );
+    })
   }
   return props.user ? (
     <Navbar fixed="top" bg="dark" variant="dark" as="ul">
-      <Navbar.Brand>
-        <Link style={{ color: "white" }} to="/main">
-          Home Bar
-        </Link>
-      </Navbar.Brand>
-      <Nav className="mr-auto">
-        <Nav.Link as="li" id="/main" onClick={(e) => handleClick(e)}>
-          {/* <Link style={{ color: "white" }} to="/main"> */}
-          Cocktails
-          {/* </Link> */}
-        </Nav.Link>
-        <Nav.Link as="li" id="/shelf" onClick={(e) => handleClick(e)}>
-          {/* <Link style={{ color: "white" }} to="/shelf"> */}
-          Shelf
-          {/* <p className="hide-sm">Shelf</p>
-            <div className="show-sm">
-              <Shelf dimension="1.5rem" />
-            </div> */}
-          {/* </Link> */}
-        </Nav.Link>
-        <Nav.Link as="li" id="/favorites" onClick={(e) => handleClick(e)}>
-          {/* <Link style={{ color: "white" }} to="/favorites"> */}
-          Favorites
-          {/* <i className="fas fa-star show-sm"></i>
-            <p className="hide-sm">Favorites</p> */}
-          {/* </Link> */}
-        </Nav.Link>
-        {/* <Nav.Link as="li"> */}
-        {/* <Link style={{ color: "white" }} to="/create"> */}
-        {/* Create */}
-        {/* <i className="fas fa-star show-sm"></i>
-            // <p className="hide-sm">Favorites</p> */}
+      <Navbar.Brand
+        style={{ color: "white", cursor: "pointer" }}
+        id="/main"
+        onClick={(e) => handleClick(e)}
+      >
+        {/* <Link style={{ color: "white" }} to="/main"> */}
+        Home Bar
         {/* </Link> */}
-        {/* </Nav.Link> */}
-      </Nav>
+      </Navbar.Brand>
+      <Nav className="mr-auto">{renderNavItems(navInfo)}</Nav>
       <i
         onClick={() => props.logout()}
         style={{ fontSize: "2rem", color: "white" }}

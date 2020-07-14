@@ -1,5 +1,5 @@
 
-import React, { useEffect, Fragment, useState, Component } from "react";
+import React, { useEffect, Fragment, useState, Component, useRef } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth_actions"
@@ -15,7 +15,13 @@ import TripleSec from "../major/TripleSec";
 import Gin from "../major/Gin";
 import Slider from "react-smooth-range-input";
 
-
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value
+  }, [value]);
+  return ref.current
+}
 
 const Main = ({
   auth: { user, loading },
@@ -30,17 +36,30 @@ const Main = ({
 }) => {
     const [filter, setFilter] = useState(3);
     const [mainAlc, setMainAlc] = useState([])
+    const [auxloading, setAuxLoading] = useState(false)
 
   useEffect(() => {
     fetchUserLists();
     getUserCocktails();
-
+    return () => {
+      clearCocktails();
+    };
     
   }, []);
-
-  const handleChange = num => setFilter(num)
   let totalLoading = loading || iLoading || cLoading
+  const prevCocktails = usePrevious(cocktails)
+  
+ 
+  const handleChange = num => {
+    setAuxLoading(true)
+    setFilter(num)
+    setTimeout(() => {
+    setAuxLoading(false)
+    }, 50)
+  }
   const handleMainAlc = id => {
+    setAuxLoading(true);
+
     let ids = mainAlc.slice()
     if(ids.includes(id)){
       let idx = ids.indexOf(id)
@@ -50,6 +69,9 @@ const Main = ({
       ids.push(id)
       setMainAlc(ids)
     }
+    setTimeout(() => {
+      setAuxLoading(false);
+    }, 50);
   }
   const sorted = (drinks) => {
     let ings = Object.keys(ingredients);
@@ -62,6 +84,21 @@ const Main = ({
     return drinks
 
   };
+  const sideInfo = () => {
+    let ings = Object.keys(ingredients);
+    const drinks = sorted(cocktails)
+    const complete = drinks.filter(c => _rank(ings, c.using2) === 0)
+    const mapZeroToThree = [0, 1, 2, 3].map(el => {
+      let count = drinks.filter((c) => _rank(ings, c.using2) === el).length
+      if(el === 0) return <p>{count} cocktails you can make right now</p>
+      return <p>{count} cocktails you are {el} ingredients away from</p>
+    })
+    return (
+      <div>
+        {mapZeroToThree}
+      </div>
+    );
+  }
   const _rank = (list, using) => {
     let count = 0;
     using.forEach((i) => {
@@ -71,6 +108,7 @@ const Main = ({
     });
     return using.length - count;
   };
+   
   const filterCard = (keys) => {
     let count = null
     if(document.querySelector(".drinkSection")){
@@ -81,7 +119,7 @@ const Main = ({
       <div className="hide-sm">
         <Card
           style={{
-            height: "20rem",
+            height: "25rem",
             position: "fixed",
             zIndex: "10",
             right: "0",
@@ -137,26 +175,31 @@ const Main = ({
               max={10}
               onChange={(num) => handleChange(num)}
             />
-            {count && `${count} Cocktails`}
+            {sideInfo()}
           </Card.Body>
         </Card>
       </div>
     );
   };
-  return totalLoading === null ? (
-    <Spinner animation="border" role="status">
-      <span className="sr-only">Loading...</span>
-    </Spinner>
-  ) : (
+  return (
     <Fragment>
-      {cocktails && ingredients && (
-        <CocktailsIndex
-          cocktails={sorted(cocktails)}
-          using={Object.keys(ingredients)}
-          mustHave={Object.keys(mustHave)}
-          favorites={user.favorites}
-          favoritesPage={false}
-        />
+      
+      {totalLoading === null || auxloading ? (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+      ) : (
+      <Fragment>
+        {cocktails && ingredients && (
+          <CocktailsIndex
+            cocktails={sorted(cocktails)}
+            using={Object.keys(ingredients)}
+            mustHave={Object.keys(mustHave)}
+            favorites={user.favorites}
+            favoritesPage={false}
+          />
+        )}
+      </Fragment>
       )}
       {mustHave && filterCard(mainAlc)}
     </Fragment>
