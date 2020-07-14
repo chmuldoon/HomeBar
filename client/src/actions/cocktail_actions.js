@@ -1,5 +1,6 @@
 import axios from "axios";
-import { FETCH_COCKTAIL,UPDATE_USER, USER, USER_FAVORITES, USER_COCKTAILS, REMOVE_FAVORITE, SIMILAR_COCKTAILS, RESET_COCKTAILS } from "../actions/types";
+import { FETCH_COCKTAIL,UPDATE_USER, CREATE_COCKTAIL, USER, USER_FAVORITES, USER_COCKTAILS, REMOVE_FAVORITE, SIMILAR_COCKTAILS, RESET_COCKTAILS } from "../actions/types";
+import history from "../history";
 export const getCocktail = (id) => async dispatch => {
   try {
     const res = await axios.get(`/api/cocktails/${id}`);
@@ -55,6 +56,54 @@ export const similarCocktails = (id) => async (dispatch) => {
     throw "err";
   }
 }
+export const clearCocktail = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: FETCH_COCKTAIL,
+      payload: null,
+    });
+  } catch (err) {
+    throw "err";
+  }
+};
+export const clearCocktails = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: USER_COCKTAILS,
+      payload: [],
+    });
+  } catch (err) {
+    throw "err";
+  }
+};
+export const formCocktailUrl = (cocktail) => {
+  if(cocktail.userMade){
+    return cocktail.photo
+  }else{
+    return `https://www.thecocktaildb.com/images/media/drink/${cocktail.photo}`;
+  }
+}
+export const createCocktail = (cocktailData) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  const body = JSON.stringify(cocktailData)
+  try {
+    const res = await axios.post("/api/cocktails", body, config)
+    console.log(res.data)
+    dispatch({
+      type: CREATE_COCKTAIL,
+      payload: res.data
+
+    })
+    console.log("1")
+    history.push(`/cocktails/${res.data._id}`)
+  } catch (err) {
+    throw "err"
+  }
+} 
 
 export const addFavorite = (id) => async dispatch => {
   try {

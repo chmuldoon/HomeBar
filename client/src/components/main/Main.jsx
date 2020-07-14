@@ -3,7 +3,7 @@ import React, { useEffect, Fragment, useState, Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../actions/auth_actions"
-import { getUserCocktails } from "../../actions/cocktail_actions";
+import { getUserCocktails, clearCocktails } from "../../actions/cocktail_actions";
 import CocktailsIndex from "./CocktailsIndex";
 import UsingArea from "./UsingArea";
 import { fetchUserLists, addMustHave, removeMustHave } from "../../actions/ingredient_actions";
@@ -18,13 +18,13 @@ import Slider from "react-smooth-range-input";
 
 
 const Main = ({
-  auth: { user },
-  cocktails,
+  auth: { user, loading },
+  cocktails: {cocktails, loading:  cLoading },
   logout,
   getUserCocktails,
+  clearCocktails,
   fetchUserLists,
-  ingredients,
-  mustHave,
+  ingredients: {mustHave, ingredients, loading: iLoading },
   addMustHave,
   removeMustHave,
 }) => {
@@ -36,10 +36,10 @@ const Main = ({
     getUserCocktails();
 
     
-  }, [getUserCocktails, fetchUserLists, cocktails]);
+  }, []);
 
   const handleChange = num => setFilter(num)
-
+  let totalLoading = loading || iLoading || cLoading
   const handleMainAlc = id => {
     let ids = mainAlc.slice()
     if(ids.includes(id)){
@@ -76,6 +76,7 @@ const Main = ({
     if(document.querySelector(".drinkSection")){
       count = document.querySelector(".drinkSection").childElementCount
     }
+
     return (
       <div className="hide-sm">
         <Card
@@ -142,7 +143,7 @@ const Main = ({
       </div>
     );
   };
-  return user === null ? (
+  return totalLoading === null ? (
     <Spinner animation="border" role="status">
       <span className="sr-only">Loading...</span>
     </Spinner>
@@ -156,8 +157,8 @@ const Main = ({
           favorites={user.favorites}
           favoritesPage={false}
         />
-        )}
-        {mustHave && filterCard(mainAlc)} 
+      )}
+      {mustHave && filterCard(mainAlc)}
     </Fragment>
   );
 };
@@ -171,9 +172,8 @@ Main.propTypes = {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  ingredients: state.ingredients.ingredients,
-  mustHave: state.ingredients.mustHave,
-  cocktails: state.cocktails.cocktails
+  ingredients: state.ingredients,
+  cocktails: state.cocktails
 });
 
 export default connect(mapStateToProps, {
@@ -181,5 +181,6 @@ export default connect(mapStateToProps, {
   getUserCocktails,
   fetchUserLists,
   addMustHave,
+  clearCocktails,
   removeMustHave,
 })(Main);

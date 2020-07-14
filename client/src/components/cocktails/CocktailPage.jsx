@@ -1,16 +1,15 @@
 import React, { Fragment, useEffect } from 'react'
-import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCocktails } from '../../actions/cocktail_actions';
+import { getCocktail, addFavorite, removeFavorite, similarCocktails, resetCocktails, formCocktailUrl, clearCocktails } from '../../actions/cocktail_actions';
 import { connect } from 'react-redux';
 import { Container, Row, Col, Card, ListGroup, ListGroupItem, Image, Button, Badge } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { CardBody } from 'react-bootstrap/Card';
-
-const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFavorite, removeFavorite,similarCocktails, loading, auth:{user}}) => {
+const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, clearCocktails, addFavorite, removeFavorite,similarCocktails, loading, auth:{user}}) => {
   useEffect(() => {
     // drink = null
-
+    clearCocktails()
     getCocktail(match.params.id);
-  
+    
     similarCocktails(match.params.id)
   },[getCocktail, similarCocktails, match])
   const renderIngredients = () => {
@@ -42,7 +41,7 @@ const CocktailPage = ({match, similar,resetCocktails, drink, getCocktail, addFav
             
             </Card.Title>
             <Card.Img
-              src={`https://www.thecocktaildb.com/images/media/drink/${el.photo}`}
+              src={formCocktailUrl(el)}
               rounded
             />
           </Link>
@@ -167,4 +166,4 @@ const mapStateToProps = (state) => {
   }
 } ;
 
-export default connect(mapStateToProps, {getCocktail,resetCocktails,  addFavorite,similarCocktails, removeFavorite})(CocktailPage)
+export default connect(mapStateToProps, {getCocktail,  clearCocktails, resetCocktails,  addFavorite,similarCocktails, removeFavorite})(CocktailPage)

@@ -34,6 +34,10 @@ const CocktailSchema = new Schema({
     type: String,
     required: true,
   },
+  userMade: {
+    type: Boolean,
+    default: false
+  }
 });
 
 CocktailSchema.statics.findIngredients = function (id) {

@@ -5,8 +5,9 @@ import { withTheme } from 'styled-components'
 import { Image } from 'react-bootstrap'
 import { fetchSearchItems } from '../../actions/search_actions'
 import Select from "react-select";
-import { Ellipsis } from "react-bootstrap/PageItem";
-const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
+import { clearCocktail, createCocktail } from "../../actions/cocktail_actions";
+import { Redirect } from "react-router-dom";
+const CreateCocktail = ({ fetchSearchItems, createCocktail, search, cocktail, history, loading }) => {
   const [cocktailFormData, setCocktailFormData] = useState({
     name: "",
     instructions: "",
@@ -15,7 +16,9 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
     using: [""],
     measurements: [""],
     photo: "",
+    userMade: true
   });
+
   const glasses = [
     "Shot glass",
     "Collins Glass",
@@ -65,6 +68,7 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
 
   useEffect(() => {
     fetchSearchItems();
+
   }, [fetchSearchItems]);
   const {
     name,
@@ -115,7 +119,10 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
     setCocktailFormData({...cocktailFormData, glass: e.name})
     debugger
   }
-  const onSubmit = async (e) => {};
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    createCocktail(cocktailFormData)
+  };
   const ingredientBar = (search) => {
     return using2.map((el, i) => {
         return (
@@ -160,8 +167,11 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
     newUsing.push("")
     setCocktailFormData({...cocktailFormData, using2: newUsing})
   }
-  return (
-    loading ? <div>loading...</div> : <div
+
+  return loading ? (
+    <div>loading...</div>
+  ) : (
+    <div
       style={{
         backgroundColor: "white",
         width: "50vw",
@@ -174,7 +184,7 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
       ) : (
         <Fragment></Fragment>
       )}
-      <form>
+      <form onSubmit={(e) => onSubmit(e)}>
         {cocktailFormData.name}
         <div className="form-group">
           Name
@@ -191,7 +201,7 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
           Glass
           <Select
             options={convertGlasses(glasses)}
-            value={{value: glass, label: glass}}
+            value={{ value: glass, label: glass }}
             onChange={(e) => handleGlass(e)}
           />
         </div>
@@ -219,14 +229,16 @@ const CreateCocktail = ({ fetchSearchItems, search, loading }) => {
         </div>
         {ingredientBar(search)}
         <button onClick={() => addIng()}>More</button>
+        <input type="submit" className="btn btn-primary" value="Create" />
       </form>
     </div>
   );
 };
 const mapStateToProps = state => ({
   search: state.search.ingredients,
-  loading: state.search.loading
+  loading: state.search.loading,
+  cocktail: state.cocktails.cocktail
 
 })
 
-export default connect(mapStateToProps, { fetchSearchItems })(CreateCocktail);
+export default connect(mapStateToProps, { createCocktail, fetchSearchItems })(CreateCocktail);

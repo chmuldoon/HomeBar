@@ -318,6 +318,8 @@ div.searchItem:hover {
   /* overflow-y: scroll; */
   min-height: 80%;
   display: flex;
+  margin-left: auto;
+  margin-right: auto;
   flex-wrap: wrap;
   justify-content: left;
   /* margin-left: -20px; */
