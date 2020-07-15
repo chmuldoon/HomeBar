@@ -17,6 +17,8 @@ const Landing = ({ isAuthenticated, getUserCocktails }) => {
  
     return (
       <section className="landing">
+        <title>Home Bar</title>
+
         <div className="dark-overlay">
           <div className="landing-inner">
             <div

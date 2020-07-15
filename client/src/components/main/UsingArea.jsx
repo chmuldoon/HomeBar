@@ -64,15 +64,25 @@ const UsingArea = ({
     <div>loading</div>
   ) : (
     <div>
-      <div style={{ width: "70vw", margin: "0 auto 2vh auto", display: "flex", justifyContent: "space-between" }}>
-        <div style={{width: "90%"}}>
-          {search && <Select
-            options={condenseList(search)}
-            
-            value={selectedIng}
-            placeholder="cool"
-            onChange={(e) => handleIngredient(e)}
-          />}
+      <title>Home Bar • Shelf</title>
+
+      <div
+        style={{
+          width: "70vw",
+          margin: "0 auto 2vh auto",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <div style={{ width: "90%" }}>
+          {search && (
+            <Select
+              options={condenseList(search)}
+              value={selectedIng}
+              placeholder="cool"
+              onChange={(e) => handleIngredient(e)}
+            />
+          )}
         </div>
         {selectedIng.label && selectedIng.value ? (
           <Button
@@ -85,7 +95,7 @@ const UsingArea = ({
           <Button variant="secondary">Add</Button>
         )}
       </div>
-      <div style={{width: "70vw"}} className="drinkSection">
+      <div style={{ width: "70vw" }} className="drinkSection">
         {renderIngredients()}
       </div>
     </div>

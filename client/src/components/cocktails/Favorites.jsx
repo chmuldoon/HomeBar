@@ -41,6 +41,8 @@ const Favorites = ({
   }
   return (
     <div className="mainArea">
+      <title>Home Bar • Favorites</title>
+
       {cocktails && ingredients && (
         <CocktailsIndex
           // wait={1000}

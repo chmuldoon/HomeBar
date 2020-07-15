@@ -118,6 +118,7 @@ const Main = ({
 
     return (
       <div className="hide-sm">
+        <title>Home Bar • Cocktails</title>
         <Card
           style={{
             height: "25rem",
