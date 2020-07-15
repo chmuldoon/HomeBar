@@ -44,7 +44,6 @@ export const register = ( email, password ) => async (dispatch) => {
 
     //makes http request with the body and header
     const res = await axios.post("/api/users", body, config);
-  debugger;
 
     //should return the token
     dispatch({

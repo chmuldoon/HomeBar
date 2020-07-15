@@ -23,7 +23,6 @@ const Topbar = (props) => {
       const url = el[0];
       const title = el[1];
       const underline = url == props.location.pathname ? "underline" : "none";
-      debugger
       return (
         <Nav.Link
           style={{

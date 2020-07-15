@@ -13,6 +13,8 @@ import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import TripleSec from "../major/TripleSec";
 import Gin from "../major/Gin";
+import uuid from "react-uuid";
+
 import Slider from "react-smooth-range-input";
 
 const usePrevious = value => {
@@ -39,7 +41,6 @@ const Main = ({
     const [auxloading, setAuxLoading] = useState(false)
 
   useEffect(() => {
-    debugger;
     fetchUserLists();
     getUserCocktails();
     return () => {
@@ -90,8 +91,8 @@ const Main = ({
     const complete = drinks.filter(c => _rank(ings, c.using2) === 0)
     const mapZeroToThree = [0, 1, 2, 3].map(el => {
       let count = drinks.filter((c) => _rank(ings, c.using2) === el).length
-      if(el === 0) return <p>{count} cocktails you can make right now</p>
-      return <p>{count} cocktails you are {el} ingredients away from</p>
+      if(el === 0) return <p key={uuid()}>{count} cocktails you can make right now</p>
+      return <p key={uuid()}>{count} cocktails you are {el} ingredients away from</p>
     })
     return (
       <div>

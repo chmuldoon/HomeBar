@@ -8,7 +8,6 @@ import Register from "../auth/Register";
 import { getUserCocktails } from "../../actions/cocktail_actions";
 import history from "../../history";
 const RegisterZone = ({ isAuthenticated, getUserCocktails, location }) => {
-  debugger
   let  flipStatus  = location.state ? location.state.flipStatus : false
 
 
@@ -47,7 +46,9 @@ const RegisterZone = ({ isAuthenticated, getUserCocktails, location }) => {
                   </h3>
                   <h3>Home Bar</h3>
                   <Login />
-                  <Button onClick={handleClick}>SignUp</Button>
+                  <br></br>
+                  <p>No account? No problem</p>
+                  <p onClick={handleClick} style={{fontWeight: "500", color: "lightblue", cursor: "pointer"}}>Sign Up</p>
                 </Card>
 
                 <Card
@@ -63,7 +64,9 @@ const RegisterZone = ({ isAuthenticated, getUserCocktails, location }) => {
                   </h3>
                   <h3>Home Bar</h3>
                   <Register />
-                  <Button onClick={handleClick}>Login</Button>
+                  <br></br>
+                  <p>Already have an account?</p>
+                  <p onClick={handleClick} style={{fontWeight: "500", color: "lightblue", cursor: "pointer"}}>Login</p>
                 </Card>
               </ReactCardFlip>
             </div>

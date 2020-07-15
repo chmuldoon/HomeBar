@@ -34,7 +34,6 @@ const UsingArea = ({
   };
   
   const convertIngredientsToOptions = (ings) => {
-    debugger
     return ings.map((ing) => {
       return ({ ...ing, value: `${ing._id}`, label: `${_capitalize(ing.name)}` });
     });
@@ -60,12 +59,12 @@ const UsingArea = ({
       return <AnimateItem key={used._id} component={myComponent}/>
     });
   }
-
+  debugger
   return using === null ? (
     <div>loading</div>
   ) : (
     <div>
-      <div style={{ width: "40vw", margin: "0 auto 2vh auto", display: "flex" }}>
+      <div style={{ width: "70vw", margin: "0 auto 2vh auto", display: "flex", justifyContent: "space-between" }}>
         <div style={{width: "90%"}}>
           {search && <Select
             options={condenseList(search)}
@@ -86,7 +85,7 @@ const UsingArea = ({
           <Button variant="secondary">Add</Button>
         )}
       </div>
-      <div style={{width: "40vw"}} className="drinkSection">
+      <div style={{width: "70vw"}} className="drinkSection">
         {renderIngredients()}
       </div>
     </div>
