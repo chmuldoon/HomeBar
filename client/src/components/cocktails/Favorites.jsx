@@ -39,7 +39,6 @@ const Favorites = ({
   if (!user) {
     return <p>loading</p>;
   }
-  debugger
   return (
     <div className="mainArea">
       {cocktails && ingredients && (

@@ -63,7 +63,7 @@ ul {
   list-style-type: none;
 }
 /* .dasd {
-  overflow-y: scroll;
+  overflow-y: scroll;x
   background-image: url("assets/images/bartendersfriend.jpg");
   background-position: center;
 } */
@@ -71,7 +71,8 @@ html {
   height: 100%;
 }
 #main {
-  height: 900px;
+  min-height: 0;
+  max-height: 900;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -337,7 +338,8 @@ div.searchItem:hover {
   display: flex;
   justify-content: center;
   margin: 4rem 0 0 0;
-  height: 90%;
+  min-height: 0;
+  max-height: 90%;
   width: 100%;
 }
 

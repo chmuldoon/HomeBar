@@ -40,9 +40,7 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
           />
         </InputGroup> */}
         <div className="form-group">
-          <label>Email:</label>
           <input
-            className="frosted"
             type="email"
             placeholder="Email Address"
             name="email"
@@ -52,7 +50,6 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
           />
         </div>
         <div className="form-group">
-          <label>Password:</label>
           <input
             type="password"
             placeholder="Password"

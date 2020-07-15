@@ -87,12 +87,10 @@ const CreateCocktail = ({ fetchSearchItems, createCocktail, search, cocktail, hi
   };
   const handleMeasurements = (e, i) => {
     const newMeasurements = measurements.slice();
-    debugger
     newMeasurements[i] = e.target.value;
     setCocktailFormData({...cocktailFormData, measurements: newMeasurements});
   }
   const handleIngredient = (e, i) => {
-    debugger
     const newUsing = using.slice();
     const newUsing2 = using2.slice();
     newUsing[i] = e.name;
@@ -117,7 +115,6 @@ const CreateCocktail = ({ fetchSearchItems, createCocktail, search, cocktail, hi
   }
   const handleGlass = (e) => {
     setCocktailFormData({...cocktailFormData, glass: e.name})
-    debugger
   }
   const onSubmit = async (e) => {
     e.preventDefault();

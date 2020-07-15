@@ -24,13 +24,13 @@ const UsingItem = ({
   };
 
   return (
-    <div style={{ height: "12rem", width: "12rem", margin: "0 10px 0 10px" }}>
+    <div style={{ height: "10vw", width: "10vw", margin: "0 10px 10px 10px" }}>
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         <Card
           style={{
             backgroundColor: `${isMustHave(item._id)}`,
-            height: "12rem",
-            width: "12rem",
+            height: "10vw",
+            width: "10vw",
             textTransform: "capitalize",
             border: "none",
           }}
@@ -38,10 +38,9 @@ const UsingItem = ({
         >
           <Card.Img
             style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              height: "10rem",
-              width: "10rem",
+              margin: "auto",
+              height: "80%",
+              width: "80%",
             }}
             src={item.img}
           />
@@ -49,24 +48,30 @@ const UsingItem = ({
             style={{
               marginLeft: "auto",
               marginRight: "auto",
+              fontSize: "12px",
             }}
           >
             {item.name}
           </Card.Title>
         </Card>
 
-        <Card onDoubleClick={handleClick} style={{ height: "12rem", width: "12rem", border: "none" }}>
+        <Card
+          onDoubleClick={handleClick}
+          style={{ height: "10vw", width: "10vw", border: "none" }}
+        >
           <Card.Body>
             <Card.Title
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: "capitalize", fontSize: "12px" }}
             >
               {item.name}
             </Card.Title>
             <Button onClick={() => removeIngredient(item._id)}> X </Button>
-            <Card.Text>Used in {item.cocktails.length} cocktails</Card.Text>
+            <Card.Text style={{ fontSize: "12px" }}>
+              {item.cocktails.length} cocktails
+            </Card.Text>
             <Row>
               <Col>
-                <Card.Text>Must have?</Card.Text>
+                <Card.Text style={{ fontSize: "12px" }}>Must have?</Card.Text>
               </Col>
               <Col>
                 <label style={{ cursor: "pointer" }} className="switch">
@@ -76,7 +81,7 @@ const UsingItem = ({
                     checked={status}
                     onChange={() => handleMustHave(item._id)}
                   />
-                  <span class="slider round"></span>
+                  <span className="slider round"></span>
                 </label>
               </Col>
             </Row>

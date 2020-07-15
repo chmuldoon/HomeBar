@@ -16,29 +16,46 @@ const Landing = ({ isAuthenticated, getUserCocktails }) => {
 
  
     return (
-        <section className="landing">
-          <div className="dark-overlay">
-            <div className="landing-inner">
-              <div
+      <section className="landing">
+        <div className="dark-overlay">
+          <div className="landing-inner">
+            <div
+              style={{
+                height: "20rem",
+                width: "20rem",
+                margin: "0 10px 0 10px",
+              }}
+            >
+              <Card
                 style={{
                   height: "20rem",
                   width: "20rem",
-                  margin: "0 10px 0 10px",
+                  backgroundColor: "rgba(255, 255, 255, .15)",
+                  backdropFilter: "blur(5px)",
                 }}
               >
-                <Card>
-                  <Link
-                    to={{ pathname: "/register", state: { flipStatus: false } }}
-                  >
-                    <Button>Login</Button>
-                  </Link>
-                  <Link
-                    to={{ pathname: "/register", state: { flipStatus: true } }}
-                  >
-                    <Button>Sign Up</Button>
-                  </Link>
-                </Card>
-                {/* <ReactCardFlip
+                <h3>
+                  <i className="fas fa-cocktail"></i>
+                </h3>
+                <h3>Home Bar</h3>
+                <h5>The Ultimate Cocktail Assistant</h5>
+                <br></br>
+                <Link
+                  to={{ pathname: "/register", state: { flipStatus: false } }}
+                >
+                  <Button>Login</Button>
+                </Link>
+                <br></br>
+                ─────── or ───────
+                <br></br>
+                <br></br>
+                <Link
+                  to={{ pathname: "/register", state: { flipStatus: true } }}
+                >
+                  <Button>Sign Up</Button>
+                </Link>
+              </Card>
+              {/* <ReactCardFlip
                   sty
                   isFlipped={isFlipped}
                   flipDirection="horizontal"
@@ -76,10 +93,10 @@ const Landing = ({ isAuthenticated, getUserCocktails }) => {
                     <Button onClick={handleClick}>Login</Button>
                   </Card>
                 </ReactCardFlip> */}
-              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
     );
 };
   
