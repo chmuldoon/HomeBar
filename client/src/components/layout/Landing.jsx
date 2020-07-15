@@ -26,19 +26,20 @@ const Landing = ({ isAuthenticated, getUserCocktails, login }) => {
           <div className="landing-inner">
             <div
               style={{
-                height: "48vh",
+                height: "58vh",
                 width: "30vw",
                 margin: "0 10px 0 10px",
               }}
             >
               <Card
                 style={{
-                  height: "48vh",
+                  height: "58vh",
                   width: "30vw",
                   backgroundColor: "rgba(255, 255, 255, .15)",
                   backdropFilter: "blur(5px)",
                 }}
               >
+                <br></br>
                 <h3>
                   <i className="fas fa-cocktail"></i>
                 </h3>
