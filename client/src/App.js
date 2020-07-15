@@ -15,6 +15,7 @@ import Favorites from './components/cocktails/Favorites'
 import Register from "./components/auth/Register";
 import Topbar from "./components/main/Topbar";
 import CreateCocktail from "./components/cocktails/CreateCocktail";
+import RegisterZone from "./components/layout/RegisterZone";
 const App = () => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -26,10 +27,10 @@ const App = () => {
   return (
     <Fragment>
       <Route exact path="/" component={Landing} />
+      <Route exact path="/register" component={RegisterZone} />
       <section>
         <PrivateRoute component={Topbar}/>
         {/* <Topbar /> */}
-        {localStorage.token && (
           <div id="main">
             <div className="mainArea">
               {/* <div className="content"> */}
@@ -49,7 +50,6 @@ const App = () => {
               {/* </div> */}
             </div>
           </div>
-        )}
       </section>
     </Fragment>
   );

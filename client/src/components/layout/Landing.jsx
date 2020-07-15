@@ -5,18 +5,17 @@ import ReactCardFlip from "react-card-flip";
 import Login from "../auth/Login";
 import { Card, Button } from "react-bootstrap";
 import Register from "../auth/Register";
-const Landing = ({ isAuthenticated }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const handleClick = (e) => {
-    e.preventDefault();
-    setIsFlipped(!isFlipped);
-  };
-  if (isAuthenticated) {
-    return <Redirect to="/main" />;
-  } else {
+import { getUserCocktails } from "../../actions/cocktail_actions";
+import history from "../../history";
+const Landing = ({ isAuthenticated, getUserCocktails }) => {
+  // const [isFlipped, setIsFlipped] = useState(false);
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   setIsFlipped(!isFlipped);
+  // };
 
+ 
     return (
-      !isAuthenticated && (
         <section className="landing">
           <div className="dark-overlay">
             <div className="landing-inner">
@@ -27,7 +26,19 @@ const Landing = ({ isAuthenticated }) => {
                   margin: "0 10px 0 10px",
                 }}
               >
-                <ReactCardFlip
+                <Card>
+                  <Link
+                    to={{ pathname: "/register", state: { flipStatus: false } }}
+                  >
+                    <Button>Login</Button>
+                  </Link>
+                  <Link
+                    to={{ pathname: "/register", state: { flipStatus: true } }}
+                  >
+                    <Button>Sign Up</Button>
+                  </Link>
+                </Card>
+                {/* <ReactCardFlip
                   sty
                   isFlipped={isFlipped}
                   flipDirection="horizontal"
@@ -64,16 +75,15 @@ const Landing = ({ isAuthenticated }) => {
                     <Register />
                     <Button onClick={handleClick}>Login</Button>
                   </Card>
-                </ReactCardFlip>
+                </ReactCardFlip> */}
               </div>
             </div>
           </div>
         </section>
-      )
     );
-  };
-  }
+};
+  
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps, null)(Landing);
+export default connect(mapStateToProps, {getUserCocktails})(Landing);

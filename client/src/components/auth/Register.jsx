@@ -17,12 +17,13 @@ const Register = ({ register, isAuthenticated }) => {
   }
   const onSubmit = async (e) => {
     e.preventDefault();
-    register(email, password);
+    register(email, password).then(() => {
+
+      return <Redirect to="/main" />;
+    })
   };
   //Redirect if logged in
-  if (isAuthenticated) {
-    return <Redirect to="/main" />;
-  }
+
 
   return (
     <Fragment>
