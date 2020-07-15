@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/auth_actions";
 import { Button, Form, InputGroup, FormControl } from "react-bootstrap";
+import history from "../../history";
 const Login = ({ demoLogin, login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
@@ -16,12 +17,11 @@ const Login = ({ demoLogin, login, isAuthenticated }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   const onSubmit = async (e) => {
     e.preventDefault();
-    login(email, password);
+    login(email, password).then(() => {
+      history.push("/main")
+    })
   };
   //Redirect if logged in
-  if (isAuthenticated) {
-    return <Redirect to="/main" />;
-  }
 
   return (
     <Fragment>

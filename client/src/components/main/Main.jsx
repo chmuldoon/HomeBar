@@ -39,13 +39,13 @@ const Main = ({
     const [auxloading, setAuxLoading] = useState(false)
 
   useEffect(() => {
+    debugger;
     fetchUserLists();
     getUserCocktails();
     return () => {
       clearCocktails();
     };
-    
-  }, []);
+  }, [getUserCocktails]);
   let totalLoading = loading || iLoading || cLoading
   const prevCocktails = usePrevious(cocktails)
   
@@ -187,6 +187,7 @@ const Main = ({
       {totalLoading === null || auxloading ? (
       <Spinner animation="border" role="status">
         <span className="sr-only">Loading...</span>
+        {() =>getUserCocktails()}
       </Spinner>
       ) : (
       <Fragment>
