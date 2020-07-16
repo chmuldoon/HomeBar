@@ -7,54 +7,78 @@ import { Card, Button } from "react-bootstrap";
 import Register from "../auth/Register";
 import { getUserCocktails } from "../../actions/cocktail_actions";
 import history from "../../history";
-const Landing = ({ isAuthenticated, getUserCocktails }) => {
+import { login } from "../../actions/auth_actions";
+import AnimateItem from "../main/AnimateItem";
+const Landing = ({ isAuthenticated, getUserCocktails, login }) => {
   // const [isFlipped, setIsFlipped] = useState(false);
   // const handleClick = (e) => {
   //   e.preventDefault();
   //   setIsFlipped(!isFlipped);
   // };
-
+  if(isAuthenticated){
+    return <Redirect to="/main" />;
+  }
  
     return (
       <section className="landing">
+        <title>Home Bar</title>
+
         <div className="dark-overlay">
           <div className="landing-inner">
             <div
               style={{
-                height: "20rem",
-                width: "20rem",
+                height: "58vh",
+                width: "30vw",
                 margin: "0 10px 0 10px",
               }}
             >
-              <Card
-                style={{
-                  height: "20rem",
-                  width: "20rem",
-                  backgroundColor: "rgba(255, 255, 255, .15)",
-                  backdropFilter: "blur(5px)",
-                }}
-              >
-                <h3>
-                  <i className="fas fa-cocktail"></i>
-                </h3>
-                <h3>Home Bar</h3>
-                <h5>The Ultimate Cocktail Assistant</h5>
-                <br></br>
-                <Link
-                  to={{ pathname: "/register", state: { flipStatus: false } }}
-                >
-                  <Button>Login</Button>
-                </Link>
-                <br></br>
-                ─────── or ───────
-                <br></br>
-                <br></br>
-                <Link
-                  to={{ pathname: "/register", state: { flipStatus: true } }}
-                >
-                  <Button>Sign Up</Button>
-                </Link>
-              </Card>
+                  <Card
+                    style={{
+                      height: "58vh",
+                      width: "30vw",
+                      backgroundColor: "rgba(255, 255, 255, .15)",
+                      backdropFilter: "blur(5px)",
+                    }}
+                  >
+                    <br></br>
+                    <h3>
+                      <i className="fas fa-cocktail"></i>
+                    </h3>
+                    <h3>Home Bar</h3>
+                    <h5>The Ultimate Cocktail Assistant</h5>
+                    <br></br>
+                    <Link
+                      to={{
+                        pathname: "/register",
+                        state: { flipStatus: false },
+                      }}
+                    >
+                      <Button>Login</Button>
+                    </Link>
+                    <br></br>
+                    ─────── or ───────
+                    <br></br>
+                    <br></br>
+                    <Link
+                      to={{
+                        pathname: "/register",
+                        state: { flipStatus: true },
+                      }}
+                    >
+                      <Button>Sign Up</Button>
+                    </Link>
+                    <br></br>
+                    ─────── or ───────
+                    <br></br>
+                    <br></br>
+                    <div>
+                      <Button
+                        onClick={() => login("demo@demo.com", "password")}
+                      >
+                        Demo Login
+                      </Button>
+                    </div>
+                  </Card>
               {/* <ReactCardFlip
                   sty
                   isFlipped={isFlipped}
@@ -103,4 +127,4 @@ const Landing = ({ isAuthenticated, getUserCocktails }) => {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
 });
-export default connect(mapStateToProps, {getUserCocktails})(Landing);
+export default connect(mapStateToProps, {getUserCocktails, login})(Landing);

@@ -7,7 +7,8 @@
     "start": "node server.js",
     "server": "nodemon server.js --ignore client",
     "client": "npm run start --prefix client",
-    "dev": "concurrently  \"npm run server \" \"npm run client\""
+    "dev": "concurrently  \"npm run server \" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +33,7 @@
     "mongoose": "^5.9.13",
     "nodemon": "^2.0.3",
     "passport": "^0.4.1",
+    "react-collapse": "^5.0.1",
     "styled": "^1.0.0",
     "styled-components": "^5.1.0",
     "ws": "^7.3.1"
