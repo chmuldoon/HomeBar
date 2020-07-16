@@ -3,16 +3,26 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { addFavorite, removeFavorite, formCocktailUrl, clearCocktails, clearCocktail } from '../../actions/cocktail_actions'
-import { Card, Popover, OverlayTrigger, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Card, Popover, OverlayTrigger, ListGroup, ListGroupItem, Badge, Collapse } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import Gin from "../major/Gin";
 import TripleSec from "../major/TripleSec";
 import uuid from "react-uuid";
 import history from "../../history";
+import random from 'random';
+import AnimateItem from "./AnimateItem";
+import { useState } from "react";
+import { useTransition, animated } from "react-spring";
+const Item = ({ user, mustHave,ind, using, drink, clearCocktails}) => {
+  const [open, setOpen] = useState(random.int(1, 3) === 3 ? true : false);
 
-const Item = ({ mustHave, using, drink, clearCocktails}) => {
-
+  const [on, toggle] = useState(true);
+  const transitions = useTransition(on, null, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+  });
   const doesHave = (ingId) => {
     return using.includes(ingId) ? 
     "success" :
@@ -21,9 +31,17 @@ const Item = ({ mustHave, using, drink, clearCocktails}) => {
   const renderList = () => {
     return <ListGroup>
       {drink.using2.map((el, i) => {
-        return <ListGroupItem key={uuid()} style={{textTransform: "capitalize"}} variant={doesHave(el)}>
-          {drink.using[i]}
-        </ListGroupItem>
+        return (
+          <ListGroupItem
+            key={uuid()}
+            style={{ textTransform: "capitalize" }}
+            variant={doesHave(el)}
+          >
+            {drink.measurements[i]
+              ? `${drink.measurements[i]} ${drink.ingredients[i]}`
+              : `${drink.ingredients[i]}`}
+          </ListGroupItem>
+        );
       })}
     </ListGroup>
   }
@@ -35,14 +53,53 @@ const Item = ({ mustHave, using, drink, clearCocktails}) => {
     })
     return count
   }
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Title as="h3">Ingredients</Popover.Title>
-      <Popover.Content>
-        {renderList()}
-      </Popover.Content>
-    </Popover>
-  );
+  // const popover = (
+  //   <Popover id="popover-basic">
+  //     <Popover.Title as="h3">Ingredients</Popover.Title>
+  //     <Popover.Content>
+  //       {renderList()}
+  //     </Popover.Content>
+  //   </Popover>
+  // );
+  const inShelf = (id) => {
+    return user.ingredients.includes(id) ? "#4CA64C" : "darkgray";
+  };
+  // const renderIngredients = () => {
+  //   return <ListGroup>
+  //     {drink.using.map((el, i) => {
+  //       return (
+  //         <ListGroupItem style={{ height: "2.5rem", border: "none" }}>
+  //           <Badge
+  //             style={{
+  //               backgroundColor: inShelf(drink.using2[i]),
+  //               color: inShelf(drink.using2[i]),
+  //             }}
+  //           >
+  //             {" X "}
+  //           </Badge>
+  
+  //           {"    "}
+  //           {drink.measurements[i]
+  //             ? `${drink.measurements[i]} ${drink.ingredients[i]}`
+  //             : `${drink.ingredients[i]}`}
+  //         </ListGroupItem>
+  //       );
+  //     })}
+  //   </ListGroup>
+  // };
+  // const animateIngredients = () => {
+  //   return  <div>
+  //       {transitions.map(
+  //         ({item, key, props}) => {
+  //         return item && (
+  //             <animated.div key={key} style={props}>
+  //               {renderIngredients()}
+  //             </animated.div>
+  //           )
+  //         }
+  //       )}
+  //     </div>
+  // }
   const handleLink = e => {
     const id = e.target.id
     clearCocktails()
@@ -50,69 +107,78 @@ const Item = ({ mustHave, using, drink, clearCocktails}) => {
       history.push(`/cocktails/${id}`)
     }, 100);
   }
-
+  debugger
   if (!drink) {
     return null;
   }
   return (
-    <div
-      style={{ marginLeft: "20px", marginRight: "20px", marginBottom: "20px" }}
-    >
-      <OverlayTrigger
-        trigger="hover focus"
-        focus
-        placement="auto"
-        overlay={popover}
-      >
-        <Card style={{ width: "18rem", height: "26rem", border: "none" }}>
-          {/* <Link to={`/cocktails/${drink._id}`}> */}
+    <AnimateItem
+      component={
+        <div
+          style={{
+            marginLeft: "20px",
+            marginRight: "20px",
+            marginBottom: "20px",
+          }}
+        >
+          <Card
+            style={{
+              width: `18rem`,
+              height: `${drink.name.length > 25 ? 28 : random.int(26, 30)}rem`,
+              // height: "26rem",
+              height: "none",
+              border: "none",
+            }}
+            onClick={() => setOpen(!open)}
+          >
             <Card.Img
               id={drink._id}
-              onClick={(e) => handleLink(e)}
+              // onClick={(e) => handleLink(e)}
+
               variant="top"
               src={formCocktailUrl(drink)}
             />
-          {/* </Link> */}
-          <Card.Body>
+            <Card.Body style={{ justifyContent: "center", padding: "1.25rem 0 1.25rem 0", borderRadius: 0 }}>
             <Link to={`/cocktails/${drink._id}`}>
-              <Card.Title style={{ overflow: "hidden" }}>
-                {drink.name.slice(0, 25)}
-                {drink.name.length > 25 && "..."}
+              <Card.Title
+                className="text-center"
+                style={{ overflow: "hidden" }}
+                >
+                {drink.name}
+                {/* {drink.name.slice(0, 25)}
+                    {drink.name.length > 25 && "..."} */}
               </Card.Title>
             </Link>
-            <div style={{ height: "30px" }}>
-              {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && (
-                <Vodka dimension="30px" used={true} />
-              )}
-              {drink.using2.includes("5e9d51a19a6bb767c4002b9f") && (
-                <Gin dimension="30px" used={true} />
-              )}
-              {drink.using2.includes("5e9d51a29a6bb767c4002d24") && (
-                <TripleSec dimension="30px" used={true} />
-              )}
-              {drink.using2.includes("5e9d51a19a6bb767c4002ba1") && (
-                <Tequila dimension="30px" used={true} />
-              )}
-            </div>
-            <OverlayTrigger
-              trigger="click"
-              placement="auto"
-              overlay={popover}
-            >
-              <Card.Text>
+              <Collapse in={open}>{renderList()}</Collapse>
+
+              <div className="text-center" style={{ height: "30px" }}>
+                {drink.using2.includes("5e9d51a19a6bb767c4002b9e") && (
+                  <Vodka dimension="30px" used={true} />
+                )}
+                {drink.using2.includes("5e9d51a19a6bb767c4002b9f") && (
+                  <Gin dimension="30px" used={true} />
+                )}
+                {drink.using2.includes("5e9d51a29a6bb767c4002d24") && (
+                  <TripleSec dimension="30px" used={true} />
+                )}
+                {drink.using2.includes("5e9d51a19a6bb767c4002ba1") && (
+                  <Tequila dimension="30px" used={true} />
+                )}
+              </div>
+              <Card.Text className="text-center">
                 {checkedNum()} out of {drink.using2.length} ingredients
               </Card.Text>
-            </OverlayTrigger>
-          </Card.Body>
+            </Card.Body>
 
-          {/* <ListGroup className="list-group-flush">
-          <ListGroupItem>Cras justo odio</ListGroupItem>
-          <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-          <ListGroupItem>Vestibulum at eros</ListGroupItem>
-        </ListGroup> */}
-        </Card>
-      </OverlayTrigger>
-    </div>
+            {/* <ListGroup className="list-group-flush">
+              <ListGroupItem>Cras justo odio</ListGroupItem>
+              <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
+              <ListGroupItem>Vestibulum at eros</ListGroupItem>
+            </ListGroup> */}
+          </Card>
+        </div>
+      }
+    ></AnimateItem>
     // <div className="drinkCard">
 
     //   <div>

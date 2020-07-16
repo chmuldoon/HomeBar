@@ -193,8 +193,9 @@ const Main = ({
       </Spinner>
       ) : (
       <Fragment>
-        {cocktails && ingredients && (
+        {cocktails.length > 0 && ingredients && (
           <CocktailsIndex
+            user={user}
             cocktails={sorted(cocktails)}
             using={Object.keys(ingredients)}
             mustHave={Object.keys(mustHave)}

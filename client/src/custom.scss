@@ -1,6 +1,19 @@
-$body-bg: lightgray;
+$body-bg: darkgray;
 // Import Bootstrap and its default variables
+$theme-colors: (
+  success: darkgreen
+);
 @import '~bootstrap/scss/bootstrap.scss';
+.list-group 
+.list-group-item {
+  border: none;
+  padding: none;
+  border-radius: 0%;
+}
+.list-group-item-success {
+  color: white;
+  background-color: darkgreen;
+}
 // .input-group {
 //   background-color: rgba(0, 0, 0, 0.1);
 //   backdrop-filter: blur(5px);

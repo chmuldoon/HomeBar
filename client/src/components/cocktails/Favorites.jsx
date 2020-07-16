@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, Fragment } from 'react'
 import {connect} from 'react-redux'
 import CocktailsIndex from '../main/CocktailsIndex'
 import {
@@ -40,12 +40,13 @@ const Favorites = ({
     return <p>loading</p>;
   }
   return (
-    <div className="mainArea">
+    <Fragment>
       <title>Home Bar • Favorites</title>
 
       {cocktails && ingredients && (
         <CocktailsIndex
           // wait={1000}
+          user={user}
           cocktails={cocktails}
           using={Object.keys(ingredients)}
           mustHave={Object.keys(mustHave)}
@@ -53,7 +54,7 @@ const Favorites = ({
           favoritesPage={true}
         />
       )}
-    </div>
+    </Fragment>
   );
 };
 const mapStateToProps = (state) => ({
