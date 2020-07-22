@@ -1,29 +1,24 @@
 import React, { useState } from "react";
 import { useTransition, animated } from "react-spring";
-import Item from "./Item";
 const AnimateItem = ({
   component,
+  base = {},
   options = {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
+    from: { opacity: 0, ...base },
+    enter: { opacity: 1, ...base },
+    leave: { opacity: 0, ...base },
   },
 }) => {
-  const { from, enter, leave } = options;
   const [on, toggle] = useState(true);
   const transitions = useTransition(on, null, options);
-  debugger
-  return (
-    <div>
-      {transitions.map(
-        ({ item, key, props }) =>
-          item && (
-            <animated.div key={key} style={props}>
-              {component}
-            </animated.div>
-          )
-      )}
-    </div>
+  debugger;
+  return transitions.map(
+    ({ item, key, props }) =>
+      item && (
+        <animated.div key={key} style={props}>
+          {component}
+        </animated.div>
+      )
   );
 };
 

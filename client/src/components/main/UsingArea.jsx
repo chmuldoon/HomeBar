@@ -56,10 +56,9 @@ const UsingArea = ({
   const renderIngredients = () => {
     return Object.values(using).map((used) => {
       const myComponent = <UsingItem mustHave={Object.keys(mustHave)} item={used} />
-      return <AnimateItem key={used._id} component={myComponent}/>
+      return <AnimateItem key={used._id} component={myComponent} nondefault={true}/>
     });
   }
-  debugger
   return using === null ? (
     <div>loading</div>
   ) : (

@@ -32,6 +32,8 @@ export const FETCH_PHOTOS = "FETCH_PHOTOS";
 export const ADD_MUST_HAVE = "ADD_MUST_HAVE";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const WELL = "WELL";
+
 
 
 export const REMOVE_MUST_HAVE = "REMOVE_MUST_HAVE";

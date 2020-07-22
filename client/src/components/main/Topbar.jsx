@@ -6,11 +6,16 @@ import { logout } from '../../actions/auth_actions';
 import Shelf from './Shelf';
 import history from '../../history';
 import { clearCocktails } from '../../actions/cocktail_actions';
+import { useEffect } from 'react';
+import { fetchWell } from '../../actions/ingredient_actions';
 // import history from '../../history';
 const Topbar = (props) => {
   // if(!isAuthenticated){
   //   return <Redirect to="/"/>
   // }
+  useEffect(() => {
+    props.fetchWell()
+  },[])
   const handleClick = (e) => {
     const id = e.target.id
     if(props.location.pathname !== e.target.id){
@@ -68,4 +73,4 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.auth.isAuthenticated,
   };
 }
-export default connect(mapStateToProps, { logout, clearCocktails })(Topbar);
+export default connect(mapStateToProps, { logout, clearCocktails, fetchWell })(Topbar);

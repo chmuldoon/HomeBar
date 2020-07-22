@@ -31,9 +31,9 @@ const CocktailsIndex = ({user, history, mustHave, using, favorites, cocktails, f
   // };
   const breakpointColumnsObj = {
     default: 4,
-    1100: 3,
-    700: 2,
-    500: 1,
+    1440: 3,
+    1130: 2,
+    750: 1,
   };
   debugger
     return (
@@ -60,16 +60,7 @@ const CocktailsIndex = ({user, history, mustHave, using, favorites, cocktails, f
               );
               return (
                 <AnimateItem
-                  // options={{
-                  //   config: { mass: 0.3, friction: 10, tension: 50 },
-                  //   from: {
-                  //     transform: `translate3d(${
-                  //       random.boolean() ? "" : "-"
-                  //     }1000px,0,0)`,
-                  //   },
-                  //   enter: { transform: "translate3d(0,0px,0)" },
-                  //   leave: { transform: "translate3d(0,-40px,0)" },
-                  // }}
+                  base={{ width: "100%", justifyContent: "center", display: "flex"}}
                   component={myComponent}
                   key={drink.name}
                 />

@@ -23,7 +23,6 @@ const App = () => {
   useEffect(() => {
     store.dispatch(loadUser());
   }, [store]);
-  window.getState = store.getState;
   return (
     <Fragment>
       <Route exact path="/" component={Landing} />
