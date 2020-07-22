@@ -1,5 +1,5 @@
 import axios from "axios";
-import { UPDATE_USER, ADD_INGREDIENT, REMOVE_INGREDIENT, FETCH_USER_LISTS, ADD_MUST_HAVE, REMOVE_MUST_HAVE } from "./types";
+import { UPDATE_USER, ADD_INGREDIENT, REMOVE_INGREDIENT, FETCH_USER_LISTS, ADD_MUST_HAVE, REMOVE_MUST_HAVE, WELL } from "./types";
 
 
 export const fetchUserLists = () => async dispatch => {
@@ -13,6 +13,17 @@ export const fetchUserLists = () => async dispatch => {
   } catch (err) {
     throw "err";
     
+  }
+}
+export const fetchWell = () => async dispatch => {
+  try {
+    const res = await axios.get("/api/ingredients/well")
+     dispatch({
+       type: WELL,
+       payload: res.data,
+     });
+  } catch (err) {
+    throw "err";
   }
 }
 export const addIngredient = (id) => async dispatch => {

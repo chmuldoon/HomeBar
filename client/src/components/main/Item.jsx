@@ -53,53 +53,12 @@ const Item = ({ user, mustHave,ind, using, drink, clearCocktails}) => {
     })
     return count
   }
-  // const popover = (
-  //   <Popover id="popover-basic">
-  //     <Popover.Title as="h3">Ingredients</Popover.Title>
-  //     <Popover.Content>
-  //       {renderList()}
-  //     </Popover.Content>
-  //   </Popover>
-  // );
+
   const inShelf = (id) => {
     return user.ingredients.includes(id) ? "#4CA64C" : "darkgray";
   };
-  // const renderIngredients = () => {
-  //   return <ListGroup>
-  //     {drink.using.map((el, i) => {
-  //       return (
-  //         <ListGroupItem style={{ height: "2.5rem", border: "none" }}>
-  //           <Badge
-  //             style={{
-  //               backgroundColor: inShelf(drink.using2[i]),
-  //               color: inShelf(drink.using2[i]),
-  //             }}
-  //           >
-  //             {" X "}
-  //           </Badge>
-  
-  //           {"    "}
-  //           {drink.measurements[i]
-  //             ? `${drink.measurements[i]} ${drink.ingredients[i]}`
-  //             : `${drink.ingredients[i]}`}
-  //         </ListGroupItem>
-  //       );
-  //     })}
-  //   </ListGroup>
-  // };
-  // const animateIngredients = () => {
-  //   return  <div>
-  //       {transitions.map(
-  //         ({item, key, props}) => {
-  //         return item && (
-  //             <animated.div key={key} style={props}>
-  //               {renderIngredients()}
-  //             </animated.div>
-  //           )
-  //         }
-  //       )}
-  //     </div>
-  // }
+
+
   const handleLink = e => {
     const id = e.target.id
     clearCocktails()
@@ -107,26 +66,19 @@ const Item = ({ user, mustHave,ind, using, drink, clearCocktails}) => {
       history.push(`/cocktails/${id}`)
     }, 100);
   }
-  debugger
   if (!drink) {
     return null;
   }
   return (
-    <AnimateItem
-      component={
-        <div
-          style={{
-            marginLeft: "20px",
-            marginRight: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          <Card
+          <div
+            className="cardSm"
             style={{
+              backgroundColor: "white",
               width: `18rem`,
               height: `${drink.name.length > 25 ? 28 : random.int(26, 30)}rem`,
               // height: "26rem",
               height: "none",
+              borderRadius: "5px",
               border: "none",
             }}
             onClick={() => setOpen(!open)}
@@ -134,7 +86,7 @@ const Item = ({ user, mustHave,ind, using, drink, clearCocktails}) => {
             <Card.Img
               id={drink._id}
               // onClick={(e) => handleLink(e)}
-
+              style={{cursor:"pointer"}}
               variant="top"
               src={formCocktailUrl(drink)}
             />
@@ -175,31 +127,7 @@ const Item = ({ user, mustHave,ind, using, drink, clearCocktails}) => {
               <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
               <ListGroupItem>Vestibulum at eros</ListGroupItem>
             </ListGroup> */}
-          </Card>
-        </div>
-      }
-    ></AnimateItem>
-    // <div className="drinkCard">
-
-    //   <div>
-    //     {/* <p>{drink.strCategory}</p> */}
-    //     <img
-    //       src={`https://www.thecocktaildb.com/images/media/drink/${drink.photo}`}
-    //       style={{ width: "100%", marginBottom: "10px" }}
-    //       alt=""
-    //     />
-
-    //     <Link to={`/cocktails/${drink._id}`}>
-    //       <p
-    //         className="drinkTitle"
-    //         style={{ width: "100%", textAlign: "center" }}
-    //       >
-    //         {drink.name}
-    //       </p>
-    //     </Link>
-    //   </div>
-    //   {renderIngredients(drink)}
-    // </div>
+          </div>
   );
 }
 

@@ -17,7 +17,18 @@ router.get('/', async (req, res) => {
     res.status(500).send("server err");
   }
 })
+router.get("/well", async (req, res) => {
 
+  try {
+    let ingObj = {}
+    let ingredients = await Ingredient.find({name: { $in: ["vodka", "gin", "rum", "triple sec", "tequila"]}}).select("name _id");
+    ingredients.forEach(ing => ingObj[ing.name] = ing)
+    res.json(ingObj)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err");
+  }
+})
 router.get('/shelf', auth, async(req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");
