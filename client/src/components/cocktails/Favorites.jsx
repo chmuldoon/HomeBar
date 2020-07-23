@@ -21,6 +21,7 @@ const Favorites = ({
   getUserFavorites,
   auth: { user },
   cocktails,
+  location,
   fetchUserLists,
   ingredients,
   clearCocktails,
@@ -46,6 +47,7 @@ const Favorites = ({
       {cocktails && ingredients && (
         <CocktailsIndex
           // wait={1000}
+          location={location.pathname}
           user={user}
           cocktails={cocktails}
           using={Object.keys(ingredients)}

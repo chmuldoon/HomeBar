@@ -6,7 +6,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Masonry from "react-masonry-css";
 import { useState } from 'react';
 import { Spinner } from 'react-bootstrap';
-const CocktailsIndex = ({user, history, mustHave, using, favorites, cocktails, favoritesPage}) => {
+const CocktailsIndex = ({user, history, location, mustHave, using, favorites, cocktails, favoritesPage}) => {
   // const [listState, setListState] = useState({
   //   items:  cocktails.length ? cocktails.length > 15 ? cocktails.slice(0,15) : cocktails.slice(0) : [],
   //   hasMore: cocktails.length ? cocktails.length > 15 ? true : false : true
@@ -37,7 +37,7 @@ const CocktailsIndex = ({user, history, mustHave, using, favorites, cocktails, f
   };
   debugger
     return (
-      cocktails.length > 0 && (
+      JSON.stringify(cocktails) !== JSON.stringify([]) ? (
 
           <Masonry
             breakpointCols={breakpointColumnsObj}
@@ -67,6 +67,11 @@ const CocktailsIndex = ({user, history, mustHave, using, favorites, cocktails, f
               );
             })}
           </Masonry>
+      ) : (
+        location === "/main" ?
+          <h2>No Cocktails, try adjusting filters</h2> :
+          <h2>No Favorites, try liking some cocktails</h2>
+      
       )
     );
   // return cocktails.length > 0 && <div className="drinkSection">

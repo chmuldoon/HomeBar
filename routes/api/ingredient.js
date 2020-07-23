@@ -10,7 +10,8 @@ const CocktailService = require('../../services/cocktail');
 
 router.get('/', async (req, res) => {
   try {
-    let ingredients = await Ingredient.find().select("-cocktails")
+    let ingredients = await Ingredient.find()
+    // .select("-cocktails")
     res.json(ingredients)
   } catch (err) {
     console.error(err.message);

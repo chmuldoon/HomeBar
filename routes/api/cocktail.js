@@ -11,16 +11,16 @@ const User = require("../../models/User");
 //get all cocktails
 //public
 //testing
-router.get("/", async (req, res) => {
-  try {
-    const cocktails = await Cocktail.find();
+// router.get("/", async (req, res) => {
+//   try {
+//     const cocktails = await Cocktail.find();
 
-    res.json(cocktails)
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("server err");
-  }
-})
+//     res.json(cocktails)
+//   } catch (err) {
+//     console.error(err.message);
+//     res.status(500).send("server err");
+//   }
+// })
 router.post("/", 
   auth,
   async (req, res) => {
@@ -118,6 +118,7 @@ router.get('/', auth, async (req, res) => {
   }
 })
 
+
 router.put("/add/favorites/:id", auth, async (req, res) => {
   try {
     let user = await User.findById(req.user.id).select("-password");
@@ -189,6 +190,16 @@ router.get("/similar/:id", async (req, res) => {
     console.error(err.message);
     res.status(500).send("server err at similar drinks");
     
+  }
+})
+router.delete("/:id", async (req, res) => {
+  try {
+    await Cocktail.findOneAndRemove({_id: req.params.id})
+    res.json({ msg: "artist was removed" });
+
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err at similar drinks");
   }
 })
 

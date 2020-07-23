@@ -30,6 +30,7 @@ const Main = ({
   auth: { user, loading },
   cocktails: {cocktails, loading:  cLoading },
   logout,
+  location,
   getUserCocktails,
   clearCocktails,
   fetchUserLists,
@@ -53,7 +54,6 @@ const Main = ({
   }, [getUserCocktails]);
   let totalLoading = loading || iLoading || cLoading
   const prevCocktails = usePrevious(cocktails)
-
  
   const handleChange = num => {
     setAuxLoading(true)
@@ -104,21 +104,7 @@ const Main = ({
     return drinks
 
   };
-  const sideInfo = () => {
-    let ings = Object.keys(ingredients);
-    const drinks = sorted(cocktails)
-    const complete = drinks.filter(c => _rank(ings, c.using2) === 0)
-    const mapZeroToThree = [0, 1].map(el => {
-      let count = drinks.filter((c) => _rank(ings, c.using2) === el).length
-      if(el === 0) return <p key={uuid()}>{count} cocktails you can make right now</p>
-      return <p key={uuid()}>{count} cocktails you are {el} ingredients away from</p>
-    })
-    return (
-      <div>
-        {mapZeroToThree}
-      </div>
-    );
-  }
+
   const _rank = (list, using) => {
     let count = 0;
     using.forEach((i) => {
@@ -155,6 +141,7 @@ const Main = ({
         <Fragment>
           {cocktails.length > 0 && ingredients && (
             <CocktailsIndex
+              location={location.pathname}
               user={user}
               cocktails={sorted(cocktails)}
               using={Object.keys(ingredients)}
