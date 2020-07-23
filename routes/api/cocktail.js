@@ -11,17 +11,16 @@ const User = require("../../models/User");
 //get all cocktails
 //public
 //testing
-// router.get("/", async (req, res) => {
-//   try {
-//     const cocktails = await Cocktail.find();
-//     const glasses = cocktails.map(c => c.glass)
-//     const end = [...new Set(glasses)]
-//     res.json(end)
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send("server err");
-//   }
-// })
+router.get("/", async (req, res) => {
+  try {
+    const cocktails = await Cocktail.find();
+
+    res.json(cocktails)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("server err");
+  }
+})
 router.post("/", 
   auth,
   async (req, res) => {

@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, Form } from 'react-bootstrap';
+import { Card, Form, InputGroup, FormControl } from 'react-bootstrap';
 import Slider from 'react-smooth-range-input';
-const Filter = ({well, mainAlc, handleMainAlc, filter, handleChange }) => {
-  debugger
+const Filter = ({well, searchTerm, handleText, mainAlc, handleMainAlc, filter, handleChange }) => {
+  
   const commonAlcs = () => {
     return ["vodka", "gin", "rum", "triple sec", "tequila"].map(el => {
       return (
@@ -24,28 +24,38 @@ const Filter = ({well, mainAlc, handleMainAlc, filter, handleChange }) => {
     }
 
     return (
-        <div className="hide-sm">
-          <Card
-            style={{
-              zIndex: "10",
-              marginBottom: "2vh"
-            }}
-          >
-            <Card.Body>
-              <Card.Title>Filter by popular Alcohol</Card.Title>
-              <div style={{display: "flex"}}>
-                {commonAlcs()}
-              </div>
-              <Card.Title>Maximum Ingredients Needed</Card.Title>
-              <Slider
-                value={filter}
-                min={0}
-                max={10}
-                onChange={(num) => handleChange(num)}
+      <div className="hide-sm">
+        <Card
+          style={{
+            zIndex: "10",
+            marginBottom: "2vh",
+          }}
+        >
+          <Card.Body>
+            <Card.Title>Filter by popular Alcohol</Card.Title>
+            <div style={{ display: "flex" }}>{commonAlcs()}</div>
+            <Card.Title>Search By Name</Card.Title>
+
+            <InputGroup className="mb-3">
+              <FormControl
+                value={searchTerm}
+                onChange={(e) => handleText(e)}
+                placeholder="Cocktail Name"
+                aria-label="Cocktail name"
+                aria-describedby="basic-addon1"
               />
-            </Card.Body>
-          </Card>
-        </div>
+            </InputGroup>
+            <Card.Title>Maximum Ingredients Needed</Card.Title>
+            <Slider
+              barColor="#004600"
+              value={filter}
+              min={0}
+              max={10}
+              onChange={(num) => handleChange(num)}
+            />
+          </Card.Body>
+        </Card>
+      </div>
     );
 };
 

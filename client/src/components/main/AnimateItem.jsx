@@ -11,7 +11,6 @@ const AnimateItem = ({
 }) => {
   const [on, toggle] = useState(true);
   const transitions = useTransition(on, null, options);
-  debugger;
   return transitions.map(
     ({ item, key, props }) =>
       item && (

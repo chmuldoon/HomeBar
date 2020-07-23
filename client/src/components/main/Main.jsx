@@ -8,7 +8,7 @@ import CocktailsIndex from "./CocktailsIndex";
 import UsingArea from "./UsingArea";
 import { fetchUserLists, addMustHave, removeMustHave } from "../../actions/ingredient_actions";
 import { Link } from "react-router-dom";
-import { Spinner, Card } from "react-bootstrap";
+import { Spinner, Card, InputGroup, FormControl } from "react-bootstrap";
 import Tequila from "../major/Tequila";
 import Vodka from "../major/Vodka";
 import TripleSec from "../major/TripleSec";
@@ -39,8 +39,9 @@ const Main = ({
   well
 }) => {
     const [filter, setFilter] = useState(3);
-    const [mainAlc, setMainAlc] = useState([])
-    const [auxloading, setAuxLoading] = useState(false)
+    const [mainAlc, setMainAlc] = useState([]);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [auxloading, setAuxLoading] = useState(false);
 
 
   useEffect(() => {
@@ -60,6 +61,15 @@ const Main = ({
     setTimeout(() => {
     setAuxLoading(false)
     }, 50)
+  }
+  const handleText = e => {
+    const term = e.target.value;
+    setAuxLoading(true);
+    setSearchTerm(term)
+
+    setTimeout(() => {
+      setAuxLoading(false);
+    }, 50);
   }
   const handleMainAlc = id => {
     setAuxLoading(true);
@@ -84,6 +94,12 @@ const Main = ({
     mainAlc.forEach(el => {
       drinks = drinks.filter(c => c.using2.includes(el))
     })
+    const condensed = searchTerm.trim()
+    if(condensed.length > 0){
+      drinks = drinks.filter(c => (
+        c.name.toLowerCase().split().some((part) => part.startsWith(condensed.toLowerCase()))
+      ))
+    }
     // setLength(drinks.length)
     return drinks
 
@@ -120,13 +136,14 @@ const Main = ({
       {mustHave && (
         <Filter
           well={well}
+          searchTerm={searchTerm}
+          handleText={handleText}
           mainAlc={mainAlc}
           handleMainAlc={handleMainAlc}
           filter={filter}
           handleChange={handleChange}
         />
       )}
-
       {totalLoading === null || auxloading ? (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Spinner animation="border" role="status">
@@ -136,8 +153,6 @@ const Main = ({
         </div>
       ) : (
         <Fragment>
-
-
           {cocktails.length > 0 && ingredients && (
             <CocktailsIndex
               user={user}
