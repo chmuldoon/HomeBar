@@ -12,7 +12,7 @@
     "fibers": "^5.0.0",
     "images-scraper": "^5.0.7",
     "jquery": "^3.5.1",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "popper": "^1.0.1",
     "popper.js": "^1.16.1",
     "puppeteer": "^5.1.0",
